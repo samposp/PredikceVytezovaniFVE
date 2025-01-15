@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34622.214
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PredikceVytěžováníFVE", "PredikceVytěžováníFVE.csproj", "{59776E4C-B768-4FB0-B6B7-93C50FE5107E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{59776E4C-B768-4FB0-B6B7-93C50FE5107E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59776E4C-B768-4FB0-B6B7-93C50FE5107E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59776E4C-B768-4FB0-B6B7-93C50FE5107E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59776E4C-B768-4FB0-B6B7-93C50FE5107E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1CE124A4-0738-4B09-BDCC-35A5260B5F3D}
+	EndGlobalSection
+EndGlobal
