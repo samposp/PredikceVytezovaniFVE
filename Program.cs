@@ -1,3 +1,6 @@
+using PredikceVytìžováníFVE.Services;
+using static System.Net.Mime.MediaTypeNames;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
@@ -23,6 +26,5 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseStaticFiles();
-
 
 app.Run();

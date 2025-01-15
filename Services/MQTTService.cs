@@ -1,11 +1,12 @@
 ﻿using MQTTnet;
+using MQTTnet.Protocol;
 using System.Text;
 
 namespace PredikceVytěžováníFVE.Services
 {
     public class MQTTService
     {
-        string broker = "mqtt.eclipse.org";
+        string broker = "test.mosquitto.org";
         int port = 1883;
         string clientId = Guid.NewGuid().ToString();
         string username = "";
@@ -13,8 +14,7 @@ namespace PredikceVytěžováníFVE.Services
 
         IMqttClient mqttClient;
 
-
-        MQTTService()
+        public MQTTService()
         {
             MqttClientFactory factory = new();
             mqttClient = factory.CreateMqttClient();
@@ -37,10 +37,22 @@ namespace PredikceVytěžováníFVE.Services
             // Callback function when a message is received
             mqttClient.ApplicationMessageReceivedAsync += e =>
             {
-                Console.WriteLine($"Received message: {Encoding.UTF8.GetString(e.ApplicationMessage.PayloadSegment)}");
+                Console.WriteLine($"Received message: {e.ApplicationMessage.ConvertPayloadToString()}");
                 return Task.CompletedTask;
             };
 
+        }
+
+        public async Task SendMessage(string topic, string message)
+        {
+            var mqttMessage = new MqttApplicationMessageBuilder()
+                .WithTopic(topic)
+                .WithPayload(message)
+                .WithQualityOfServiceLevel(MqttQualityOfServiceLevel.AtLeastOnce)
+                .WithRetainFlag()
+                .Build();
+
+            await mqttClient.PublishAsync(mqttMessage);
         }
 
     }
