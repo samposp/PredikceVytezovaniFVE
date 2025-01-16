@@ -5,9 +5,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddOpenApiDocument();
+builder.Services.AddRazorPages();
 
 var app = builder.Build();
-
 
 app.UseHttpsRedirection();
 app.UseRouting();
@@ -26,5 +26,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseStaticFiles();
+app.MapRazorPages();
 
 app.Run();
