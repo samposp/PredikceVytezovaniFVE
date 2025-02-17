@@ -1,10 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using PredikceVytěžováníFVE.Models.MeteoSource;
+﻿using Microsoft.AspNetCore.Mvc;
 using PredikceVytěžováníFVE.Services;
-using System.IO;
-using System.Reflection.Metadata.Ecma335;
-using System.Web;
+using ServiceReference1;
 
 namespace PredikceVytěžováníFVE.Controllers
 {
@@ -12,28 +8,24 @@ namespace PredikceVytěžováníFVE.Controllers
     [ApiController]
     public class ProductionPredictionController : ControllerBase
     {
-        readonly private MeteoSourceService meteoService = new();
-        readonly private OpenWeatherService weatherService = new();
-
-
-        //[HttpGet]
-        //public async void GetWeather()
-        //{
-        //    PointQuery apiPoint = new()
-        //    {
-        //        placeID = "postal-cz-46601",
-        //    };
-        //    var data = await meteoService.GetPoint(apiPoint);
-        //    Console.WriteLine(data.ToString());
-        //}
+        readonly private PVForcastService pvForcastService = new();
+        
+        readonly private ForecastService forecastService = new();
 
         [HttpGet]
         public async void GetPrediction()
         {
-            string lat = "50.7260878";
-            string lon = "15.1675150";
-            var data = await weatherService.Call(lat, lon);
-            Console.WriteLine(data.ToString());
+            string latitude = "50.79";
+            string longitude = "15.145";
+            await forecastService.GetWatthoursDay(latitude, longitude, "10");
+        }
+
+        [HttpGet("/Spot")]
+        public async void GetSpot() {
+            PublicDataServiceSoapClient client = new();
+            DateTime tomorrow = DateTime.Now.AddDays(1);
+            GetDamPriceEResponse damPrice = await client.GetDamPriceEAsync(tomorrow, tomorrow, 1, 24, false);
+            Console.WriteLine(damPrice.Result.Length);
         }
     }
 }
