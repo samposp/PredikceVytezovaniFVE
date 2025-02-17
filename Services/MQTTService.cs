@@ -1,12 +1,13 @@
 ﻿using MQTTnet;
 using MQTTnet.Protocol;
+using System.ServiceModel.Security;
 using System.Text;
 
 namespace PredikceVytěžováníFVE.Services
 {
     public class MQTTService
     {
-        string broker = "test.mosquitto.org";
+        string broker = "147.230.76.38";
         int port = 1883;
         string clientId = Guid.NewGuid().ToString();
         string username = "";
@@ -14,8 +15,14 @@ namespace PredikceVytěžováníFVE.Services
 
         IMqttClient mqttClient;
 
-        public MQTTService()
+        public MQTTService(string broker, int port = 1883,string? clientId = null, string username = "", string password = "")
         {
+            this.broker = broker;
+            this.port = port;
+            this.clientId = clientId ?? Guid.NewGuid().ToString();
+            this.username = username;
+            this.password = password;
+
             MqttClientFactory factory = new();
             mqttClient = factory.CreateMqttClient();
         }
