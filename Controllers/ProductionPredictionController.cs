@@ -12,6 +12,8 @@ namespace PredikceVytěžováníFVE.Controllers
         
         readonly private ForecastService forecastService = new();
 
+        readonly private MQTTService mqttService = new("147.230.76.38");
+
         [HttpGet]
         public async void GetPrediction()
         {
@@ -26,6 +28,12 @@ namespace PredikceVytěžováníFVE.Controllers
             DateTime tomorrow = DateTime.Now.AddDays(1);
             GetDamPriceEResponse damPrice = await client.GetDamPriceEAsync(tomorrow, tomorrow, 1, 24, false);
             Console.WriteLine(damPrice.Result.Length);
+        }
+
+        [HttpGet("/MQTT")]
+        public async void GetMqtt() {
+            await mqttService.Connect();
+            //await mqttService.Subscribe("FVE/Ibehej_TX");
         }
     }
 }
