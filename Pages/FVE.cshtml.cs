@@ -6,19 +6,24 @@ using Microsoft.AspNetCore.SignalR.Client;
 using PredikceVytěžováníFVE.Models;
 using PredikceVytěžováníFVE.Services;
 using MQTTnet;
+using Microsoft.AspNetCore.SignalR;
+using PredikceVytěžováníFVE.Hubs;
 
 namespace PredikceVytěžováníFVE.Pages
 {
     public class FVEModel : PageModel
     {
+        private readonly IHubContext<MqttHub> _hubContext;
 
-        [BindProperty]
+        public FVEModel(IHubContext<MqttHub> hubContext) {
+            _hubContext = hubContext;
+
+        }
+
         public FVEData FVEData { get; set; } = new();
 
-        private HubConnection? hubConnection;
         readonly private MQTTService mqttService = new("147.230.76.38");
 
-        [BindProperty]
         public string text { get; set; } = "test";
 
         public async Task OnGet()
@@ -33,23 +38,13 @@ namespace PredikceVytěžováníFVE.Pages
                 Timestamp = DateTime.UtcNow
             };
 
-            //await mqttService.Connect();
-            //await mqttService.Subscribe("FVE/Ibehej_TX", e => {
-            //    text = e.ApplicationMessage.ConvertPayloadToString();
-            //    Console.WriteLine($"Received message: {text}");
-            //    RedirectToPage("/FVE");
-            //    return Task.CompletedTask;
-                
-            //});
-            //hubConnection = new HubConnectionBuilder()
-            //    .WithUrl(Request.Host+"/mqtthub")
-            //    .Build();
-
-            //hubConnection.On<string>("Subscribe", (message) => {
-            //    text = $"{message}";
-            //});
-
-            //await hubConnection.StartAsync();
+            await mqttService.Connect();
+            await mqttService.Subscribe("FVE/Ibehej_TX", e => {
+                text = e.ApplicationMessage.ConvertPayloadToString();
+                Console.WriteLine($"Received message: {text}");
+                _hubContext.Clients.All.SendAsync("ReceiveMqtt", text);
+                return Task.CompletedTask;
+            });
         }
     }
 }
