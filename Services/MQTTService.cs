@@ -7,11 +7,8 @@ namespace PredikceVytěžováníFVE.Services
 {
     public class MQTTService
     {
-        string broker = "147.230.76.38";
-        int port = 1883;
-        string clientId = Guid.NewGuid().ToString();
-        string username = "";
-        string password = "";
+        private string broker, clientId, username, password;
+        private int port;
 
         IMqttClient mqttClient;
 
@@ -37,17 +34,12 @@ namespace PredikceVytěžováníFVE.Services
                 .Build();
             return await mqttClient.ConnectAsync(options);
         }
-        public async Task Subscribe(string topic)
+        public async Task Subscribe(string topic, Func<MqttApplicationMessageReceivedEventArgs, Task> callback)
         {
             await mqttClient.SubscribeAsync(topic);
 
             // Callback function when a message is received
-            mqttClient.ApplicationMessageReceivedAsync += e =>
-            {
-                Console.WriteLine($"Received message: {e.ApplicationMessage.ConvertPayloadToString()}");
-                return Task.CompletedTask;
-            };
-
+            mqttClient.ApplicationMessageReceivedAsync += callback;
         }
 
         public async Task SendMessage(string topic, string message)

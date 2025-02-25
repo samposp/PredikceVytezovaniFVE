@@ -1,3 +1,4 @@
+using PredikceVytìžováníFVE.Hubs;
 using PredikceVytìžováníFVE.Services;
 using static System.Net.Mime.MediaTypeNames;
 
@@ -6,6 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddOpenApiDocument();
 builder.Services.AddRazorPages();
+builder.Services.AddSignalR();
 
 var app = builder.Build();
 
@@ -27,5 +29,6 @@ if (app.Environment.IsDevelopment())
 
 app.UseStaticFiles();
 app.MapRazorPages();
+app.MapHub<MqttHub>("/mqtthub");
 
 app.Run();

@@ -1,0 +1,38 @@
+﻿@page
+@model PredikceVytěžováníFVE.Pages.FVEModel
+@using Microsoft.AspNetCore.SignalR.Client
+@{
+    ViewData["Title"] = "FVE";
+}
+
+@{
+    void Card(string title, string data) {
+        <div class="col-xl-2 col-md-3 col-sm-4">
+            <div class="card bg-secondary mb-4">
+                <div class="card-header">
+                    @title
+                </div>
+                <div class="card-body">
+                    @data
+                </div>
+            </div>
+        </div>
+    }
+}
+
+<div class="text-center">
+    <div class="box-body">
+        <div class="container">
+            <div id="mqtt"></div>
+            <div class="row">
+                @{
+                    Card("Baterie [%]", Model.FVEData.BatteryPercentage.ToString());
+                    Card("Výkon baterie", @Model.FVEData.BatteryPercentage.ToString());
+                    Card("Výkon FVE", @Model.FVEData.PVOutput.ToString());
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/js/signalr.js"></script>
+<script src="~/js/MqttHub.js"></script>
