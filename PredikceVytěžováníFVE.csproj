@@ -7,7 +7,23 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="FVEDB.db" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="FVEDB.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="9.0.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="9.0.2" />
     <PackageReference Include="MQTTnet" Version="5.0.1.1416" />
     <PackageReference Include="NSwag.AspNetCore" Version="14.2.0" />
     <PackageReference Include="System.ServiceModel.Duplex" Version="6.0.*" />
