@@ -2,49 +2,24 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.SignalR.Client;
-using PredikceVytěžováníFVE.Models;
-using PredikceVytěžováníFVE.Services;
-using MQTTnet;
-using Microsoft.AspNetCore.SignalR;
-using PredikceVytěžováníFVE.Hubs;
+using PredikceVytěžováníFVE.Data;
 
 namespace PredikceVytěžováníFVE.Pages
 {
     public class FVEModel : PageModel
     {
-        private readonly IHubContext<MqttHub> _hubContext;
+        private readonly FVEDbContext _db;
 
-        public FVEModel(IHubContext<MqttHub> hubContext) {
-            _hubContext = hubContext;
+        public List<int> labels = new() { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+        public List<int> values = new() { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 
-        }
-
-        public FVEData FVEData { get; set; } = new();
-
-        readonly private MQTTService mqttService = new("147.230.76.38");
-
-        public string text { get; set; } = "test";
-
-        public async Task OnGet()
+        public FVEModel(FVEDbContext database)
         {
-            FVEData = new() {
-                BatteryPercentage = 60,
-                BatteryOutput = 23,
-                PVOutput = 45,
-                PVEnergyCumulative = 23,
-                OutputCumulative = 54,
-                InputCumulative = 45,
-                Timestamp = DateTime.UtcNow
-            };
+            _db = database;
+        }
+        public void OnGet()
+        {
 
-            await mqttService.Connect();
-            await mqttService.Subscribe("FVE/Ibehej_TX", e => {
-                text = e.ApplicationMessage.ConvertPayloadToString();
-                Console.WriteLine($"Received message: {text}");
-                _hubContext.Clients.All.SendAsync("ReceiveMqtt", text);
-                return Task.CompletedTask;
-            });
         }
     }
 }

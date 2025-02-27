@@ -1,6 +1,7 @@
+using PredikceVytìžováníFVE.Data;
 using PredikceVytìžováníFVE.Hubs;
+using Microsoft.EntityFrameworkCore;
 using PredikceVytìžováníFVE.Services;
-using static System.Net.Mime.MediaTypeNames;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +9,10 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApiDocument();
 builder.Services.AddRazorPages();
 builder.Services.AddSignalR();
+builder.Services.AddDbContext<FVEDbContext>(options => {
+    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
+});
+builder.Services.AddHostedService<MqttBackgroundTask>();
 
 var app = builder.Build();
 

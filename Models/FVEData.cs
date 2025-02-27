@@ -2,12 +2,12 @@
 
 namespace PredikceVytěžováníFVE.Models {
     public class FVEData {
-        public int BatteryPercentage;
-        public int BatteryOutput;
-        public int PVOutput;
-        public double PVEnergyCumulative;
-        public double OutputCumulative;
-        public double InputCumulative;
-        public DateTime Timestamp;
+        public int BatteryPercentage { get; set; }
+        public int BatteryOutput { get; set; }
+        public int PVOutput { get; set; }
+        public double PVEnergyCumulative { get; set; }
+        public double OutputCumulative { get; set; }
+        public double InputCumulative { get; set; }
+        public DateTime Timestamp { get; set; }
     }
 }

@@ -6,8 +6,9 @@ let connection = new signalR.HubConnectionBuilder()
     .build();
 
 connection.on("ReceiveMqtt", (value) => {
-    console.log(value);
-    document.getElementById("mqtt").innerHTML = value
+    document.getElementById("batteryPercentage").innerHTML = value.batteryPercentage
+    document.getElementById("batteryOutput").innerHTML = value.batteryOutput
+    document.getElementById("PVEnergy").innerHTML = value.pvOutput
 });
 
 
