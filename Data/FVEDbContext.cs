@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using PredikceVytěžováníFVE.Models;
 using PredikceVytěžováníFVE.Models.DB;
 
 namespace PredikceVytěžováníFVE.Data {
@@ -6,6 +7,6 @@ namespace PredikceVytěžováníFVE.Data {
         public FVEDbContext(DbContextOptions<FVEDbContext> options) : base(options)
         { }
 
-        public DbSet<MqttBo> mqttBos { get; set; }
+        public DbSet<MqttData> mqttData { get; set; }
     }
 }

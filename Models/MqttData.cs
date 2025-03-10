@@ -1,4 +1,7 @@
-﻿namespace PredikceVytěžováníFVE.Models {
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace PredikceVytěžováníFVE.Models {
+    [PrimaryKey(nameof(Date), nameof(Time))]
     public class MqttData {
             public int SoC { get; set; }        // procento nabití baterie
             public int P_PV { get; set; }       // výkon stringu
