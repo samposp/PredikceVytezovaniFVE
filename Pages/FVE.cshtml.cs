@@ -2,7 +2,13 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Razor.TagHelpers;
+using Microsoft.AspNetCore.SignalR;
 using PredikceVytěžováníFVE.Data;
+using PredikceVytěžováníFVE.Helpers;
+using PredikceVytěžováníFVE.Hubs;
+using PredikceVytěžováníFVE.Models;
+using PredikceVytěžováníFVE.Models.DB;
 
 namespace PredikceVytěžováníFVE.Pages
 {
@@ -10,8 +16,10 @@ namespace PredikceVytěžováníFVE.Pages
     {
         private readonly FVEDbContext _db;
 
-        public List<int> labels = new() { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-        public List<int> values = new() { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+        public List<int> BatteryLevel = new();
+        public List<string> Timestapms = new();
+
+        public FVEData initData = new();
 
         public FVEModel(FVEDbContext database)
         {
@@ -19,7 +27,15 @@ namespace PredikceVytěžováníFVE.Pages
         }
         public void OnGet()
         {
-
+            GetData();
         }
+
+        private void GetData() {
+            string date = DateTime.Now.ToString("d.M.yyyy");
+            List<MqttData> chartData = _db.mqttData.Where(x => x.Date.Equals(date)).OrderBy(x => x.Time).ToList();
+            initData = ConverHelper.ToFVEData(chartData.Last());
+            BatteryLevel = chartData.Select(x => x.SoC).ToList();
+            Timestapms = chartData.Select(x => x.Time).ToList();
+        } 
     }
 }

@@ -1,23 +1,14 @@
 ﻿@page
-@model PredikceVytěžováníFVE.Pages.FVEModel
-@using Microsoft.AspNetCore.SignalR.Client
+@model PredikceVytěžováníFVE.Pages.PredictModel
 @{
-    ViewData["Title"] = "FVE";
+    ViewData["Title"] = "FVE data";
 }
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <div class="text-center">
-    <div class="box-body">
-        <div class="container">
-            <div id="mqtt"></div>
-            <div class="row">
-                @{
-                    Chart(Model.Timestapms, Model.BatteryLevel, "Baterie [%]");
-                }
-            </div>
-        </div>
-    </div>
+     <div class="box-body">
+        @{Chart(Model.labels, Model.data, "Price", "bar");}
+    </div>  
 </div>
 
 

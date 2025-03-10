@@ -1,49 +1,31 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using MQTTnet;
+using PredikceVytìžováníFVE.Data;
+using PredikceVytìžováníFVE.Helpers;
 using PredikceVytìžováníFVE.Models;
-using PredikceVytìžováníFVE.Services;
-using ServiceReference1;
+
 
 namespace WebApplication1.Pages
 {
     public class IndexModel : PageModel
     {
         private readonly ILogger<IndexModel> _logger;
-        ForecastService forecastService = new ForecastService();
-        PVForcastService pvForcastService = new PVForcastService();
-        readonly private MQTTService mqttService = new("147.230.76.38");
-        public string text = "TEST";
+        private readonly FVEDbContext _db;
 
+        public FVEData initData = new(); 
 
-        public List<string> labels { get; set; } = new();
-
-        public List<decimal> data { get; set; } = new();
-
-        public IndexModel(ILogger<IndexModel> logger)
+        public IndexModel(ILogger<IndexModel> logger, FVEDbContext database)
         {
+            _db = database;
             _logger = logger;
         }
 
-        public async Task OnGet()
+        public void OnGet()
         {
-            //labels = damPrice.Result.Select(x => x.Hour).ToList();
-            //data = damPrice.Result.Select(x => x.Price).ToList();
-            //await mqttService.Connect();
-            //await mqttService.Subscribe("FVE/Ibehej_TX", e => {
-            //    text = e.ApplicationMessage.ConvertPayloadToString();
-            //    Console.WriteLine($"Received message: {text}");
-            //    return Task.CompletedTask;
-            //});
-            string latitude = "50.79";
-            string longitude = "15.145";
-
-
-            //IEnumerable<TimeValuePair> dataPair = await forecastService.GetWatthours(latitude, longitude, "10");
-            //IEnumerable<TimeValuePair> dataPair = await pvForcastService.GetPrediciton(latitude, longitude);
-
-            //labels = dataPair.Select(x => x.Time.ToShortTimeString()).ToList();
-            //data = dataPair.Select(x => x.Value).ToList();
+            string date = DateTime.Now.ToString("d.M.yyyy");
+            List<MqttData> chartData = _db.mqttData.Where(x => x.Date.Equals(date)).OrderBy(x => x.Time).ToList();
+            initData = ConverHelper.ToFVEData(chartData.Last());
         }
     }
 }
