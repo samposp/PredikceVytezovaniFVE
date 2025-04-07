@@ -10,14 +10,14 @@ namespace PredikceVytěžováníFVE.Services {
     public class ForecastService {
 
         private static readonly string host = "https://api.forecast.solar/estimate/";
-        static private HttpClient client = new HttpClient();
+        private HttpClient client = new HttpClient();
 
         public ForecastService()
         {
             client.BaseAddress = new Uri(host);
         }
 
-        public async Task<IEnumerable<TimeValuePair>> GetWatthours(string latitude, string longitude, string peakPower, string declination = "0", string azimuth = "0") {
+        public async Task<WatthourResponse> GetWatthours(string latitude, string longitude, string peakPower, string declination = "0", string azimuth = "0") {
 
             List<string> path = new() {
                 "watthours",
@@ -49,7 +49,7 @@ namespace PredikceVytěžováníFVE.Services {
                 if (deserialized == null)
                     throw new HttpRequestException("No content found");
 
-                return deserialized.Result.Data.Select(x => new TimeValuePair(x.Key, x.Value));
+                return deserialized;
             }
             string errorMessage = await response.Content.ReadAsStringAsync();
             throw new HttpRequestException(errorMessage);

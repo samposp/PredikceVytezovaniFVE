@@ -3,10 +3,11 @@ using MQTTnet;
 using PredikceVytěžováníFVE.Data;
 using PredikceVytěžováníFVE.Helpers;
 using PredikceVytěžováníFVE.Hubs;
-using PredikceVytěžováníFVE.Models;
+using PredikceVytěžováníFVE.Models.DB;
 using System.Text.Json;
 
-namespace PredikceVytěžováníFVE.Services {
+namespace PredikceVytěžováníFVE.Services
+{
     public class MqttBackgroundTask : IHostedService {
 
         private readonly IHubContext<MqttHub> _hubContext;
@@ -25,6 +26,8 @@ namespace PredikceVytěžováníFVE.Services {
             await mqttService.Connect();
             await mqttService.Subscribe("FVE/Ibehej_TX", e => {
                 string message = e.ApplicationMessage.ConvertPayloadToString();
+                if (message == null)
+                    return Task.CompletedTask;
                 MqttData? mqttMessage = JsonSerializer.Deserialize<MqttData>(message);
                 if (mqttMessage == null) {
                     _logger.LogError("Message not found");
@@ -33,11 +36,14 @@ namespace PredikceVytěžováníFVE.Services {
                 using IServiceScope scope = _serviceProvider.CreateScope();
                 FVEDbContext _db = scope.ServiceProvider.GetRequiredService<FVEDbContext>();
 
-                bool entryExists = _db.mqttData.Any(x => x.Date.Equals(mqttMessage.Date) && x.Time.Equals(mqttMessage.Time));
+                DateTime timeStamp = DateTime.Parse(mqttMessage.Date + " " + mqttMessage.Time);
+
+                bool entryExists = _db.mqttData.Any(x => x.TimeStamp == timeStamp);
 
                 if (!entryExists) {
                     _logger.LogInformation($"Saving mqttMessage: {message}");
-                    _db.Add(mqttMessage);
+                    _db.mqttData.Add(ConverHelper.ToMqttDataBto(mqttMessage));
+                    
                     _db.SaveChangesAsync();
                     _hubContext.Clients.All.SendAsync("ReceiveMqtt", ConverHelper.ToFVEData(mqttMessage));
                 }

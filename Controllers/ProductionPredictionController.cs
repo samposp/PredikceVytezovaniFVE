@@ -19,7 +19,11 @@ namespace PredikceVytěžováníFVE.Controllers
         {
             string latitude = "50.79";
             string longitude = "15.145";
-            await forecastService.GetWatthoursDay(latitude, longitude, "10");
+            string azimuth = "-15";
+            string peakPower = "19.9";
+            string declination = "35";
+            var a = await forecastService.GetWatthours(latitude, longitude, peakPower, declination, azimuth);
+            Console.WriteLine(a);
         }
 
         [HttpGet("/Spot")]

@@ -1,4 +1,5 @@
-﻿using PredikceVytěžováníFVE.Models;
+﻿using PredikceVytěžováníFVE.Data;
+using PredikceVytěžováníFVE.Models;
 using ServiceReference1;
 
 namespace PredikceVytěžováníFVE.Services {
@@ -8,6 +9,12 @@ namespace PredikceVytěžováníFVE.Services {
 
         private readonly OpenMeteoService meteoService = new();
         private readonly PublicDataServiceSoapClient soapClient = new();
+        private readonly FVEDbContext _database;
+
+        public PredicitonService(FVEDbContext database)
+        {
+            _database = database;
+        }
 
         private static double ProducionPrediction(double minTemp, double maxTemp) {
             // from linear regression
@@ -21,7 +28,9 @@ namespace PredikceVytěžováníFVE.Services {
             string latitude = "50.79";
             string longitude = "15.145";
 
-            List<double> spot = await GetSpot();
+            //List<double> spot = await GetSpot();
+            DateTime tomorrow = DateTime.Now.AddDays(-1);
+            List<double> spot = _database.spotData.Where(x => x.TimeStamp == tomorrow).Select(x=>x.Value).ToList();
 
             OpenMeteoTemperature meteoResponse = await meteoService.GetTemperature(latitude, longitude);
             double minTemp = meteoResponse.daily.temperature_2m_min[0];

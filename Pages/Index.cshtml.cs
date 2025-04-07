@@ -4,6 +4,7 @@ using MQTTnet;
 using PredikceVytìžováníFVE.Data;
 using PredikceVytìžováníFVE.Helpers;
 using PredikceVytìžováníFVE.Models;
+using PredikceVytìžováníFVE.Models.DB;
 
 
 namespace WebApplication1.Pages
@@ -21,11 +22,14 @@ namespace WebApplication1.Pages
             _logger = logger;
         }
 
-        public void OnGet()
-        {
-            string date = DateTime.Now.ToString("d.M.yyyy");
-            List<MqttData> chartData = _db.mqttData.Where(x => x.Date.Equals(date)).OrderBy(x => x.Time).ToList();
-            initData = ConverHelper.ToFVEData(chartData.Last());
+        public void OnGet() {
+            DateTime date = DateTime.Now;
+
+            List<MqttDataBto> chartData = _db.mqttData.Where(x => x.TimeStamp.Date == date.Date).OrderBy(x => x.TimeStamp).ToList();
+            if (chartData.Count != 0) {
+                initData = ConverHelper.ToFVEData(chartData.Last());
+            }
+            
         }
     }
 }

@@ -13,6 +13,9 @@ builder.Services.AddDbContext<FVEDbContext>(options => {
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 builder.Services.AddHostedService<MqttBackgroundTask>();
+builder.Services.AddHostedService<SchedulerBackgoundService>();
+builder.Services.AddScoped<IScopedSchedulerService, ScopedSchedulerService>();
+
 
 var app = builder.Build();
 

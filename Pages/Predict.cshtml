@@ -8,62 +8,84 @@
 <div class="text-center">
      <div class="box-body">
         @{Chart(Model.labels, Model.data, "Price", "bar");}
+        @Html.Raw(Json.Serialize(Model.labels))
     </div>  
 </div>
 
 
 @{
     void Chart<L, V>(List<L> labels, List<V> values, string chartName, string type = "line") {
-        <div class="col-xl-6 col-md-8 col-sm-12">
-            <div class="card mb-4">
-                <canvas id="@chartName" style="width:100%; height:300px"></canvas>
+            <div class="col-xl-6 col-md-8 col-sm-12">
+                <div class="card mb-4">
+                    <canvas id="@chartName" style="width:100%; height:300px"></canvas>
+                </div>
             </div>
-        </div>
-        <script type="text/javascript">
-            $(function () {
-                let ctx = document.getElementById("@chartName").getContext('2d');
-                let data = {
+            <script type="text/javascript">
+                $(function () {
+
+                    let timeLabels = JSON.parse('@Html.Raw(Json.Serialize(labels))');
+                    let labels = [];
+                    timeLabels.forEach(stringDate => {
+                    labels.push(new Date(stringDate).getTime())
+                    })
+                    console.log(labels)
+
+                    let ctx = document.getElementById("@chartName").getContext('2d');
+                    let data = {
                     labels: JSON.parse('@Html.Raw(Json.Serialize(labels))'),
-                    datasets: [{
-                        label: "@chartName",
-                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                        borderColor: 'rgba(54, 162, 235, 1)',
-                        borderWidth: 1,
-                        data: JSON.parse('@Html.Raw(Json.Serialize(values))')
-                    }]
-                };
-
-                var options = {
-                    maintainAspectRatio: false,
-                    scales: {
-                        yAxes: [{
-                            ticks: {
-                                min: 0,
-                                beginAtZero: true
-                            },
-                            gridLines: {
-                                display: true,
-                                color: "rgba(255,99,164,0.2)"
-                            }
-                        }],
-                        xAxes: [{
-                            ticks: {
-                                min: 0,
-                                beginAtZero: true
-                            },
-                            gridLines: {
-                                display: false
-                            }
+                        datasets: [{
+                            label: "@chartName",
+                            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            borderWidth: 1,
+                            data: JSON.parse('@Html.Raw(Json.Serialize(values))')
                         }]
-                    }
-                };
-                var myChart = new Chart(ctx, {
-                    options: options,
-                    data: data,
-                    type: "@type"
+                    };
 
+                    var options = {
+                        maintainAspectRatio: false,
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    min: 0,
+                                    beginAtZero: true
+                                },
+                                gridLines: {
+                                    display: true,
+                                    color: "rgba(255,99,164,0.2)"
+                                }
+                            }],
+                            xAxes: [{
+                                ticks: {
+                                    min: 0,
+                                    beginAtZero: true
+                                },
+                                gridLines: {
+                                    display: false
+                                }
+                            }]
+                        }
+                    };
+
+                    var scales = {
+                        x: {
+                            type: 'time',
+                            time: {
+                                unit: 'hour',
+                                tooltipFormat: 'DD T'
+                            },
+
+                        }
+                    }
+
+                    var myChart = new Chart(ctx, {
+                        options: options,
+                        data: data,
+                        type: "@type",
+                        scales: scales
+
+                    });
                 });
-            });
-        </script>
+            </script>
     }
 }
