@@ -7,6 +7,8 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+
 <div class="text-center">
     <div class="box-body">
         <div class="container">
@@ -14,6 +16,8 @@
             <div class="row">
                 @{
                     Chart(Model.Timestapms, Model.BatteryLevel, "Baterie [%]");
+                    Chart(Model.Timestapms, Model.FVEPower, "FVE");
+
                 }
             </div>
         </div>
@@ -66,10 +70,25 @@
                         }]
                     }
                 };
+
+                var scales = {
+                    x: {
+                        type: 'time',
+                        time: {
+                            unit: 'hour'
+                        },
+                                            time: {
+                            // Luxon format string
+                            tooltipFormat: 'DD T'
+                        },
+                    }
+                }
+
                 var myChart = new Chart(ctx, {
                     options: options,
                     data: data,
-                    type: "@type"
+                    type: "@type",
+                    scales: scales
 
                 });
             });
