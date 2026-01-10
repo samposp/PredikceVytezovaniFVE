@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PredikceVytěžováníFVE.Data;
 
@@ -10,27 +11,16 @@ using PredikceVytěžováníFVE.Data;
 namespace PredikceVytěžováníFVE.Migrations
 {
     [DbContext(typeof(FVEDbContext))]
-    partial class FVEDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250320125047_add_timestamp")]
+    partial class add_timestamp
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.2");
 
-            modelBuilder.Entity("PredikceVytěžováníFVE.Models.DB.SpotBo", b =>
-                {
-                    b.Property<DateTime>("DateTime")
-                        .HasColumnType("TEXT");
-
-                    b.Property<decimal>("Value")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("DateTime");
-
-                    b.ToTable("SpotData");
-                });
-
-            modelBuilder.Entity("PredikceVytěžováníFVE.Models.MqttData", b =>
+            modelBuilder.Entity("PredikceVytěžováníFVE.Data.testData", b =>
                 {
                     b.Property<DateTime>("dateTime")
                         .HasColumnType("TEXT");
@@ -51,12 +41,6 @@ namespace PredikceVytěžováníFVE.Migrations
                     b.Property<double>("BUY_T")
                         .HasColumnType("REAL");
 
-                    b.Property<double>("Charge")
-                        .HasColumnType("REAL");
-
-                    b.Property<double>("BUY_T")
-                        .HasColumnType("REAL");
-
                     b.Property<double>("Consumed")
                         .HasColumnType("REAL");
 
@@ -66,28 +50,13 @@ namespace PredikceVytěžováníFVE.Migrations
                     b.Property<double>("FromBAT")
                         .HasColumnType("REAL");
 
-                    b.Property<double>("FromBAT")
-                        .HasColumnType("REAL");
-
                     b.Property<double>("FromBAT_T")
-                        .HasColumnType("REAL");
-
-                    b.Property<string>("FullMessage")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("GRID_LIMIT")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<double>("Input")
                         .HasColumnType("REAL");
 
                     b.Property<double>("PRICE_CZK")
                         .HasColumnType("REAL");
 
                     b.Property<double>("PVForecast")
-                        .HasColumnType("REAL");
-
-                    b.Property<double>("PRICE_CZK")
                         .HasColumnType("REAL");
 
                     b.Property<double>("PVenergy")
@@ -97,36 +66,6 @@ namespace PredikceVytěžováníFVE.Migrations
                         .HasColumnType("REAL");
 
                     b.Property<int>("P_BAT")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("P_Batt")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<double>("P_EPS")
-                        .HasColumnType("REAL");
-
-                    b.Property<int>("P_GRID")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("P_GRID_L1")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("P_GRID_L2")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("P_GRID_L3")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("P_HOME")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("P_HOME_L1")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("P_HOME_L2")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("P_HOME_L3")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("P_EPS")
@@ -150,15 +89,24 @@ namespace PredikceVytěžováníFVE.Migrations
                     b.Property<int>("SoC")
                         .HasColumnType("INTEGER");
 
+                    b.Property<double>("Temp24h")
+                        .HasColumnType("REAL");
+
+                    b.Property<double>("Temp48h")
+                        .HasColumnType("REAL");
+
                     b.Property<double>("ToBAT")
                         .HasColumnType("REAL");
 
                     b.Property<double>("ToBAT_T")
                         .HasColumnType("REAL");
 
-                    b.HasKey("Date", "Time");
+                    b.Property<double>("consPredict")
+                        .HasColumnType("REAL");
 
-                    b.ToTable("MqttData");
+                    b.HasKey("TimeStamp");
+
+                    b.ToTable("mqttData");
                 });
 
             modelBuilder.Entity("PredikceVytěžováníFVE.Models.DB.TimeChartData<double>", b =>
