@@ -1,12 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PredikceVytěžováníFVE.Models;
 using PredikceVytěžováníFVE.Models.DB;
+using PredikceVytěžováníFVE.Services;
 
 namespace PredikceVytěžováníFVE.Data {
-    public class FVEDbContext : DbContext {
-        public FVEDbContext(DbContextOptions<FVEDbContext> options) : base(options)
-        { }
-
-        public DbSet<MqttData> mqttData { get; set; }
+    public class FVEDbContext(DbContextOptions<FVEDbContext> options) : DbContext(options) {
+        public DbSet<MqttData> MqttData { get; set; }
+        public DbSet<SpotBo> SpotData { get; set; }
     }
 }

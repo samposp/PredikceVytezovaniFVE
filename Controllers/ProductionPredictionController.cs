@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PredikceVytěžováníFVE.Services;
-using ServiceReference1;
+using PublicOTEService;
 
 namespace PredikceVytěžováníFVE.Controllers
 {
@@ -32,7 +32,7 @@ namespace PredikceVytěžováníFVE.Controllers
 
         [HttpGet("/MQTT")]
         public async void GetMqtt() {
-            await mqttService.Connect();
+            //await mqttService.Connect();
             //await mqttService.Subscribe("FVE/Ibehej_TX");
         }
     }

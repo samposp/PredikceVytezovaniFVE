@@ -7,91 +7,103 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ServiceReference1
+namespace PublicOTEService
 {
     
     
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
-    [System.ServiceModel.ServiceContractAttribute(Namespace="http://www.ote-cr.cz/schema/service/public", ConfigurationName="ServiceReference1.PublicDataServiceSoap")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.ServiceModel.ServiceContractAttribute(Namespace="http://www.ote-cr.cz/schema/service/public", ConfigurationName="PublicOTEService.PublicDataServiceSoap")]
     public interface PublicDataServiceSoap
     {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.ote-cr.cz/schema/service/public/GetRutList", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [return: System.ServiceModel.MessageParameterAttribute(Name="Result")]
-        System.Threading.Tasks.Task<ServiceReference1.GetRutListResponseResult> GetRutListAsync(int IdRutFrom, int IdRutTo);
+        System.Threading.Tasks.Task<PublicOTEService.GetRutListResponseResult> GetRutListAsync(int IdRutFrom, int IdRutTo);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.ote-cr.cz/schema/service/public/GetDamIndexE", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        System.Threading.Tasks.Task<ServiceReference1.GetDamIndexEResponse> GetDamIndexEAsync(ServiceReference1.GetDamIndexERequest request);
+        System.Threading.Tasks.Task<PublicOTEService.GetDamIndexEResponse> GetDamIndexEAsync(PublicOTEService.GetDamIndexERequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.ote-cr.cz/schema/service/public/GetDamPriceE", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        System.Threading.Tasks.Task<ServiceReference1.GetDamPriceEResponse> GetDamPriceEAsync(ServiceReference1.GetDamPriceERequest request);
+        System.Threading.Tasks.Task<PublicOTEService.GetDamPriceEResponse> GetDamPriceEAsync(PublicOTEService.GetDamPriceERequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.ote-cr.cz/schema/service/public/GetDamPricePeriodE", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        System.Threading.Tasks.Task<PublicOTEService.GetDamPricePeriodEResponse> GetDamPricePeriodEAsync(PublicOTEService.GetDamPricePeriodERequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.ote-cr.cz/schema/service/public/GetDamAllE", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        System.Threading.Tasks.Task<ServiceReference1.GetDamAllEResponse> GetDamAllEAsync(ServiceReference1.GetDamAllERequest request);
+        System.Threading.Tasks.Task<PublicOTEService.GetDamAllEResponse> GetDamAllEAsync(PublicOTEService.GetDamAllERequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.ote-cr.cz/schema/service/public/GetDamAllPeriodE", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        System.Threading.Tasks.Task<PublicOTEService.GetDamAllPeriodEResponse> GetDamAllPeriodEAsync(PublicOTEService.GetDamAllPeriodERequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.ote-cr.cz/schema/service/public/GetDamFlowsPeriodE", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        System.Threading.Tasks.Task<PublicOTEService.GetDamFlowsPeriodEResponse> GetDamFlowsPeriodEAsync(PublicOTEService.GetDamFlowsPeriodERequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.ote-cr.cz/schema/service/public/GetBmPriceE", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        System.Threading.Tasks.Task<ServiceReference1.GetBmPriceEResponse> GetBmPriceEAsync(ServiceReference1.GetBmPriceERequest request);
+        System.Threading.Tasks.Task<PublicOTEService.GetBmPriceEResponse> GetBmPriceEAsync(PublicOTEService.GetBmPriceERequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.ote-cr.cz/schema/service/public/GetImPriceE", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        System.Threading.Tasks.Task<ServiceReference1.GetImPriceEResponse> GetImPriceEAsync(ServiceReference1.GetImPriceERequest request);
+        System.Threading.Tasks.Task<PublicOTEService.GetImPriceEResponse> GetImPriceEAsync(PublicOTEService.GetImPriceERequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.ote-cr.cz/schema/service/public/GetImbalanceSettlementE", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        System.Threading.Tasks.Task<ServiceReference1.GetImbalanceSettlementEResponse> GetImbalanceSettlementEAsync(ServiceReference1.GetImbalanceSettlementERequest request);
+        System.Threading.Tasks.Task<PublicOTEService.GetImbalanceSettlementEResponse> GetImbalanceSettlementEAsync(PublicOTEService.GetImbalanceSettlementERequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.ote-cr.cz/schema/service/public/GetDamPriceG", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        System.Threading.Tasks.Task<ServiceReference1.GetDamPriceGResponse> GetDamPriceGAsync(ServiceReference1.GetDamPriceGRequest request);
+        System.Threading.Tasks.Task<PublicOTEService.GetDamPriceGResponse> GetDamPriceGAsync(PublicOTEService.GetDamPriceGRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.ote-cr.cz/schema/service/public/GetImPriceG", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        System.Threading.Tasks.Task<ServiceReference1.GetImPriceGResponse> GetImPriceGAsync(ServiceReference1.GetImPriceGRequest request);
+        System.Threading.Tasks.Task<PublicOTEService.GetImPriceGResponse> GetImPriceGAsync(PublicOTEService.GetImPriceGRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.ote-cr.cz/schema/service/public/GetImbalanceSettlementG", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        System.Threading.Tasks.Task<ServiceReference1.GetImbalanceSettlementGResponse> GetImbalanceSettlementGAsync(ServiceReference1.GetImbalanceSettlementGRequest request);
+        System.Threading.Tasks.Task<PublicOTEService.GetImbalanceSettlementGResponse> GetImbalanceSettlementGAsync(PublicOTEService.GetImbalanceSettlementGRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.ote-cr.cz/schema/service/public/GetImbalanceNCBALSettlementG", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        System.Threading.Tasks.Task<ServiceReference1.GetImbalanceNCBALSettlementGResponse> GetImbalanceNCBALSettlementGAsync(ServiceReference1.GetImbalanceNCBALSettlementGRequest request);
+        System.Threading.Tasks.Task<PublicOTEService.GetImbalanceNCBALSettlementGResponse> GetImbalanceNCBALSettlementGAsync(PublicOTEService.GetImbalanceNCBALSettlementGRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.ote-cr.cz/schema/service/public/GetIDAIndexE", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        System.Threading.Tasks.Task<ServiceReference1.GetIDAIndexEResponse> GetIDAIndexEAsync(ServiceReference1.GetIDAIndexERequest request);
+        System.Threading.Tasks.Task<PublicOTEService.GetIDAIndexEResponse> GetIDAIndexEAsync(PublicOTEService.GetIDAIndexERequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.ote-cr.cz/schema/service/public/GetIDAPriceE", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        System.Threading.Tasks.Task<ServiceReference1.GetIDAPriceEResponse> GetIDAPriceEAsync(ServiceReference1.GetIDAPriceERequest request);
+        System.Threading.Tasks.Task<PublicOTEService.GetIDAPriceEResponse> GetIDAPriceEAsync(PublicOTEService.GetIDAPriceERequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.ote-cr.cz/schema/service/public/GetIDAAllE", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        System.Threading.Tasks.Task<ServiceReference1.GetIDAAllEResponse> GetIDAAllEAsync(ServiceReference1.GetIDAAllERequest request);
+        System.Threading.Tasks.Task<PublicOTEService.GetIDAAllEResponse> GetIDAAllEAsync(PublicOTEService.GetIDAAllERequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.ote-cr.cz/schema/service/public/GetImPricePeriodE", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        System.Threading.Tasks.Task<ServiceReference1.GetImPricePeriodEResponse> GetImPricePeriodEAsync(ServiceReference1.GetImPricePeriodERequest request);
+        System.Threading.Tasks.Task<PublicOTEService.GetImPricePeriodEResponse> GetImPricePeriodEAsync(PublicOTEService.GetImPricePeriodERequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.ote-cr.cz/schema/service/public/GetImbalanceSettlementPeriodE", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        System.Threading.Tasks.Task<ServiceReference1.GetImbalanceSettlementPeriodEResponse> GetImbalanceSettlementPeriodEAsync(ServiceReference1.GetImbalanceSettlementPeriodERequest request);
+        System.Threading.Tasks.Task<PublicOTEService.GetImbalanceSettlementPeriodEResponse> GetImbalanceSettlementPeriodEAsync(PublicOTEService.GetImbalanceSettlementPeriodERequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.ote-cr.cz/schema/service/public/GetIDAPricePeriodE", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        System.Threading.Tasks.Task<ServiceReference1.GetIDAPricePeriodEResponse> GetIDAPricePeriodEAsync(ServiceReference1.GetIDAPricePeriodERequest request);
+        System.Threading.Tasks.Task<PublicOTEService.GetIDAPricePeriodEResponse> GetIDAPricePeriodEAsync(PublicOTEService.GetIDAPricePeriodERequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.ote-cr.cz/schema/service/public/GetIDAAllPeriodE", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        System.Threading.Tasks.Task<ServiceReference1.GetIDAAllPeriodEResponse> GetIDAAllPeriodEAsync(ServiceReference1.GetIDAAllPeriodERequest request);
+        System.Threading.Tasks.Task<PublicOTEService.GetIDAAllPeriodEResponse> GetIDAAllPeriodEAsync(PublicOTEService.GetIDAAllPeriodERequest request);
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://www.ote-cr.cz/schema/service/public")]
     public partial class GetRutListResponseResult
@@ -211,7 +223,7 @@ namespace ServiceReference1
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://www.ote-cr.cz/schema/service/public")]
     public partial class GetRutListResponseResultRut
@@ -699,7 +711,7 @@ namespace ServiceReference1
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ote-cr.cz/schema/service/public")]
     public partial class ProductType
@@ -787,7 +799,7 @@ namespace ServiceReference1
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://www.ote-cr.cz/schema/service/public")]
     public enum ProductTypeType
     {
@@ -803,15 +815,11 @@ namespace ServiceReference1
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://www.ote-cr.cz/schema/service/public")]
     public partial class GetDamIndexEResponseDamIndex
     {
-        
-        private decimal emergField;
-        
-        private bool emergFieldSpecified;
         
         private System.DateTime dateField;
         
@@ -831,36 +839,24 @@ namespace ServiceReference1
         
         private bool offpeakLoadFieldSpecified;
         
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public decimal Emerg
-        {
-            get
-            {
-                return this.emergField;
-            }
-            set
-            {
-                this.emergField = value;
-            }
-        }
+        private decimal baseLoadVolumeField;
+        
+        private bool baseLoadVolumeFieldSpecified;
+        
+        private decimal peakLoadVolumeField;
+        
+        private bool peakLoadVolumeFieldSpecified;
+        
+        private decimal offpeakLoadVolumeField;
+        
+        private bool offpeakLoadVolumeFieldSpecified;
+        
+        private decimal emergencyStateField;
+        
+        private bool emergencyStateFieldSpecified;
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool EmergSpecified
-        {
-            get
-            {
-                return this.emergFieldSpecified;
-            }
-            set
-            {
-                this.emergFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(DataType="date", Order=1)]
+        [System.Xml.Serialization.XmlElementAttribute(DataType="date", Order=0)]
         public System.DateTime Date
         {
             get
@@ -874,7 +870,7 @@ namespace ServiceReference1
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
         public decimal EurRate
         {
             get
@@ -902,7 +898,7 @@ namespace ServiceReference1
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
         public decimal BaseLoad
         {
             get
@@ -930,7 +926,7 @@ namespace ServiceReference1
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
         public decimal PeakLoad
         {
             get
@@ -958,7 +954,7 @@ namespace ServiceReference1
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
         public decimal OffpeakLoad
         {
             get
@@ -984,10 +980,122 @@ namespace ServiceReference1
                 this.offpeakLoadFieldSpecified = value;
             }
         }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
+        public decimal BaseLoadVolume
+        {
+            get
+            {
+                return this.baseLoadVolumeField;
+            }
+            set
+            {
+                this.baseLoadVolumeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool BaseLoadVolumeSpecified
+        {
+            get
+            {
+                return this.baseLoadVolumeFieldSpecified;
+            }
+            set
+            {
+                this.baseLoadVolumeFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
+        public decimal PeakLoadVolume
+        {
+            get
+            {
+                return this.peakLoadVolumeField;
+            }
+            set
+            {
+                this.peakLoadVolumeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool PeakLoadVolumeSpecified
+        {
+            get
+            {
+                return this.peakLoadVolumeFieldSpecified;
+            }
+            set
+            {
+                this.peakLoadVolumeFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=7)]
+        public decimal OffpeakLoadVolume
+        {
+            get
+            {
+                return this.offpeakLoadVolumeField;
+            }
+            set
+            {
+                this.offpeakLoadVolumeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool OffpeakLoadVolumeSpecified
+        {
+            get
+            {
+                return this.offpeakLoadVolumeFieldSpecified;
+            }
+            set
+            {
+                this.offpeakLoadVolumeFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=8)]
+        public decimal EmergencyState
+        {
+            get
+            {
+                return this.emergencyStateField;
+            }
+            set
+            {
+                this.emergencyStateField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool EmergencyStateSpecified
+        {
+            get
+            {
+                return this.emergencyStateFieldSpecified;
+            }
+            set
+            {
+                this.emergencyStateFieldSpecified = value;
+            }
+        }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
     [System.ServiceModel.MessageContractAttribute(WrapperName="GetDamIndexE", WrapperNamespace="http://www.ote-cr.cz/schema/service/public", IsWrapped=true)]
     public partial class GetDamIndexERequest
@@ -1013,7 +1121,7 @@ namespace ServiceReference1
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
     [System.ServiceModel.MessageContractAttribute(WrapperName="GetDamIndexEResponse", WrapperNamespace="http://www.ote-cr.cz/schema/service/public", IsWrapped=true)]
     public partial class GetDamIndexEResponse
@@ -1021,20 +1129,20 @@ namespace ServiceReference1
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.ote-cr.cz/schema/service/public", Order=0)]
         [System.Xml.Serialization.XmlArrayItemAttribute("DamIndex", IsNullable=false)]
-        public ServiceReference1.GetDamIndexEResponseDamIndex[] Result;
+        public PublicOTEService.GetDamIndexEResponseDamIndex[] Result;
         
         public GetDamIndexEResponse()
         {
         }
         
-        public GetDamIndexEResponse(ServiceReference1.GetDamIndexEResponseDamIndex[] Result)
+        public GetDamIndexEResponse(PublicOTEService.GetDamIndexEResponseDamIndex[] Result)
         {
             this.Result = Result;
         }
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://www.ote-cr.cz/schema/service/public")]
     public partial class GetDamPriceEResponseItem
@@ -1170,7 +1278,7 @@ namespace ServiceReference1
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
     [System.ServiceModel.MessageContractAttribute(WrapperName="GetDamPriceE", WrapperNamespace="http://www.ote-cr.cz/schema/service/public", IsWrapped=true)]
     public partial class GetDamPriceERequest
@@ -1208,7 +1316,7 @@ namespace ServiceReference1
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
     [System.ServiceModel.MessageContractAttribute(WrapperName="GetDamPriceEResponse", WrapperNamespace="http://www.ote-cr.cz/schema/service/public", IsWrapped=true)]
     public partial class GetDamPriceEResponse
@@ -1216,20 +1324,305 @@ namespace ServiceReference1
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.ote-cr.cz/schema/service/public", Order=0)]
         [System.Xml.Serialization.XmlArrayItemAttribute("Item", IsNullable=false)]
-        public ServiceReference1.GetDamPriceEResponseItem[] Result;
+        public PublicOTEService.GetDamPriceEResponseItem[] Result;
         
         public GetDamPriceEResponse()
         {
         }
         
-        public GetDamPriceEResponse(ServiceReference1.GetDamPriceEResponseItem[] Result)
+        public GetDamPriceEResponse(PublicOTEService.GetDamPriceEResponseItem[] Result)
         {
             this.Result = Result;
         }
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://www.ote-cr.cz/schema/service/public")]
+    public enum GetDamPricePeriodEPeriodResolution
+    {
+        
+        /// <remarks/>
+        PT15M,
+        
+        /// <remarks/>
+        PT60M,
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://www.ote-cr.cz/schema/service/public")]
+    public partial class GetDamPricePeriodEResponseItem
+    {
+        
+        private System.DateTime dateField;
+        
+        private GetDamPricePeriodEResponseItemPeriodResolution periodResolutionField;
+        
+        private int periodIndexField;
+        
+        private string periodIntervalField;
+        
+        private decimal priceField;
+        
+        private bool priceFieldSpecified;
+        
+        private decimal hourlyPriceField;
+        
+        private bool hourlyPriceFieldSpecified;
+        
+        private decimal volumeTotalField;
+        
+        private bool volumeTotalFieldSpecified;
+        
+        private decimal emergencyStateField;
+        
+        private bool emergencyStateFieldSpecified;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(DataType="date", Order=0)]
+        public System.DateTime Date
+        {
+            get
+            {
+                return this.dateField;
+            }
+            set
+            {
+                this.dateField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public GetDamPricePeriodEResponseItemPeriodResolution PeriodResolution
+        {
+            get
+            {
+                return this.periodResolutionField;
+            }
+            set
+            {
+                this.periodResolutionField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public int PeriodIndex
+        {
+            get
+            {
+                return this.periodIndexField;
+            }
+            set
+            {
+                this.periodIndexField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public string PeriodInterval
+        {
+            get
+            {
+                return this.periodIntervalField;
+            }
+            set
+            {
+                this.periodIntervalField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
+        public decimal Price
+        {
+            get
+            {
+                return this.priceField;
+            }
+            set
+            {
+                this.priceField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool PriceSpecified
+        {
+            get
+            {
+                return this.priceFieldSpecified;
+            }
+            set
+            {
+                this.priceFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
+        public decimal HourlyPrice
+        {
+            get
+            {
+                return this.hourlyPriceField;
+            }
+            set
+            {
+                this.hourlyPriceField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool HourlyPriceSpecified
+        {
+            get
+            {
+                return this.hourlyPriceFieldSpecified;
+            }
+            set
+            {
+                this.hourlyPriceFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
+        public decimal VolumeTotal
+        {
+            get
+            {
+                return this.volumeTotalField;
+            }
+            set
+            {
+                this.volumeTotalField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool VolumeTotalSpecified
+        {
+            get
+            {
+                return this.volumeTotalFieldSpecified;
+            }
+            set
+            {
+                this.volumeTotalFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=7)]
+        public decimal EmergencyState
+        {
+            get
+            {
+                return this.emergencyStateField;
+            }
+            set
+            {
+                this.emergencyStateField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool EmergencyStateSpecified
+        {
+            get
+            {
+                return this.emergencyStateFieldSpecified;
+            }
+            set
+            {
+                this.emergencyStateFieldSpecified = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://www.ote-cr.cz/schema/service/public")]
+    public enum GetDamPricePeriodEResponseItemPeriodResolution
+    {
+        
+        /// <remarks/>
+        PT15M,
+        
+        /// <remarks/>
+        PT60M,
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="GetDamPricePeriodE", WrapperNamespace="http://www.ote-cr.cz/schema/service/public", IsWrapped=true)]
+    public partial class GetDamPricePeriodERequest
+    {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.ote-cr.cz/schema/service/public", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(DataType="date")]
+        public System.DateTime StartDate;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.ote-cr.cz/schema/service/public", Order=1)]
+        [System.Xml.Serialization.XmlElementAttribute(DataType="date")]
+        public System.DateTime EndDate;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.ote-cr.cz/schema/service/public", Order=2)]
+        public PublicOTEService.GetDamPricePeriodEPeriodResolution PeriodResolution;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.ote-cr.cz/schema/service/public", Order=3)]
+        public int StartPeriod;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.ote-cr.cz/schema/service/public", Order=4)]
+        public int EndPeriod;
+        
+        public GetDamPricePeriodERequest()
+        {
+        }
+        
+        public GetDamPricePeriodERequest(System.DateTime StartDate, System.DateTime EndDate, PublicOTEService.GetDamPricePeriodEPeriodResolution PeriodResolution, int StartPeriod, int EndPeriod)
+        {
+            this.StartDate = StartDate;
+            this.EndDate = EndDate;
+            this.PeriodResolution = PeriodResolution;
+            this.StartPeriod = StartPeriod;
+            this.EndPeriod = EndPeriod;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="GetDamPricePeriodEResponse", WrapperNamespace="http://www.ote-cr.cz/schema/service/public", IsWrapped=true)]
+    public partial class GetDamPricePeriodEResponse
+    {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.ote-cr.cz/schema/service/public", Order=0)]
+        [System.Xml.Serialization.XmlArrayItemAttribute("Item", IsNullable=false)]
+        public PublicOTEService.GetDamPricePeriodEResponseItem[] Result;
+        
+        public GetDamPricePeriodEResponse()
+        {
+        }
+        
+        public GetDamPricePeriodEResponse(PublicOTEService.GetDamPricePeriodEResponseItem[] Result)
+        {
+            this.Result = Result;
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://www.ote-cr.cz/schema/service/public")]
     public partial class GetDamAllEResponseItem
@@ -1493,7 +1886,7 @@ namespace ServiceReference1
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
     [System.ServiceModel.MessageContractAttribute(WrapperName="GetDamAllE", WrapperNamespace="http://www.ote-cr.cz/schema/service/public", IsWrapped=true)]
     public partial class GetDamAllERequest
@@ -1531,7 +1924,7 @@ namespace ServiceReference1
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
     [System.ServiceModel.MessageContractAttribute(WrapperName="GetDamAllEResponse", WrapperNamespace="http://www.ote-cr.cz/schema/service/public", IsWrapped=true)]
     public partial class GetDamAllEResponse
@@ -1539,20 +1932,733 @@ namespace ServiceReference1
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.ote-cr.cz/schema/service/public", Order=0)]
         [System.Xml.Serialization.XmlArrayItemAttribute("Item", IsNullable=false)]
-        public ServiceReference1.GetDamAllEResponseItem[] Result;
+        public PublicOTEService.GetDamAllEResponseItem[] Result;
         
         public GetDamAllEResponse()
         {
         }
         
-        public GetDamAllEResponse(ServiceReference1.GetDamAllEResponseItem[] Result)
+        public GetDamAllEResponse(PublicOTEService.GetDamAllEResponseItem[] Result)
         {
             this.Result = Result;
         }
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://www.ote-cr.cz/schema/service/public")]
+    public enum GetDamAllPeriodEPeriodResolution
+    {
+        
+        /// <remarks/>
+        PT15M,
+        
+        /// <remarks/>
+        PT60M,
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://www.ote-cr.cz/schema/service/public")]
+    public partial class GetDamAllPeriodEResponseItem
+    {
+        
+        private System.DateTime dateField;
+        
+        private GetDamAllPeriodEResponseItemPeriodResolution periodResolutionField;
+        
+        private int periodIndexField;
+        
+        private string periodIntervalField;
+        
+        private decimal priceField;
+        
+        private bool priceFieldSpecified;
+        
+        private decimal hourlyPriceField;
+        
+        private bool hourlyPriceFieldSpecified;
+        
+        private decimal volumeTotalField;
+        
+        private bool volumeTotalFieldSpecified;
+        
+        private decimal volumeBuyQuarterlyField;
+        
+        private bool volumeBuyQuarterlyFieldSpecified;
+        
+        private decimal volumeSellQuarterlyField;
+        
+        private bool volumeSellQuarterlyFieldSpecified;
+        
+        private decimal volumeBuyHourlyField;
+        
+        private bool volumeBuyHourlyFieldSpecified;
+        
+        private decimal volumeSellHourlyField;
+        
+        private bool volumeSellHourlyFieldSpecified;
+        
+        private decimal importField;
+        
+        private decimal exportField;
+        
+        private decimal emergencyStateField;
+        
+        private bool emergencyStateFieldSpecified;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(DataType="date", Order=0)]
+        public System.DateTime Date
+        {
+            get
+            {
+                return this.dateField;
+            }
+            set
+            {
+                this.dateField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public GetDamAllPeriodEResponseItemPeriodResolution PeriodResolution
+        {
+            get
+            {
+                return this.periodResolutionField;
+            }
+            set
+            {
+                this.periodResolutionField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public int PeriodIndex
+        {
+            get
+            {
+                return this.periodIndexField;
+            }
+            set
+            {
+                this.periodIndexField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public string PeriodInterval
+        {
+            get
+            {
+                return this.periodIntervalField;
+            }
+            set
+            {
+                this.periodIntervalField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
+        public decimal Price
+        {
+            get
+            {
+                return this.priceField;
+            }
+            set
+            {
+                this.priceField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool PriceSpecified
+        {
+            get
+            {
+                return this.priceFieldSpecified;
+            }
+            set
+            {
+                this.priceFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
+        public decimal HourlyPrice
+        {
+            get
+            {
+                return this.hourlyPriceField;
+            }
+            set
+            {
+                this.hourlyPriceField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool HourlyPriceSpecified
+        {
+            get
+            {
+                return this.hourlyPriceFieldSpecified;
+            }
+            set
+            {
+                this.hourlyPriceFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
+        public decimal VolumeTotal
+        {
+            get
+            {
+                return this.volumeTotalField;
+            }
+            set
+            {
+                this.volumeTotalField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool VolumeTotalSpecified
+        {
+            get
+            {
+                return this.volumeTotalFieldSpecified;
+            }
+            set
+            {
+                this.volumeTotalFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=7)]
+        public decimal VolumeBuyQuarterly
+        {
+            get
+            {
+                return this.volumeBuyQuarterlyField;
+            }
+            set
+            {
+                this.volumeBuyQuarterlyField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool VolumeBuyQuarterlySpecified
+        {
+            get
+            {
+                return this.volumeBuyQuarterlyFieldSpecified;
+            }
+            set
+            {
+                this.volumeBuyQuarterlyFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=8)]
+        public decimal VolumeSellQuarterly
+        {
+            get
+            {
+                return this.volumeSellQuarterlyField;
+            }
+            set
+            {
+                this.volumeSellQuarterlyField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool VolumeSellQuarterlySpecified
+        {
+            get
+            {
+                return this.volumeSellQuarterlyFieldSpecified;
+            }
+            set
+            {
+                this.volumeSellQuarterlyFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=9)]
+        public decimal VolumeBuyHourly
+        {
+            get
+            {
+                return this.volumeBuyHourlyField;
+            }
+            set
+            {
+                this.volumeBuyHourlyField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool VolumeBuyHourlySpecified
+        {
+            get
+            {
+                return this.volumeBuyHourlyFieldSpecified;
+            }
+            set
+            {
+                this.volumeBuyHourlyFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=10)]
+        public decimal VolumeSellHourly
+        {
+            get
+            {
+                return this.volumeSellHourlyField;
+            }
+            set
+            {
+                this.volumeSellHourlyField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool VolumeSellHourlySpecified
+        {
+            get
+            {
+                return this.volumeSellHourlyFieldSpecified;
+            }
+            set
+            {
+                this.volumeSellHourlyFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=11)]
+        public decimal Import
+        {
+            get
+            {
+                return this.importField;
+            }
+            set
+            {
+                this.importField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=12)]
+        public decimal Export
+        {
+            get
+            {
+                return this.exportField;
+            }
+            set
+            {
+                this.exportField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=13)]
+        public decimal EmergencyState
+        {
+            get
+            {
+                return this.emergencyStateField;
+            }
+            set
+            {
+                this.emergencyStateField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool EmergencyStateSpecified
+        {
+            get
+            {
+                return this.emergencyStateFieldSpecified;
+            }
+            set
+            {
+                this.emergencyStateFieldSpecified = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://www.ote-cr.cz/schema/service/public")]
+    public enum GetDamAllPeriodEResponseItemPeriodResolution
+    {
+        
+        /// <remarks/>
+        PT15M,
+        
+        /// <remarks/>
+        PT60M,
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="GetDamAllPeriodE", WrapperNamespace="http://www.ote-cr.cz/schema/service/public", IsWrapped=true)]
+    public partial class GetDamAllPeriodERequest
+    {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.ote-cr.cz/schema/service/public", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(DataType="date")]
+        public System.DateTime StartDate;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.ote-cr.cz/schema/service/public", Order=1)]
+        [System.Xml.Serialization.XmlElementAttribute(DataType="date")]
+        public System.DateTime EndDate;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.ote-cr.cz/schema/service/public", Order=2)]
+        public PublicOTEService.GetDamAllPeriodEPeriodResolution PeriodResolution;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.ote-cr.cz/schema/service/public", Order=3)]
+        public int StartPeriod;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.ote-cr.cz/schema/service/public", Order=4)]
+        public int EndPeriod;
+        
+        public GetDamAllPeriodERequest()
+        {
+        }
+        
+        public GetDamAllPeriodERequest(System.DateTime StartDate, System.DateTime EndDate, PublicOTEService.GetDamAllPeriodEPeriodResolution PeriodResolution, int StartPeriod, int EndPeriod)
+        {
+            this.StartDate = StartDate;
+            this.EndDate = EndDate;
+            this.PeriodResolution = PeriodResolution;
+            this.StartPeriod = StartPeriod;
+            this.EndPeriod = EndPeriod;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="GetDamAllPeriodEResponse", WrapperNamespace="http://www.ote-cr.cz/schema/service/public", IsWrapped=true)]
+    public partial class GetDamAllPeriodEResponse
+    {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.ote-cr.cz/schema/service/public", Order=0)]
+        [System.Xml.Serialization.XmlArrayItemAttribute("Item", IsNullable=false)]
+        public PublicOTEService.GetDamAllPeriodEResponseItem[] Result;
+        
+        public GetDamAllPeriodEResponse()
+        {
+        }
+        
+        public GetDamAllPeriodEResponse(PublicOTEService.GetDamAllPeriodEResponseItem[] Result)
+        {
+            this.Result = Result;
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://www.ote-cr.cz/schema/service/public")]
+    public partial class GetDamFlowsPeriodEResponseItem
+    {
+        
+        private System.DateTime dateField;
+        
+        private GetDamFlowsPeriodEResponseItemPeriodResolution periodResolutionField;
+        
+        private int periodIndexField;
+        
+        private string periodIntervalField;
+        
+        private decimal flowCZATField;
+        
+        private decimal flowATCZField;
+        
+        private decimal flowCZPLField;
+        
+        private decimal flowPLCZField;
+        
+        private decimal flowCZSKField;
+        
+        private decimal flowSKCZField;
+        
+        private decimal flowCZDEField;
+        
+        private decimal flowDECZField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(DataType="date", Order=0)]
+        public System.DateTime Date
+        {
+            get
+            {
+                return this.dateField;
+            }
+            set
+            {
+                this.dateField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public GetDamFlowsPeriodEResponseItemPeriodResolution PeriodResolution
+        {
+            get
+            {
+                return this.periodResolutionField;
+            }
+            set
+            {
+                this.periodResolutionField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public int PeriodIndex
+        {
+            get
+            {
+                return this.periodIndexField;
+            }
+            set
+            {
+                this.periodIndexField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public string PeriodInterval
+        {
+            get
+            {
+                return this.periodIntervalField;
+            }
+            set
+            {
+                this.periodIntervalField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
+        public decimal FlowCZAT
+        {
+            get
+            {
+                return this.flowCZATField;
+            }
+            set
+            {
+                this.flowCZATField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
+        public decimal FlowATCZ
+        {
+            get
+            {
+                return this.flowATCZField;
+            }
+            set
+            {
+                this.flowATCZField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
+        public decimal FlowCZPL
+        {
+            get
+            {
+                return this.flowCZPLField;
+            }
+            set
+            {
+                this.flowCZPLField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=7)]
+        public decimal FlowPLCZ
+        {
+            get
+            {
+                return this.flowPLCZField;
+            }
+            set
+            {
+                this.flowPLCZField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=8)]
+        public decimal FlowCZSK
+        {
+            get
+            {
+                return this.flowCZSKField;
+            }
+            set
+            {
+                this.flowCZSKField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=9)]
+        public decimal FlowSKCZ
+        {
+            get
+            {
+                return this.flowSKCZField;
+            }
+            set
+            {
+                this.flowSKCZField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=10)]
+        public decimal FlowCZDE
+        {
+            get
+            {
+                return this.flowCZDEField;
+            }
+            set
+            {
+                this.flowCZDEField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=11)]
+        public decimal FlowDECZ
+        {
+            get
+            {
+                return this.flowDECZField;
+            }
+            set
+            {
+                this.flowDECZField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://www.ote-cr.cz/schema/service/public")]
+    public enum GetDamFlowsPeriodEResponseItemPeriodResolution
+    {
+        
+        /// <remarks/>
+        PT15M,
+        
+        /// <remarks/>
+        PT60M,
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="GetDamFlowsPeriodE", WrapperNamespace="http://www.ote-cr.cz/schema/service/public", IsWrapped=true)]
+    public partial class GetDamFlowsPeriodERequest
+    {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.ote-cr.cz/schema/service/public", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(DataType="date")]
+        public System.DateTime StartDate;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.ote-cr.cz/schema/service/public", Order=1)]
+        [System.Xml.Serialization.XmlElementAttribute(DataType="date")]
+        public System.DateTime EndDate;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.ote-cr.cz/schema/service/public", Order=2)]
+        public int StartPeriod;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.ote-cr.cz/schema/service/public", Order=3)]
+        public int EndPeriod;
+        
+        public GetDamFlowsPeriodERequest()
+        {
+        }
+        
+        public GetDamFlowsPeriodERequest(System.DateTime StartDate, System.DateTime EndDate, int StartPeriod, int EndPeriod)
+        {
+            this.StartDate = StartDate;
+            this.EndDate = EndDate;
+            this.StartPeriod = StartPeriod;
+            this.EndPeriod = EndPeriod;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="GetDamFlowsPeriodEResponse", WrapperNamespace="http://www.ote-cr.cz/schema/service/public", IsWrapped=true)]
+    public partial class GetDamFlowsPeriodEResponse
+    {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.ote-cr.cz/schema/service/public", Order=0)]
+        [System.Xml.Serialization.XmlArrayItemAttribute("Item", IsNullable=false)]
+        public PublicOTEService.GetDamFlowsPeriodEResponseItem[] Result;
+        
+        public GetDamFlowsPeriodEResponse()
+        {
+        }
+        
+        public GetDamFlowsPeriodEResponse(PublicOTEService.GetDamFlowsPeriodEResponseItem[] Result)
+        {
+            this.Result = Result;
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://www.ote-cr.cz/schema/service/public")]
     public partial class GetBmPriceEResponseItem
@@ -1624,7 +2730,7 @@ namespace ServiceReference1
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
     [System.ServiceModel.MessageContractAttribute(WrapperName="GetBmPriceE", WrapperNamespace="http://www.ote-cr.cz/schema/service/public", IsWrapped=true)]
     public partial class GetBmPriceERequest
@@ -1654,7 +2760,7 @@ namespace ServiceReference1
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
     [System.ServiceModel.MessageContractAttribute(WrapperName="GetBmPriceEResponse", WrapperNamespace="http://www.ote-cr.cz/schema/service/public", IsWrapped=true)]
     public partial class GetBmPriceEResponse
@@ -1662,20 +2768,20 @@ namespace ServiceReference1
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.ote-cr.cz/schema/service/public", Order=0)]
         [System.Xml.Serialization.XmlArrayItemAttribute("Item", IsNullable=false)]
-        public ServiceReference1.GetBmPriceEResponseItem[] Result;
+        public PublicOTEService.GetBmPriceEResponseItem[] Result;
         
         public GetBmPriceEResponse()
         {
         }
         
-        public GetBmPriceEResponse(ServiceReference1.GetBmPriceEResponseItem[] Result)
+        public GetBmPriceEResponse(PublicOTEService.GetBmPriceEResponseItem[] Result)
         {
             this.Result = Result;
         }
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://www.ote-cr.cz/schema/service/public")]
     public partial class GetImPriceEResponseItem
@@ -1811,7 +2917,7 @@ namespace ServiceReference1
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
     [System.ServiceModel.MessageContractAttribute(WrapperName="GetImPriceE", WrapperNamespace="http://www.ote-cr.cz/schema/service/public", IsWrapped=true)]
     public partial class GetImPriceERequest
@@ -1845,7 +2951,7 @@ namespace ServiceReference1
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
     [System.ServiceModel.MessageContractAttribute(WrapperName="GetImPriceEResponse", WrapperNamespace="http://www.ote-cr.cz/schema/service/public", IsWrapped=true)]
     public partial class GetImPriceEResponse
@@ -1853,20 +2959,20 @@ namespace ServiceReference1
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.ote-cr.cz/schema/service/public", Order=0)]
         [System.Xml.Serialization.XmlArrayItemAttribute("Item", IsNullable=false)]
-        public ServiceReference1.GetImPriceEResponseItem[] Result;
+        public PublicOTEService.GetImPriceEResponseItem[] Result;
         
         public GetImPriceEResponse()
         {
         }
         
-        public GetImPriceEResponse(ServiceReference1.GetImPriceEResponseItem[] Result)
+        public GetImPriceEResponse(PublicOTEService.GetImPriceEResponseItem[] Result)
         {
             this.Result = Result;
         }
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ote-cr.cz/schema/service/public")]
     public enum VersionType
     {
@@ -1885,7 +2991,7 @@ namespace ServiceReference1
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://www.ote-cr.cz/schema/service/public")]
     public partial class GetImbalanceSettlementEResponseItem
@@ -2389,14 +3495,14 @@ namespace ServiceReference1
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
     [System.ServiceModel.MessageContractAttribute(WrapperName="GetImbalanceSettlementE", WrapperNamespace="http://www.ote-cr.cz/schema/service/public", IsWrapped=true)]
     public partial class GetImbalanceSettlementERequest
     {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.ote-cr.cz/schema/service/public", Order=0)]
-        public ServiceReference1.VersionType Version;
+        public PublicOTEService.VersionType Version;
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.ote-cr.cz/schema/service/public", Order=1)]
         [System.Xml.Serialization.XmlElementAttribute(DataType="date")]
@@ -2416,7 +3522,7 @@ namespace ServiceReference1
         {
         }
         
-        public GetImbalanceSettlementERequest(ServiceReference1.VersionType Version, System.DateTime StartDate, System.DateTime EndDate, int StartHour, int EndHour)
+        public GetImbalanceSettlementERequest(PublicOTEService.VersionType Version, System.DateTime StartDate, System.DateTime EndDate, int StartHour, int EndHour)
         {
             this.Version = Version;
             this.StartDate = StartDate;
@@ -2427,7 +3533,7 @@ namespace ServiceReference1
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
     [System.ServiceModel.MessageContractAttribute(WrapperName="GetImbalanceSettlementEResponse", WrapperNamespace="http://www.ote-cr.cz/schema/service/public", IsWrapped=true)]
     public partial class GetImbalanceSettlementEResponse
@@ -2435,20 +3541,20 @@ namespace ServiceReference1
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.ote-cr.cz/schema/service/public", Order=0)]
         [System.Xml.Serialization.XmlArrayItemAttribute("Item", IsNullable=false)]
-        public ServiceReference1.GetImbalanceSettlementEResponseItem[] Result;
+        public PublicOTEService.GetImbalanceSettlementEResponseItem[] Result;
         
         public GetImbalanceSettlementEResponse()
         {
         }
         
-        public GetImbalanceSettlementEResponse(ServiceReference1.GetImbalanceSettlementEResponseItem[] Result)
+        public GetImbalanceSettlementEResponse(PublicOTEService.GetImbalanceSettlementEResponseItem[] Result)
         {
             this.Result = Result;
         }
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://www.ote-cr.cz/schema/service/public")]
     public partial class GetDamPriceGResponseItem
@@ -2552,7 +3658,7 @@ namespace ServiceReference1
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://www.ote-cr.cz/schema/service/public")]
     public enum GetDamPriceGResponseItemSession
     {
@@ -2565,7 +3671,7 @@ namespace ServiceReference1
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
     [System.ServiceModel.MessageContractAttribute(WrapperName="GetDamPriceG", WrapperNamespace="http://www.ote-cr.cz/schema/service/public", IsWrapped=true)]
     public partial class GetDamPriceGRequest
@@ -2591,7 +3697,7 @@ namespace ServiceReference1
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
     [System.ServiceModel.MessageContractAttribute(WrapperName="GetDamPriceGResponse", WrapperNamespace="http://www.ote-cr.cz/schema/service/public", IsWrapped=true)]
     public partial class GetDamPriceGResponse
@@ -2599,20 +3705,20 @@ namespace ServiceReference1
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.ote-cr.cz/schema/service/public", Order=0)]
         [System.Xml.Serialization.XmlArrayItemAttribute("Item", IsNullable=false)]
-        public ServiceReference1.GetDamPriceGResponseItem[] Result;
+        public PublicOTEService.GetDamPriceGResponseItem[] Result;
         
         public GetDamPriceGResponse()
         {
         }
         
-        public GetDamPriceGResponse(ServiceReference1.GetDamPriceGResponseItem[] Result)
+        public GetDamPriceGResponse(PublicOTEService.GetDamPriceGResponseItem[] Result)
         {
             this.Result = Result;
         }
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://www.ote-cr.cz/schema/service/public")]
     public partial class GetImPriceGResponseItem
@@ -2796,7 +3902,7 @@ namespace ServiceReference1
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
     [System.ServiceModel.MessageContractAttribute(WrapperName="GetImPriceG", WrapperNamespace="http://www.ote-cr.cz/schema/service/public", IsWrapped=true)]
     public partial class GetImPriceGRequest
@@ -2822,7 +3928,7 @@ namespace ServiceReference1
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
     [System.ServiceModel.MessageContractAttribute(WrapperName="GetImPriceGResponse", WrapperNamespace="http://www.ote-cr.cz/schema/service/public", IsWrapped=true)]
     public partial class GetImPriceGResponse
@@ -2830,20 +3936,20 @@ namespace ServiceReference1
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.ote-cr.cz/schema/service/public", Order=0)]
         [System.Xml.Serialization.XmlArrayItemAttribute("Item", IsNullable=false)]
-        public ServiceReference1.GetImPriceGResponseItem[] Result;
+        public PublicOTEService.GetImPriceGResponseItem[] Result;
         
         public GetImPriceGResponse()
         {
         }
         
-        public GetImPriceGResponse(ServiceReference1.GetImPriceGResponseItem[] Result)
+        public GetImPriceGResponse(PublicOTEService.GetImPriceGResponseItem[] Result)
         {
             this.Result = Result;
         }
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://www.ote-cr.cz/schema/service/public")]
     public partial class GetImbalanceSettlementGResponseItem
@@ -3139,14 +4245,14 @@ namespace ServiceReference1
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
     [System.ServiceModel.MessageContractAttribute(WrapperName="GetImbalanceSettlementG", WrapperNamespace="http://www.ote-cr.cz/schema/service/public", IsWrapped=true)]
     public partial class GetImbalanceSettlementGRequest
     {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.ote-cr.cz/schema/service/public", Order=0)]
-        public ServiceReference1.VersionType Version;
+        public PublicOTEService.VersionType Version;
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.ote-cr.cz/schema/service/public", Order=1)]
         [System.Xml.Serialization.XmlElementAttribute(DataType="date")]
@@ -3160,7 +4266,7 @@ namespace ServiceReference1
         {
         }
         
-        public GetImbalanceSettlementGRequest(ServiceReference1.VersionType Version, System.DateTime StartDate, System.DateTime EndDate)
+        public GetImbalanceSettlementGRequest(PublicOTEService.VersionType Version, System.DateTime StartDate, System.DateTime EndDate)
         {
             this.Version = Version;
             this.StartDate = StartDate;
@@ -3169,7 +4275,7 @@ namespace ServiceReference1
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
     [System.ServiceModel.MessageContractAttribute(WrapperName="GetImbalanceSettlementGResponse", WrapperNamespace="http://www.ote-cr.cz/schema/service/public", IsWrapped=true)]
     public partial class GetImbalanceSettlementGResponse
@@ -3177,20 +4283,20 @@ namespace ServiceReference1
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.ote-cr.cz/schema/service/public", Order=0)]
         [System.Xml.Serialization.XmlArrayItemAttribute("Item", IsNullable=false)]
-        public ServiceReference1.GetImbalanceSettlementGResponseItem[] Result;
+        public PublicOTEService.GetImbalanceSettlementGResponseItem[] Result;
         
         public GetImbalanceSettlementGResponse()
         {
         }
         
-        public GetImbalanceSettlementGResponse(ServiceReference1.GetImbalanceSettlementGResponseItem[] Result)
+        public GetImbalanceSettlementGResponse(PublicOTEService.GetImbalanceSettlementGResponseItem[] Result)
         {
             this.Result = Result;
         }
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://www.ote-cr.cz/schema/service/public")]
     public partial class GetImbalanceNCBALSettlementGResponseItem
@@ -3518,14 +4624,14 @@ namespace ServiceReference1
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
     [System.ServiceModel.MessageContractAttribute(WrapperName="GetImbalanceNCBALSettlementG", WrapperNamespace="http://www.ote-cr.cz/schema/service/public", IsWrapped=true)]
     public partial class GetImbalanceNCBALSettlementGRequest
     {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.ote-cr.cz/schema/service/public", Order=0)]
-        public ServiceReference1.VersionType Version;
+        public PublicOTEService.VersionType Version;
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.ote-cr.cz/schema/service/public", Order=1)]
         [System.Xml.Serialization.XmlElementAttribute(DataType="date")]
@@ -3539,7 +4645,7 @@ namespace ServiceReference1
         {
         }
         
-        public GetImbalanceNCBALSettlementGRequest(ServiceReference1.VersionType Version, System.DateTime StartDate, System.DateTime EndDate)
+        public GetImbalanceNCBALSettlementGRequest(PublicOTEService.VersionType Version, System.DateTime StartDate, System.DateTime EndDate)
         {
             this.Version = Version;
             this.StartDate = StartDate;
@@ -3548,7 +4654,7 @@ namespace ServiceReference1
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
     [System.ServiceModel.MessageContractAttribute(WrapperName="GetImbalanceNCBALSettlementGResponse", WrapperNamespace="http://www.ote-cr.cz/schema/service/public", IsWrapped=true)]
     public partial class GetImbalanceNCBALSettlementGResponse
@@ -3556,20 +4662,20 @@ namespace ServiceReference1
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.ote-cr.cz/schema/service/public", Order=0)]
         [System.Xml.Serialization.XmlArrayItemAttribute("Item", IsNullable=false)]
-        public ServiceReference1.GetImbalanceNCBALSettlementGResponseItem[] Result;
+        public PublicOTEService.GetImbalanceNCBALSettlementGResponseItem[] Result;
         
         public GetImbalanceNCBALSettlementGResponse()
         {
         }
         
-        public GetImbalanceNCBALSettlementGResponse(ServiceReference1.GetImbalanceNCBALSettlementGResponseItem[] Result)
+        public GetImbalanceNCBALSettlementGResponse(PublicOTEService.GetImbalanceNCBALSettlementGResponseItem[] Result)
         {
             this.Result = Result;
         }
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://www.ote-cr.cz/schema/service/public")]
     public partial class GetIDAIndexEResponseIDAIndex
@@ -3769,7 +4875,7 @@ namespace ServiceReference1
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
     [System.ServiceModel.MessageContractAttribute(WrapperName="GetIDAIndexE", WrapperNamespace="http://www.ote-cr.cz/schema/service/public", IsWrapped=true)]
     public partial class GetIDAIndexERequest
@@ -3799,7 +4905,7 @@ namespace ServiceReference1
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
     [System.ServiceModel.MessageContractAttribute(WrapperName="GetIDAIndexEResponse", WrapperNamespace="http://www.ote-cr.cz/schema/service/public", IsWrapped=true)]
     public partial class GetIDAIndexEResponse
@@ -3807,20 +4913,20 @@ namespace ServiceReference1
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.ote-cr.cz/schema/service/public", Order=0)]
         [System.Xml.Serialization.XmlArrayItemAttribute("IDAIndex", IsNullable=false)]
-        public ServiceReference1.GetIDAIndexEResponseIDAIndex[] Result;
+        public PublicOTEService.GetIDAIndexEResponseIDAIndex[] Result;
         
         public GetIDAIndexEResponse()
         {
         }
         
-        public GetIDAIndexEResponse(ServiceReference1.GetIDAIndexEResponseIDAIndex[] Result)
+        public GetIDAIndexEResponse(PublicOTEService.GetIDAIndexEResponseIDAIndex[] Result)
         {
             this.Result = Result;
         }
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://www.ote-cr.cz/schema/service/public")]
     public partial class GetIDAPriceEResponseItem
@@ -3972,7 +5078,7 @@ namespace ServiceReference1
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
     [System.ServiceModel.MessageContractAttribute(WrapperName="GetIDAPriceE", WrapperNamespace="http://www.ote-cr.cz/schema/service/public", IsWrapped=true)]
     public partial class GetIDAPriceERequest
@@ -4014,7 +5120,7 @@ namespace ServiceReference1
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
     [System.ServiceModel.MessageContractAttribute(WrapperName="GetIDAPriceEResponse", WrapperNamespace="http://www.ote-cr.cz/schema/service/public", IsWrapped=true)]
     public partial class GetIDAPriceEResponse
@@ -4022,20 +5128,20 @@ namespace ServiceReference1
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.ote-cr.cz/schema/service/public", Order=0)]
         [System.Xml.Serialization.XmlArrayItemAttribute("Item", IsNullable=false)]
-        public ServiceReference1.GetIDAPriceEResponseItem[] Result;
+        public PublicOTEService.GetIDAPriceEResponseItem[] Result;
         
         public GetIDAPriceEResponse()
         {
         }
         
-        public GetIDAPriceEResponse(ServiceReference1.GetIDAPriceEResponseItem[] Result)
+        public GetIDAPriceEResponse(PublicOTEService.GetIDAPriceEResponseItem[] Result)
         {
             this.Result = Result;
         }
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://www.ote-cr.cz/schema/service/public")]
     public partial class GetIDAAllEResponseItem
@@ -4267,7 +5373,7 @@ namespace ServiceReference1
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
     [System.ServiceModel.MessageContractAttribute(WrapperName="GetIDAAllE", WrapperNamespace="http://www.ote-cr.cz/schema/service/public", IsWrapped=true)]
     public partial class GetIDAAllERequest
@@ -4309,7 +5415,7 @@ namespace ServiceReference1
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
     [System.ServiceModel.MessageContractAttribute(WrapperName="GetIDAAllEResponse", WrapperNamespace="http://www.ote-cr.cz/schema/service/public", IsWrapped=true)]
     public partial class GetIDAAllEResponse
@@ -4317,20 +5423,20 @@ namespace ServiceReference1
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.ote-cr.cz/schema/service/public", Order=0)]
         [System.Xml.Serialization.XmlArrayItemAttribute("Item", IsNullable=false)]
-        public ServiceReference1.GetIDAAllEResponseItem[] Result;
+        public PublicOTEService.GetIDAAllEResponseItem[] Result;
         
         public GetIDAAllEResponse()
         {
         }
         
-        public GetIDAAllEResponse(ServiceReference1.GetIDAAllEResponseItem[] Result)
+        public GetIDAAllEResponse(PublicOTEService.GetIDAAllEResponseItem[] Result)
         {
             this.Result = Result;
         }
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://www.ote-cr.cz/schema/service/public")]
     public partial class GetImPricePeriodEResponseItem
@@ -4482,7 +5588,7 @@ namespace ServiceReference1
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://www.ote-cr.cz/schema/service/public")]
     public enum GetImPricePeriodEResponseItemPeriodResolution
     {
@@ -4495,7 +5601,7 @@ namespace ServiceReference1
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
     [System.ServiceModel.MessageContractAttribute(WrapperName="GetImPricePeriodE", WrapperNamespace="http://www.ote-cr.cz/schema/service/public", IsWrapped=true)]
     public partial class GetImPricePeriodERequest
@@ -4529,7 +5635,7 @@ namespace ServiceReference1
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
     [System.ServiceModel.MessageContractAttribute(WrapperName="GetImPricePeriodEResponse", WrapperNamespace="http://www.ote-cr.cz/schema/service/public", IsWrapped=true)]
     public partial class GetImPricePeriodEResponse
@@ -4537,20 +5643,20 @@ namespace ServiceReference1
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.ote-cr.cz/schema/service/public", Order=0)]
         [System.Xml.Serialization.XmlArrayItemAttribute("Item", IsNullable=false)]
-        public ServiceReference1.GetImPricePeriodEResponseItem[] Result;
+        public PublicOTEService.GetImPricePeriodEResponseItem[] Result;
         
         public GetImPricePeriodEResponse()
         {
         }
         
-        public GetImPricePeriodEResponse(ServiceReference1.GetImPricePeriodEResponseItem[] Result)
+        public GetImPricePeriodEResponse(PublicOTEService.GetImPricePeriodEResponseItem[] Result)
         {
             this.Result = Result;
         }
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://www.ote-cr.cz/schema/service/public")]
     public enum GetImbalanceSettlementPeriodEVersion
     {
@@ -4569,7 +5675,7 @@ namespace ServiceReference1
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://www.ote-cr.cz/schema/service/public")]
     public partial class GetImbalanceSettlementPeriodEResponseItem
@@ -5089,7 +6195,7 @@ namespace ServiceReference1
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://www.ote-cr.cz/schema/service/public")]
     public enum GetImbalanceSettlementPeriodEResponseItemVersion
     {
@@ -5108,7 +6214,7 @@ namespace ServiceReference1
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://www.ote-cr.cz/schema/service/public")]
     public enum GetImbalanceSettlementPeriodEResponseItemPeriodResolution
     {
@@ -5121,14 +6227,14 @@ namespace ServiceReference1
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
     [System.ServiceModel.MessageContractAttribute(WrapperName="GetImbalanceSettlementPeriodE", WrapperNamespace="http://www.ote-cr.cz/schema/service/public", IsWrapped=true)]
     public partial class GetImbalanceSettlementPeriodERequest
     {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.ote-cr.cz/schema/service/public", Order=0)]
-        public ServiceReference1.GetImbalanceSettlementPeriodEVersion Version;
+        public PublicOTEService.GetImbalanceSettlementPeriodEVersion Version;
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.ote-cr.cz/schema/service/public", Order=1)]
         [System.Xml.Serialization.XmlElementAttribute(DataType="date")]
@@ -5148,7 +6254,7 @@ namespace ServiceReference1
         {
         }
         
-        public GetImbalanceSettlementPeriodERequest(ServiceReference1.GetImbalanceSettlementPeriodEVersion Version, System.DateTime StartDate, System.DateTime EndDate, int StartPeriod, int EndPeriod)
+        public GetImbalanceSettlementPeriodERequest(PublicOTEService.GetImbalanceSettlementPeriodEVersion Version, System.DateTime StartDate, System.DateTime EndDate, int StartPeriod, int EndPeriod)
         {
             this.Version = Version;
             this.StartDate = StartDate;
@@ -5159,7 +6265,7 @@ namespace ServiceReference1
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
     [System.ServiceModel.MessageContractAttribute(WrapperName="GetImbalanceSettlementPeriodEResponse", WrapperNamespace="http://www.ote-cr.cz/schema/service/public", IsWrapped=true)]
     public partial class GetImbalanceSettlementPeriodEResponse
@@ -5167,20 +6273,20 @@ namespace ServiceReference1
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.ote-cr.cz/schema/service/public", Order=0)]
         [System.Xml.Serialization.XmlArrayItemAttribute("Item", IsNullable=false)]
-        public ServiceReference1.GetImbalanceSettlementPeriodEResponseItem[] Result;
+        public PublicOTEService.GetImbalanceSettlementPeriodEResponseItem[] Result;
         
         public GetImbalanceSettlementPeriodEResponse()
         {
         }
         
-        public GetImbalanceSettlementPeriodEResponse(ServiceReference1.GetImbalanceSettlementPeriodEResponseItem[] Result)
+        public GetImbalanceSettlementPeriodEResponse(PublicOTEService.GetImbalanceSettlementPeriodEResponseItem[] Result)
         {
             this.Result = Result;
         }
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://www.ote-cr.cz/schema/service/public")]
     public enum GetIDAPricePeriodEAuction
     {
@@ -5196,7 +6302,7 @@ namespace ServiceReference1
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://www.ote-cr.cz/schema/service/public")]
     public partial class GetIDAPricePeriodEResponseItem
@@ -5380,7 +6486,7 @@ namespace ServiceReference1
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://www.ote-cr.cz/schema/service/public")]
     public enum GetIDAPricePeriodEResponseItemPeriodResolution
     {
@@ -5393,7 +6499,7 @@ namespace ServiceReference1
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://www.ote-cr.cz/schema/service/public")]
     public enum GetIDAPricePeriodEResponseItemAuction
     {
@@ -5409,7 +6515,7 @@ namespace ServiceReference1
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
     [System.ServiceModel.MessageContractAttribute(WrapperName="GetIDAPricePeriodE", WrapperNamespace="http://www.ote-cr.cz/schema/service/public", IsWrapped=true)]
     public partial class GetIDAPricePeriodERequest
@@ -5430,7 +6536,7 @@ namespace ServiceReference1
         public int EndPeriod;
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.ote-cr.cz/schema/service/public", Order=4)]
-        public ServiceReference1.GetIDAPricePeriodEAuction Auction;
+        public PublicOTEService.GetIDAPricePeriodEAuction Auction;
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.ote-cr.cz/schema/service/public", Order=5)]
         public bool InEur;
@@ -5439,7 +6545,7 @@ namespace ServiceReference1
         {
         }
         
-        public GetIDAPricePeriodERequest(System.DateTime StartDate, System.DateTime EndDate, int StartPeriod, int EndPeriod, ServiceReference1.GetIDAPricePeriodEAuction Auction, bool InEur)
+        public GetIDAPricePeriodERequest(System.DateTime StartDate, System.DateTime EndDate, int StartPeriod, int EndPeriod, PublicOTEService.GetIDAPricePeriodEAuction Auction, bool InEur)
         {
             this.StartDate = StartDate;
             this.EndDate = EndDate;
@@ -5451,7 +6557,7 @@ namespace ServiceReference1
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
     [System.ServiceModel.MessageContractAttribute(WrapperName="GetIDAPricePeriodEResponse", WrapperNamespace="http://www.ote-cr.cz/schema/service/public", IsWrapped=true)]
     public partial class GetIDAPricePeriodEResponse
@@ -5459,20 +6565,20 @@ namespace ServiceReference1
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.ote-cr.cz/schema/service/public", Order=0)]
         [System.Xml.Serialization.XmlArrayItemAttribute("Item", IsNullable=false)]
-        public ServiceReference1.GetIDAPricePeriodEResponseItem[] Result;
+        public PublicOTEService.GetIDAPricePeriodEResponseItem[] Result;
         
         public GetIDAPricePeriodEResponse()
         {
         }
         
-        public GetIDAPricePeriodEResponse(ServiceReference1.GetIDAPricePeriodEResponseItem[] Result)
+        public GetIDAPricePeriodEResponse(PublicOTEService.GetIDAPricePeriodEResponseItem[] Result)
         {
             this.Result = Result;
         }
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://www.ote-cr.cz/schema/service/public")]
     public enum GetIDAAllPeriodEAuction
     {
@@ -5488,7 +6594,7 @@ namespace ServiceReference1
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://www.ote-cr.cz/schema/service/public")]
     public partial class GetIDAAllPeriodEResponseItem
@@ -5768,7 +6874,7 @@ namespace ServiceReference1
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://www.ote-cr.cz/schema/service/public")]
     public enum GetIDAAllPeriodEResponseItemPeriodResolution
     {
@@ -5781,7 +6887,7 @@ namespace ServiceReference1
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://www.ote-cr.cz/schema/service/public")]
     public enum GetIDAAllPeriodEResponseItemAuction
     {
@@ -5797,7 +6903,7 @@ namespace ServiceReference1
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
     [System.ServiceModel.MessageContractAttribute(WrapperName="GetIDAAllPeriodE", WrapperNamespace="http://www.ote-cr.cz/schema/service/public", IsWrapped=true)]
     public partial class GetIDAAllPeriodERequest
@@ -5818,7 +6924,7 @@ namespace ServiceReference1
         public int EndPeriod;
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.ote-cr.cz/schema/service/public", Order=4)]
-        public ServiceReference1.GetIDAAllPeriodEAuction Auction;
+        public PublicOTEService.GetIDAAllPeriodEAuction Auction;
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.ote-cr.cz/schema/service/public", Order=5)]
         public bool InEur;
@@ -5827,7 +6933,7 @@ namespace ServiceReference1
         {
         }
         
-        public GetIDAAllPeriodERequest(System.DateTime StartDate, System.DateTime EndDate, int StartPeriod, int EndPeriod, ServiceReference1.GetIDAAllPeriodEAuction Auction, bool InEur)
+        public GetIDAAllPeriodERequest(System.DateTime StartDate, System.DateTime EndDate, int StartPeriod, int EndPeriod, PublicOTEService.GetIDAAllPeriodEAuction Auction, bool InEur)
         {
             this.StartDate = StartDate;
             this.EndDate = EndDate;
@@ -5839,7 +6945,7 @@ namespace ServiceReference1
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
     [System.ServiceModel.MessageContractAttribute(WrapperName="GetIDAAllPeriodEResponse", WrapperNamespace="http://www.ote-cr.cz/schema/service/public", IsWrapped=true)]
     public partial class GetIDAAllPeriodEResponse
@@ -5847,26 +6953,26 @@ namespace ServiceReference1
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.ote-cr.cz/schema/service/public", Order=0)]
         [System.Xml.Serialization.XmlArrayItemAttribute("Item", IsNullable=false)]
-        public ServiceReference1.GetIDAAllPeriodEResponseItem[] Result;
+        public PublicOTEService.GetIDAAllPeriodEResponseItem[] Result;
         
         public GetIDAAllPeriodEResponse()
         {
         }
         
-        public GetIDAAllPeriodEResponse(ServiceReference1.GetIDAAllPeriodEResponseItem[] Result)
+        public GetIDAAllPeriodEResponse(PublicOTEService.GetIDAAllPeriodEResponseItem[] Result)
         {
             this.Result = Result;
         }
     }
     
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
-    public interface PublicDataServiceSoapChannel : ServiceReference1.PublicDataServiceSoap, System.ServiceModel.IClientChannel
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    public interface PublicDataServiceSoapChannel : PublicOTEService.PublicDataServiceSoap, System.ServiceModel.IClientChannel
     {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
-    public partial class PublicDataServiceSoapClient : System.ServiceModel.ClientBase<ServiceReference1.PublicDataServiceSoap>, ServiceReference1.PublicDataServiceSoap
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    public partial class PublicDataServiceSoapClient : System.ServiceModel.ClientBase<PublicOTEService.PublicDataServiceSoap>, PublicOTEService.PublicDataServiceSoap
     {
         
         /// <summary>
@@ -5909,289 +7015,346 @@ namespace ServiceReference1
         {
         }
         
-        public System.Threading.Tasks.Task<ServiceReference1.GetRutListResponseResult> GetRutListAsync(int IdRutFrom, int IdRutTo)
+        public System.Threading.Tasks.Task<PublicOTEService.GetRutListResponseResult> GetRutListAsync(int IdRutFrom, int IdRutTo)
         {
             return base.Channel.GetRutListAsync(IdRutFrom, IdRutTo);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<ServiceReference1.GetDamIndexEResponse> ServiceReference1.PublicDataServiceSoap.GetDamIndexEAsync(ServiceReference1.GetDamIndexERequest request)
+        System.Threading.Tasks.Task<PublicOTEService.GetDamIndexEResponse> PublicOTEService.PublicDataServiceSoap.GetDamIndexEAsync(PublicOTEService.GetDamIndexERequest request)
         {
             return base.Channel.GetDamIndexEAsync(request);
         }
         
-        public System.Threading.Tasks.Task<ServiceReference1.GetDamIndexEResponse> GetDamIndexEAsync(System.DateTime StartDate, System.DateTime EndDate)
+        public System.Threading.Tasks.Task<PublicOTEService.GetDamIndexEResponse> GetDamIndexEAsync(System.DateTime StartDate, System.DateTime EndDate)
         {
-            ServiceReference1.GetDamIndexERequest inValue = new ServiceReference1.GetDamIndexERequest();
+            PublicOTEService.GetDamIndexERequest inValue = new PublicOTEService.GetDamIndexERequest();
             inValue.StartDate = StartDate;
             inValue.EndDate = EndDate;
-            return ((ServiceReference1.PublicDataServiceSoap)(this)).GetDamIndexEAsync(inValue);
+            return ((PublicOTEService.PublicDataServiceSoap)(this)).GetDamIndexEAsync(inValue);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<ServiceReference1.GetDamPriceEResponse> ServiceReference1.PublicDataServiceSoap.GetDamPriceEAsync(ServiceReference1.GetDamPriceERequest request)
+        System.Threading.Tasks.Task<PublicOTEService.GetDamPriceEResponse> PublicOTEService.PublicDataServiceSoap.GetDamPriceEAsync(PublicOTEService.GetDamPriceERequest request)
         {
             return base.Channel.GetDamPriceEAsync(request);
         }
         
-        public System.Threading.Tasks.Task<ServiceReference1.GetDamPriceEResponse> GetDamPriceEAsync(System.DateTime StartDate, System.DateTime EndDate, int StartHour, int EndHour, bool InEur)
+        public System.Threading.Tasks.Task<PublicOTEService.GetDamPriceEResponse> GetDamPriceEAsync(System.DateTime StartDate, System.DateTime EndDate, int StartHour, int EndHour, bool InEur)
         {
-            ServiceReference1.GetDamPriceERequest inValue = new ServiceReference1.GetDamPriceERequest();
+            PublicOTEService.GetDamPriceERequest inValue = new PublicOTEService.GetDamPriceERequest();
             inValue.StartDate = StartDate;
             inValue.EndDate = EndDate;
             inValue.StartHour = StartHour;
             inValue.EndHour = EndHour;
             inValue.InEur = InEur;
-            return ((ServiceReference1.PublicDataServiceSoap)(this)).GetDamPriceEAsync(inValue);
+            return ((PublicOTEService.PublicDataServiceSoap)(this)).GetDamPriceEAsync(inValue);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<ServiceReference1.GetDamAllEResponse> ServiceReference1.PublicDataServiceSoap.GetDamAllEAsync(ServiceReference1.GetDamAllERequest request)
+        System.Threading.Tasks.Task<PublicOTEService.GetDamPricePeriodEResponse> PublicOTEService.PublicDataServiceSoap.GetDamPricePeriodEAsync(PublicOTEService.GetDamPricePeriodERequest request)
+        {
+            return base.Channel.GetDamPricePeriodEAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<PublicOTEService.GetDamPricePeriodEResponse> GetDamPricePeriodEAsync(System.DateTime StartDate, System.DateTime EndDate, PublicOTEService.GetDamPricePeriodEPeriodResolution PeriodResolution, int StartPeriod, int EndPeriod)
+        {
+            PublicOTEService.GetDamPricePeriodERequest inValue = new PublicOTEService.GetDamPricePeriodERequest();
+            inValue.StartDate = StartDate;
+            inValue.EndDate = EndDate;
+            inValue.PeriodResolution = PeriodResolution;
+            inValue.StartPeriod = StartPeriod;
+            inValue.EndPeriod = EndPeriod;
+            return ((PublicOTEService.PublicDataServiceSoap)(this)).GetDamPricePeriodEAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<PublicOTEService.GetDamAllEResponse> PublicOTEService.PublicDataServiceSoap.GetDamAllEAsync(PublicOTEService.GetDamAllERequest request)
         {
             return base.Channel.GetDamAllEAsync(request);
         }
         
-        public System.Threading.Tasks.Task<ServiceReference1.GetDamAllEResponse> GetDamAllEAsync(System.DateTime StartDate, System.DateTime EndDate, int StartHour, int EndHour, bool InEur)
+        public System.Threading.Tasks.Task<PublicOTEService.GetDamAllEResponse> GetDamAllEAsync(System.DateTime StartDate, System.DateTime EndDate, int StartHour, int EndHour, bool InEur)
         {
-            ServiceReference1.GetDamAllERequest inValue = new ServiceReference1.GetDamAllERequest();
+            PublicOTEService.GetDamAllERequest inValue = new PublicOTEService.GetDamAllERequest();
             inValue.StartDate = StartDate;
             inValue.EndDate = EndDate;
             inValue.StartHour = StartHour;
             inValue.EndHour = EndHour;
             inValue.InEur = InEur;
-            return ((ServiceReference1.PublicDataServiceSoap)(this)).GetDamAllEAsync(inValue);
+            return ((PublicOTEService.PublicDataServiceSoap)(this)).GetDamAllEAsync(inValue);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<ServiceReference1.GetBmPriceEResponse> ServiceReference1.PublicDataServiceSoap.GetBmPriceEAsync(ServiceReference1.GetBmPriceERequest request)
+        System.Threading.Tasks.Task<PublicOTEService.GetDamAllPeriodEResponse> PublicOTEService.PublicDataServiceSoap.GetDamAllPeriodEAsync(PublicOTEService.GetDamAllPeriodERequest request)
+        {
+            return base.Channel.GetDamAllPeriodEAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<PublicOTEService.GetDamAllPeriodEResponse> GetDamAllPeriodEAsync(System.DateTime StartDate, System.DateTime EndDate, PublicOTEService.GetDamAllPeriodEPeriodResolution PeriodResolution, int StartPeriod, int EndPeriod)
+        {
+            PublicOTEService.GetDamAllPeriodERequest inValue = new PublicOTEService.GetDamAllPeriodERequest();
+            inValue.StartDate = StartDate;
+            inValue.EndDate = EndDate;
+            inValue.PeriodResolution = PeriodResolution;
+            inValue.StartPeriod = StartPeriod;
+            inValue.EndPeriod = EndPeriod;
+            return ((PublicOTEService.PublicDataServiceSoap)(this)).GetDamAllPeriodEAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<PublicOTEService.GetDamFlowsPeriodEResponse> PublicOTEService.PublicDataServiceSoap.GetDamFlowsPeriodEAsync(PublicOTEService.GetDamFlowsPeriodERequest request)
+        {
+            return base.Channel.GetDamFlowsPeriodEAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<PublicOTEService.GetDamFlowsPeriodEResponse> GetDamFlowsPeriodEAsync(System.DateTime StartDate, System.DateTime EndDate, int StartPeriod, int EndPeriod)
+        {
+            PublicOTEService.GetDamFlowsPeriodERequest inValue = new PublicOTEService.GetDamFlowsPeriodERequest();
+            inValue.StartDate = StartDate;
+            inValue.EndDate = EndDate;
+            inValue.StartPeriod = StartPeriod;
+            inValue.EndPeriod = EndPeriod;
+            return ((PublicOTEService.PublicDataServiceSoap)(this)).GetDamFlowsPeriodEAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<PublicOTEService.GetBmPriceEResponse> PublicOTEService.PublicDataServiceSoap.GetBmPriceEAsync(PublicOTEService.GetBmPriceERequest request)
         {
             return base.Channel.GetBmPriceEAsync(request);
         }
         
-        public System.Threading.Tasks.Task<ServiceReference1.GetBmPriceEResponse> GetBmPriceEAsync(System.DateTime StartDate, System.DateTime EndDate, bool InEur)
+        public System.Threading.Tasks.Task<PublicOTEService.GetBmPriceEResponse> GetBmPriceEAsync(System.DateTime StartDate, System.DateTime EndDate, bool InEur)
         {
-            ServiceReference1.GetBmPriceERequest inValue = new ServiceReference1.GetBmPriceERequest();
+            PublicOTEService.GetBmPriceERequest inValue = new PublicOTEService.GetBmPriceERequest();
             inValue.StartDate = StartDate;
             inValue.EndDate = EndDate;
             inValue.InEur = InEur;
-            return ((ServiceReference1.PublicDataServiceSoap)(this)).GetBmPriceEAsync(inValue);
+            return ((PublicOTEService.PublicDataServiceSoap)(this)).GetBmPriceEAsync(inValue);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<ServiceReference1.GetImPriceEResponse> ServiceReference1.PublicDataServiceSoap.GetImPriceEAsync(ServiceReference1.GetImPriceERequest request)
+        System.Threading.Tasks.Task<PublicOTEService.GetImPriceEResponse> PublicOTEService.PublicDataServiceSoap.GetImPriceEAsync(PublicOTEService.GetImPriceERequest request)
         {
             return base.Channel.GetImPriceEAsync(request);
         }
         
-        public System.Threading.Tasks.Task<ServiceReference1.GetImPriceEResponse> GetImPriceEAsync(System.DateTime StartDate, System.DateTime EndDate, int StartHour, int EndHour)
+        public System.Threading.Tasks.Task<PublicOTEService.GetImPriceEResponse> GetImPriceEAsync(System.DateTime StartDate, System.DateTime EndDate, int StartHour, int EndHour)
         {
-            ServiceReference1.GetImPriceERequest inValue = new ServiceReference1.GetImPriceERequest();
+            PublicOTEService.GetImPriceERequest inValue = new PublicOTEService.GetImPriceERequest();
             inValue.StartDate = StartDate;
             inValue.EndDate = EndDate;
             inValue.StartHour = StartHour;
             inValue.EndHour = EndHour;
-            return ((ServiceReference1.PublicDataServiceSoap)(this)).GetImPriceEAsync(inValue);
+            return ((PublicOTEService.PublicDataServiceSoap)(this)).GetImPriceEAsync(inValue);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<ServiceReference1.GetImbalanceSettlementEResponse> ServiceReference1.PublicDataServiceSoap.GetImbalanceSettlementEAsync(ServiceReference1.GetImbalanceSettlementERequest request)
+        System.Threading.Tasks.Task<PublicOTEService.GetImbalanceSettlementEResponse> PublicOTEService.PublicDataServiceSoap.GetImbalanceSettlementEAsync(PublicOTEService.GetImbalanceSettlementERequest request)
         {
             return base.Channel.GetImbalanceSettlementEAsync(request);
         }
         
-        public System.Threading.Tasks.Task<ServiceReference1.GetImbalanceSettlementEResponse> GetImbalanceSettlementEAsync(ServiceReference1.VersionType Version, System.DateTime StartDate, System.DateTime EndDate, int StartHour, int EndHour)
+        public System.Threading.Tasks.Task<PublicOTEService.GetImbalanceSettlementEResponse> GetImbalanceSettlementEAsync(PublicOTEService.VersionType Version, System.DateTime StartDate, System.DateTime EndDate, int StartHour, int EndHour)
         {
-            ServiceReference1.GetImbalanceSettlementERequest inValue = new ServiceReference1.GetImbalanceSettlementERequest();
+            PublicOTEService.GetImbalanceSettlementERequest inValue = new PublicOTEService.GetImbalanceSettlementERequest();
             inValue.Version = Version;
             inValue.StartDate = StartDate;
             inValue.EndDate = EndDate;
             inValue.StartHour = StartHour;
             inValue.EndHour = EndHour;
-            return ((ServiceReference1.PublicDataServiceSoap)(this)).GetImbalanceSettlementEAsync(inValue);
+            return ((PublicOTEService.PublicDataServiceSoap)(this)).GetImbalanceSettlementEAsync(inValue);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<ServiceReference1.GetDamPriceGResponse> ServiceReference1.PublicDataServiceSoap.GetDamPriceGAsync(ServiceReference1.GetDamPriceGRequest request)
+        System.Threading.Tasks.Task<PublicOTEService.GetDamPriceGResponse> PublicOTEService.PublicDataServiceSoap.GetDamPriceGAsync(PublicOTEService.GetDamPriceGRequest request)
         {
             return base.Channel.GetDamPriceGAsync(request);
         }
         
-        public System.Threading.Tasks.Task<ServiceReference1.GetDamPriceGResponse> GetDamPriceGAsync(System.DateTime StartDate, System.DateTime EndDate)
+        public System.Threading.Tasks.Task<PublicOTEService.GetDamPriceGResponse> GetDamPriceGAsync(System.DateTime StartDate, System.DateTime EndDate)
         {
-            ServiceReference1.GetDamPriceGRequest inValue = new ServiceReference1.GetDamPriceGRequest();
+            PublicOTEService.GetDamPriceGRequest inValue = new PublicOTEService.GetDamPriceGRequest();
             inValue.StartDate = StartDate;
             inValue.EndDate = EndDate;
-            return ((ServiceReference1.PublicDataServiceSoap)(this)).GetDamPriceGAsync(inValue);
+            return ((PublicOTEService.PublicDataServiceSoap)(this)).GetDamPriceGAsync(inValue);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<ServiceReference1.GetImPriceGResponse> ServiceReference1.PublicDataServiceSoap.GetImPriceGAsync(ServiceReference1.GetImPriceGRequest request)
+        System.Threading.Tasks.Task<PublicOTEService.GetImPriceGResponse> PublicOTEService.PublicDataServiceSoap.GetImPriceGAsync(PublicOTEService.GetImPriceGRequest request)
         {
             return base.Channel.GetImPriceGAsync(request);
         }
         
-        public System.Threading.Tasks.Task<ServiceReference1.GetImPriceGResponse> GetImPriceGAsync(System.DateTime StartDate, System.DateTime EndDate)
+        public System.Threading.Tasks.Task<PublicOTEService.GetImPriceGResponse> GetImPriceGAsync(System.DateTime StartDate, System.DateTime EndDate)
         {
-            ServiceReference1.GetImPriceGRequest inValue = new ServiceReference1.GetImPriceGRequest();
+            PublicOTEService.GetImPriceGRequest inValue = new PublicOTEService.GetImPriceGRequest();
             inValue.StartDate = StartDate;
             inValue.EndDate = EndDate;
-            return ((ServiceReference1.PublicDataServiceSoap)(this)).GetImPriceGAsync(inValue);
+            return ((PublicOTEService.PublicDataServiceSoap)(this)).GetImPriceGAsync(inValue);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<ServiceReference1.GetImbalanceSettlementGResponse> ServiceReference1.PublicDataServiceSoap.GetImbalanceSettlementGAsync(ServiceReference1.GetImbalanceSettlementGRequest request)
+        System.Threading.Tasks.Task<PublicOTEService.GetImbalanceSettlementGResponse> PublicOTEService.PublicDataServiceSoap.GetImbalanceSettlementGAsync(PublicOTEService.GetImbalanceSettlementGRequest request)
         {
             return base.Channel.GetImbalanceSettlementGAsync(request);
         }
         
-        public System.Threading.Tasks.Task<ServiceReference1.GetImbalanceSettlementGResponse> GetImbalanceSettlementGAsync(ServiceReference1.VersionType Version, System.DateTime StartDate, System.DateTime EndDate)
+        public System.Threading.Tasks.Task<PublicOTEService.GetImbalanceSettlementGResponse> GetImbalanceSettlementGAsync(PublicOTEService.VersionType Version, System.DateTime StartDate, System.DateTime EndDate)
         {
-            ServiceReference1.GetImbalanceSettlementGRequest inValue = new ServiceReference1.GetImbalanceSettlementGRequest();
+            PublicOTEService.GetImbalanceSettlementGRequest inValue = new PublicOTEService.GetImbalanceSettlementGRequest();
             inValue.Version = Version;
             inValue.StartDate = StartDate;
             inValue.EndDate = EndDate;
-            return ((ServiceReference1.PublicDataServiceSoap)(this)).GetImbalanceSettlementGAsync(inValue);
+            return ((PublicOTEService.PublicDataServiceSoap)(this)).GetImbalanceSettlementGAsync(inValue);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<ServiceReference1.GetImbalanceNCBALSettlementGResponse> ServiceReference1.PublicDataServiceSoap.GetImbalanceNCBALSettlementGAsync(ServiceReference1.GetImbalanceNCBALSettlementGRequest request)
+        System.Threading.Tasks.Task<PublicOTEService.GetImbalanceNCBALSettlementGResponse> PublicOTEService.PublicDataServiceSoap.GetImbalanceNCBALSettlementGAsync(PublicOTEService.GetImbalanceNCBALSettlementGRequest request)
         {
             return base.Channel.GetImbalanceNCBALSettlementGAsync(request);
         }
         
-        public System.Threading.Tasks.Task<ServiceReference1.GetImbalanceNCBALSettlementGResponse> GetImbalanceNCBALSettlementGAsync(ServiceReference1.VersionType Version, System.DateTime StartDate, System.DateTime EndDate)
+        public System.Threading.Tasks.Task<PublicOTEService.GetImbalanceNCBALSettlementGResponse> GetImbalanceNCBALSettlementGAsync(PublicOTEService.VersionType Version, System.DateTime StartDate, System.DateTime EndDate)
         {
-            ServiceReference1.GetImbalanceNCBALSettlementGRequest inValue = new ServiceReference1.GetImbalanceNCBALSettlementGRequest();
+            PublicOTEService.GetImbalanceNCBALSettlementGRequest inValue = new PublicOTEService.GetImbalanceNCBALSettlementGRequest();
             inValue.Version = Version;
             inValue.StartDate = StartDate;
             inValue.EndDate = EndDate;
-            return ((ServiceReference1.PublicDataServiceSoap)(this)).GetImbalanceNCBALSettlementGAsync(inValue);
+            return ((PublicOTEService.PublicDataServiceSoap)(this)).GetImbalanceNCBALSettlementGAsync(inValue);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<ServiceReference1.GetIDAIndexEResponse> ServiceReference1.PublicDataServiceSoap.GetIDAIndexEAsync(ServiceReference1.GetIDAIndexERequest request)
+        System.Threading.Tasks.Task<PublicOTEService.GetIDAIndexEResponse> PublicOTEService.PublicDataServiceSoap.GetIDAIndexEAsync(PublicOTEService.GetIDAIndexERequest request)
         {
             return base.Channel.GetIDAIndexEAsync(request);
         }
         
-        public System.Threading.Tasks.Task<ServiceReference1.GetIDAIndexEResponse> GetIDAIndexEAsync(System.DateTime StartDate, System.DateTime EndDate, string Auction)
+        public System.Threading.Tasks.Task<PublicOTEService.GetIDAIndexEResponse> GetIDAIndexEAsync(System.DateTime StartDate, System.DateTime EndDate, string Auction)
         {
-            ServiceReference1.GetIDAIndexERequest inValue = new ServiceReference1.GetIDAIndexERequest();
+            PublicOTEService.GetIDAIndexERequest inValue = new PublicOTEService.GetIDAIndexERequest();
             inValue.StartDate = StartDate;
             inValue.EndDate = EndDate;
             inValue.Auction = Auction;
-            return ((ServiceReference1.PublicDataServiceSoap)(this)).GetIDAIndexEAsync(inValue);
+            return ((PublicOTEService.PublicDataServiceSoap)(this)).GetIDAIndexEAsync(inValue);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<ServiceReference1.GetIDAPriceEResponse> ServiceReference1.PublicDataServiceSoap.GetIDAPriceEAsync(ServiceReference1.GetIDAPriceERequest request)
+        System.Threading.Tasks.Task<PublicOTEService.GetIDAPriceEResponse> PublicOTEService.PublicDataServiceSoap.GetIDAPriceEAsync(PublicOTEService.GetIDAPriceERequest request)
         {
             return base.Channel.GetIDAPriceEAsync(request);
         }
         
-        public System.Threading.Tasks.Task<ServiceReference1.GetIDAPriceEResponse> GetIDAPriceEAsync(System.DateTime StartDate, System.DateTime EndDate, int StartHour, int EndHour, string Auction, bool InEur)
+        public System.Threading.Tasks.Task<PublicOTEService.GetIDAPriceEResponse> GetIDAPriceEAsync(System.DateTime StartDate, System.DateTime EndDate, int StartHour, int EndHour, string Auction, bool InEur)
         {
-            ServiceReference1.GetIDAPriceERequest inValue = new ServiceReference1.GetIDAPriceERequest();
+            PublicOTEService.GetIDAPriceERequest inValue = new PublicOTEService.GetIDAPriceERequest();
             inValue.StartDate = StartDate;
             inValue.EndDate = EndDate;
             inValue.StartHour = StartHour;
             inValue.EndHour = EndHour;
             inValue.Auction = Auction;
             inValue.InEur = InEur;
-            return ((ServiceReference1.PublicDataServiceSoap)(this)).GetIDAPriceEAsync(inValue);
+            return ((PublicOTEService.PublicDataServiceSoap)(this)).GetIDAPriceEAsync(inValue);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<ServiceReference1.GetIDAAllEResponse> ServiceReference1.PublicDataServiceSoap.GetIDAAllEAsync(ServiceReference1.GetIDAAllERequest request)
+        System.Threading.Tasks.Task<PublicOTEService.GetIDAAllEResponse> PublicOTEService.PublicDataServiceSoap.GetIDAAllEAsync(PublicOTEService.GetIDAAllERequest request)
         {
             return base.Channel.GetIDAAllEAsync(request);
         }
         
-        public System.Threading.Tasks.Task<ServiceReference1.GetIDAAllEResponse> GetIDAAllEAsync(System.DateTime StartDate, System.DateTime EndDate, int StartHour, int EndHour, string Auction, bool InEur)
+        public System.Threading.Tasks.Task<PublicOTEService.GetIDAAllEResponse> GetIDAAllEAsync(System.DateTime StartDate, System.DateTime EndDate, int StartHour, int EndHour, string Auction, bool InEur)
         {
-            ServiceReference1.GetIDAAllERequest inValue = new ServiceReference1.GetIDAAllERequest();
+            PublicOTEService.GetIDAAllERequest inValue = new PublicOTEService.GetIDAAllERequest();
             inValue.StartDate = StartDate;
             inValue.EndDate = EndDate;
             inValue.StartHour = StartHour;
             inValue.EndHour = EndHour;
             inValue.Auction = Auction;
             inValue.InEur = InEur;
-            return ((ServiceReference1.PublicDataServiceSoap)(this)).GetIDAAllEAsync(inValue);
+            return ((PublicOTEService.PublicDataServiceSoap)(this)).GetIDAAllEAsync(inValue);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<ServiceReference1.GetImPricePeriodEResponse> ServiceReference1.PublicDataServiceSoap.GetImPricePeriodEAsync(ServiceReference1.GetImPricePeriodERequest request)
+        System.Threading.Tasks.Task<PublicOTEService.GetImPricePeriodEResponse> PublicOTEService.PublicDataServiceSoap.GetImPricePeriodEAsync(PublicOTEService.GetImPricePeriodERequest request)
         {
             return base.Channel.GetImPricePeriodEAsync(request);
         }
         
-        public System.Threading.Tasks.Task<ServiceReference1.GetImPricePeriodEResponse> GetImPricePeriodEAsync(System.DateTime StartDate, System.DateTime EndDate, int StartPeriod, int EndPeriod)
+        public System.Threading.Tasks.Task<PublicOTEService.GetImPricePeriodEResponse> GetImPricePeriodEAsync(System.DateTime StartDate, System.DateTime EndDate, int StartPeriod, int EndPeriod)
         {
-            ServiceReference1.GetImPricePeriodERequest inValue = new ServiceReference1.GetImPricePeriodERequest();
+            PublicOTEService.GetImPricePeriodERequest inValue = new PublicOTEService.GetImPricePeriodERequest();
             inValue.StartDate = StartDate;
             inValue.EndDate = EndDate;
             inValue.StartPeriod = StartPeriod;
             inValue.EndPeriod = EndPeriod;
-            return ((ServiceReference1.PublicDataServiceSoap)(this)).GetImPricePeriodEAsync(inValue);
+            return ((PublicOTEService.PublicDataServiceSoap)(this)).GetImPricePeriodEAsync(inValue);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<ServiceReference1.GetImbalanceSettlementPeriodEResponse> ServiceReference1.PublicDataServiceSoap.GetImbalanceSettlementPeriodEAsync(ServiceReference1.GetImbalanceSettlementPeriodERequest request)
+        System.Threading.Tasks.Task<PublicOTEService.GetImbalanceSettlementPeriodEResponse> PublicOTEService.PublicDataServiceSoap.GetImbalanceSettlementPeriodEAsync(PublicOTEService.GetImbalanceSettlementPeriodERequest request)
         {
             return base.Channel.GetImbalanceSettlementPeriodEAsync(request);
         }
         
-        public System.Threading.Tasks.Task<ServiceReference1.GetImbalanceSettlementPeriodEResponse> GetImbalanceSettlementPeriodEAsync(ServiceReference1.GetImbalanceSettlementPeriodEVersion Version, System.DateTime StartDate, System.DateTime EndDate, int StartPeriod, int EndPeriod)
+        public System.Threading.Tasks.Task<PublicOTEService.GetImbalanceSettlementPeriodEResponse> GetImbalanceSettlementPeriodEAsync(PublicOTEService.GetImbalanceSettlementPeriodEVersion Version, System.DateTime StartDate, System.DateTime EndDate, int StartPeriod, int EndPeriod)
         {
-            ServiceReference1.GetImbalanceSettlementPeriodERequest inValue = new ServiceReference1.GetImbalanceSettlementPeriodERequest();
+            PublicOTEService.GetImbalanceSettlementPeriodERequest inValue = new PublicOTEService.GetImbalanceSettlementPeriodERequest();
             inValue.Version = Version;
             inValue.StartDate = StartDate;
             inValue.EndDate = EndDate;
             inValue.StartPeriod = StartPeriod;
             inValue.EndPeriod = EndPeriod;
-            return ((ServiceReference1.PublicDataServiceSoap)(this)).GetImbalanceSettlementPeriodEAsync(inValue);
+            return ((PublicOTEService.PublicDataServiceSoap)(this)).GetImbalanceSettlementPeriodEAsync(inValue);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<ServiceReference1.GetIDAPricePeriodEResponse> ServiceReference1.PublicDataServiceSoap.GetIDAPricePeriodEAsync(ServiceReference1.GetIDAPricePeriodERequest request)
+        System.Threading.Tasks.Task<PublicOTEService.GetIDAPricePeriodEResponse> PublicOTEService.PublicDataServiceSoap.GetIDAPricePeriodEAsync(PublicOTEService.GetIDAPricePeriodERequest request)
         {
             return base.Channel.GetIDAPricePeriodEAsync(request);
         }
         
-        public System.Threading.Tasks.Task<ServiceReference1.GetIDAPricePeriodEResponse> GetIDAPricePeriodEAsync(System.DateTime StartDate, System.DateTime EndDate, int StartPeriod, int EndPeriod, ServiceReference1.GetIDAPricePeriodEAuction Auction, bool InEur)
+        public System.Threading.Tasks.Task<PublicOTEService.GetIDAPricePeriodEResponse> GetIDAPricePeriodEAsync(System.DateTime StartDate, System.DateTime EndDate, int StartPeriod, int EndPeriod, PublicOTEService.GetIDAPricePeriodEAuction Auction, bool InEur)
         {
-            ServiceReference1.GetIDAPricePeriodERequest inValue = new ServiceReference1.GetIDAPricePeriodERequest();
+            PublicOTEService.GetIDAPricePeriodERequest inValue = new PublicOTEService.GetIDAPricePeriodERequest();
             inValue.StartDate = StartDate;
             inValue.EndDate = EndDate;
             inValue.StartPeriod = StartPeriod;
             inValue.EndPeriod = EndPeriod;
             inValue.Auction = Auction;
             inValue.InEur = InEur;
-            return ((ServiceReference1.PublicDataServiceSoap)(this)).GetIDAPricePeriodEAsync(inValue);
+            return ((PublicOTEService.PublicDataServiceSoap)(this)).GetIDAPricePeriodEAsync(inValue);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<ServiceReference1.GetIDAAllPeriodEResponse> ServiceReference1.PublicDataServiceSoap.GetIDAAllPeriodEAsync(ServiceReference1.GetIDAAllPeriodERequest request)
+        System.Threading.Tasks.Task<PublicOTEService.GetIDAAllPeriodEResponse> PublicOTEService.PublicDataServiceSoap.GetIDAAllPeriodEAsync(PublicOTEService.GetIDAAllPeriodERequest request)
         {
             return base.Channel.GetIDAAllPeriodEAsync(request);
         }
         
-        public System.Threading.Tasks.Task<ServiceReference1.GetIDAAllPeriodEResponse> GetIDAAllPeriodEAsync(System.DateTime StartDate, System.DateTime EndDate, int StartPeriod, int EndPeriod, ServiceReference1.GetIDAAllPeriodEAuction Auction, bool InEur)
+        public System.Threading.Tasks.Task<PublicOTEService.GetIDAAllPeriodEResponse> GetIDAAllPeriodEAsync(System.DateTime StartDate, System.DateTime EndDate, int StartPeriod, int EndPeriod, PublicOTEService.GetIDAAllPeriodEAuction Auction, bool InEur)
         {
-            ServiceReference1.GetIDAAllPeriodERequest inValue = new ServiceReference1.GetIDAAllPeriodERequest();
+            PublicOTEService.GetIDAAllPeriodERequest inValue = new PublicOTEService.GetIDAAllPeriodERequest();
             inValue.StartDate = StartDate;
             inValue.EndDate = EndDate;
             inValue.StartPeriod = StartPeriod;
             inValue.EndPeriod = EndPeriod;
             inValue.Auction = Auction;
             inValue.InEur = InEur;
-            return ((ServiceReference1.PublicDataServiceSoap)(this)).GetIDAAllPeriodEAsync(inValue);
+            return ((PublicOTEService.PublicDataServiceSoap)(this)).GetIDAAllPeriodEAsync(inValue);
         }
         
         public virtual System.Threading.Tasks.Task OpenAsync()
         {
             return System.Threading.Tasks.Task.Factory.FromAsync(((System.ServiceModel.ICommunicationObject)(this)).BeginOpen(null, null), new System.Action<System.IAsyncResult>(((System.ServiceModel.ICommunicationObject)(this)).EndOpen));
         }
+        
+        #if !NET6_0_OR_GREATER
+        public virtual System.Threading.Tasks.Task CloseAsync()
+        {
+            return System.Threading.Tasks.Task.Factory.FromAsync(((System.ServiceModel.ICommunicationObject)(this)).BeginClose(null, null), new System.Action<System.IAsyncResult>(((System.ServiceModel.ICommunicationObject)(this)).EndClose));
+        }
+        #endif
         
         private static System.ServiceModel.Channels.Binding GetBindingForEndpoint(EndpointConfiguration endpointConfiguration)
         {

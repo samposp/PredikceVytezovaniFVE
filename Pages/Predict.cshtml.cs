@@ -10,7 +10,7 @@ namespace PredikceVytěžováníFVE.Pages
 {
     public class PredictModel : PageModel
     {
-        private readonly PredicitonService prediction = new();
+        //private readonly PredicitonService prediction = new();
         private readonly ILogger<PredictModel> _logger;
 
         public List<string> labels { get; set; } = new();
@@ -25,8 +25,8 @@ namespace PredikceVytěžováníFVE.Pages
             for (int i = 0; i < 24; i++) {
                 labels.Add(i.ToString());
             }
-            await prediction.Hourly();
-            data = prediction.HourlyPrice;
+            //await prediction.Hourly();
+            //data = prediction.HourlyPrice;
 
             //string latitude = "50.79";
             //string longitude = "15.145";
