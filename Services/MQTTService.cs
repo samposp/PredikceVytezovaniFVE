@@ -35,7 +35,7 @@ namespace PredikceVytěžováníFVE.Services
             return await mqttClient.ConnectAsync(options);
         }
 
-        public async Task DisConnect() {
+        public async Task Disconnect() {
             await mqttClient.DisconnectAsync();
         }
         public async Task Subscribe(string topic, Func<MqttApplicationMessageReceivedEventArgs, Task> callback)

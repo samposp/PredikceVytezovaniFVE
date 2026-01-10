@@ -32,8 +32,9 @@ namespace PredikceVytěžováníFVE.Pages
 
         private void GetData() {
             string date = DateTime.Now.ToString("d.M.yyyy");
-            List<MqttData> chartData = _db.mqttData.Where(x => x.Date.Equals(date)).OrderBy(x => x.Time).ToList();
-            initData = ConverHelper.ToFVEData(chartData.Last());
+            date = "28.2.2025";
+            List<MqttData> chartData = _db.MqttData.Where(x => x.Date.Equals(date)).OrderBy(x => x.Time).ToList();
+            initData = ConverterHelper.ToFVEData(chartData.Last());
             BatteryLevel = chartData.Select(x => x.SoC).ToList();
             Timestapms = chartData.Select(x => x.Time).ToList();
         } 
