@@ -28,7 +28,7 @@ namespace WebApplication1.Pages
             }
             string date = DateTime.Now.ToString("d.M.yyyy");
             date = "28.2.2025";
-            List<MqttData> chartData = db.MqttData.Where(x => x.Date.Equals(date)).OrderBy(x => x.Time).ToList();
+            //List<MqttData> chartData = db.MqttData.Where(x => x.Date.Equals(date)).OrderBy(x => x.Time).ToList();
             //initData = ConverterHelper.ToFVEData(chartData.Last());
 
             initData = new() {
