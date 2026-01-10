@@ -14,7 +14,7 @@ namespace PredikceVytěžováníFVE.Migrations
                 name: "mqttBos");
 
             migrationBuilder.CreateTable(
-                name: "mqttData",
+                name: "MqttData",
                 columns: table => new
                 {
                     Date = table.Column<string>(type: "TEXT", nullable: false),
@@ -45,7 +45,7 @@ namespace PredikceVytěžováníFVE.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "mqttData");
+                name: "MqttData");
 
             migrationBuilder.CreateTable(
                 name: "mqttBos",

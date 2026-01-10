@@ -11,8 +11,8 @@ using PredikceVytěžováníFVE.Data;
 namespace PredikceVytěžováníFVE.Migrations
 {
     [DbContext(typeof(FVEDbContext))]
-    [Migration("20250320125047_add_timestamp")]
-    partial class add_timestamp
+    [Migration("20251229211334_Mqtt data changes")]
+    partial class Mqttdatachanges
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -20,19 +20,25 @@ namespace PredikceVytěžováníFVE.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.2");
 
-            modelBuilder.Entity("PredikceVytěžováníFVE.Data.testData", b =>
+            modelBuilder.Entity("PredikceVytěžováníFVE.Models.DB.SpotBo", b =>
                 {
-                    b.Property<DateTime>("dateTime")
+                    b.Property<DateTime>("DateTime")
                         .HasColumnType("TEXT");
 
-                    b.HasKey("dateTime");
+                    b.Property<decimal>("Value")
+                        .HasColumnType("TEXT");
 
-                    b.ToTable("testData");
+                    b.HasKey("DateTime");
+
+                    b.ToTable("SpotData");
                 });
 
-            modelBuilder.Entity("PredikceVytěžováníFVE.Models.DB.MqttDataBto", b =>
+            modelBuilder.Entity("PredikceVytěžováníFVE.Models.MqttData", b =>
                 {
-                    b.Property<DateTime>("TimeStamp")
+                    b.Property<string>("Date")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Time")
                         .HasColumnType("TEXT");
 
                     b.Property<double>("BUY")
@@ -41,10 +47,16 @@ namespace PredikceVytěžováníFVE.Migrations
                     b.Property<double>("BUY_T")
                         .HasColumnType("REAL");
 
-                    b.Property<double>("Consumed")
+                    b.Property<double>("Charge")
                         .HasColumnType("REAL");
 
-                    b.Property<double>("Consumed_T")
+                    b.Property<double>("Consumption")
+                        .HasColumnType("REAL");
+
+                    b.Property<double>("Discharge")
+                        .HasColumnType("REAL");
+
+                    b.Property<double>("Feed")
                         .HasColumnType("REAL");
 
                     b.Property<double>("FromBAT")
@@ -53,10 +65,19 @@ namespace PredikceVytěžováníFVE.Migrations
                     b.Property<double>("FromBAT_T")
                         .HasColumnType("REAL");
 
-                    b.Property<double>("PRICE_CZK")
+                    b.Property<int>("GRID_LIMIT")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<double>("Input")
                         .HasColumnType("REAL");
 
-                    b.Property<double>("PVForecast")
+                    b.Property<double>("Load")
+                        .HasColumnType("REAL");
+
+                    b.Property<double>("Output")
+                        .HasColumnType("REAL");
+
+                    b.Property<double>("PRICE_CZK")
                         .HasColumnType("REAL");
 
                     b.Property<double>("PVenergy")
@@ -68,13 +89,43 @@ namespace PredikceVytěžováníFVE.Migrations
                     b.Property<int>("P_BAT")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("P_EPS")
+                    b.Property<int>("P_Batt")
                         .HasColumnType("INTEGER");
+
+                    b.Property<double>("P_EPS")
+                        .HasColumnType("REAL");
 
                     b.Property<int>("P_GRID")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("P_GRID_L1")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("P_GRID_L2")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("P_GRID_L3")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("P_HOME")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("P_HOME_L1")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("P_HOME_L2")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("P_HOME_L3")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("P_Inv")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("P_OffGr")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("P_OnGr")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("P_PV")
@@ -89,50 +140,15 @@ namespace PredikceVytěžováníFVE.Migrations
                     b.Property<int>("SoC")
                         .HasColumnType("INTEGER");
 
-                    b.Property<double>("Temp24h")
-                        .HasColumnType("REAL");
-
-                    b.Property<double>("Temp48h")
-                        .HasColumnType("REAL");
-
                     b.Property<double>("ToBAT")
                         .HasColumnType("REAL");
 
                     b.Property<double>("ToBAT_T")
                         .HasColumnType("REAL");
 
-                    b.Property<double>("consPredict")
-                        .HasColumnType("REAL");
+                    b.HasKey("Date", "Time");
 
-                    b.HasKey("TimeStamp");
-
-                    b.ToTable("mqttData");
-                });
-
-            modelBuilder.Entity("PredikceVytěžováníFVE.Models.DB.TimeChartData<double>", b =>
-                {
-                    b.Property<DateTime>("TimeStamp")
-                        .HasColumnType("TEXT");
-
-                    b.Property<double>("Value")
-                        .HasColumnType("REAL");
-
-                    b.HasKey("TimeStamp");
-
-                    b.ToTable("spotData");
-                });
-
-            modelBuilder.Entity("PredikceVytěžováníFVE.Models.DB.TimeChartData<int>", b =>
-                {
-                    b.Property<DateTime>("TimeStamp")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("Value")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("TimeStamp");
-
-                    b.ToTable("forecastData");
+                    b.ToTable("MqttData");
                 });
 #pragma warning restore 612, 618
         }
