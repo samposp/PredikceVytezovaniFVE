@@ -4,6 +4,7 @@ using Newtonsoft.Json.Linq;
 using PredikceVytěžováníFVE.Data;
 using PredikceVytěžováníFVE.Helpers;
 using PredikceVytěžováníFVE.Hubs;
+using PredikceVytěžováníFVE.Models;
 using PredikceVytěžováníFVE.Models.DB;
 using System.Text.Json;
 using System.Text.Json.Nodes;
