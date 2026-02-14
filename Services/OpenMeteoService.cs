@@ -22,7 +22,7 @@ namespace PredikceVytěžováníFVE.Services {
             return uriBuilder.ToString();
         }
 
-        async public Task<OpenMeteoTemperature> GetTemperature(string latitude, string longitude) {
+        async public Task<OpenMeteoTemperature> GetTomorrowTemperature(string latitude, string longitude) {
             string uri = GetUri(latitude, longitude);
             HttpResponseMessage response = await client.GetAsync(uri);
             if (response.IsSuccessStatusCode) {

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.SignalR;
+using Microsoft.EntityFrameworkCore;
 using MQTTnet;
 using Newtonsoft.Json.Linq;
 using PredikceVytěžováníFVE.Data;
@@ -52,22 +53,12 @@ namespace PredikceVytěžováníFVE.Services
                         return;
                     }
                     mqttMessage.FullMessage = message;
+                    //mqttMessage.DateTime = DateTime.Parse(mqttMessage.Date + " " + mqttMessage.Time);
+
                     using IServiceScope scope = _serviceProvider.CreateScope();
-                    FVEDbContext _db = scope.ServiceProvider.GetRequiredService<FVEDbContext>();
-
-                    bool entryExists = _db.MqttData.Any(x => x.Date.Equals(mqttMessage.Date) && x.Time.Equals(mqttMessage.Time));
-
-                    if (!entryExists)
-                    {
-                        _logger.LogInformation($"Saving mqttMessage to DB");
-                        _db.Add(mqttMessage);
-                        await _db.SaveChangesAsync();
+                    MqttDataService mqttDataService = scope.ServiceProvider.GetRequiredService<MqttDataService>();
+                    if (await mqttDataService.SaveMqttData(mqttMessage))
                         await _hubContext.Clients.All.SendAsync("ReceiveMqtt", ConverterHelper.ToFVEData(mqttMessage));
-                    }
-                    else
-                    {
-                        _logger.LogInformation($"Entry for {mqttMessage.Date} {mqttMessage.Time} already exists. Skipping save.");
-                    }
                 });
             }
             catch (Exception ex)

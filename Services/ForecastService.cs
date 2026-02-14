@@ -1,31 +1,42 @@
 ﻿using Microsoft.AspNetCore.Http.Extensions;
+using PredikceVytěžováníFVE.Data;
 using PredikceVytěžováníFVE.Helpers;
 using PredikceVytěžováníFVE.Models;
 using PredikceVytěžováníFVE.Models.Forecast;
 using System.IO;
+using System.Linq;
 using System.Net.Http.Headers;
 using System.Xml.Serialization;
 
 namespace PredikceVytěžováníFVE.Services {
-    public class ForecastService {
+    public class ForecastService(IServiceProvider serviceProvider) {
 
         private static readonly string host = "https://api.forecast.solar/estimate/";
-        private HttpClient client = new HttpClient();
 
-        public ForecastService()
-        {
-            client.BaseAddress = new Uri(host);
-        }
+        // TODO get from config
+        string _latitude = "50.79";
+        string _longitude = "15.145";
+        string _azimuth = "-15";
+        string _peakPower = "19.9";
+        string _declination = "35";
 
-        public async Task<WatthourResponse> GetWatthours(string latitude, string longitude, string peakPower, string declination = "0", string azimuth = "0") {
+        public async Task<List<TimeValuePair>> GetTomorrowWatthours() 
+        {    
+            DateTime tomorrow = DateTime.Now.AddDays(1);
+            tomorrow = DateTime.Now;
+            using var scope = serviceProvider.CreateScope();
+            var db = scope.ServiceProvider.GetRequiredService<FVEDbContext>();
+            var storedData = db.ForecastSolarData.Where(p => p.TimeStamp.Date == tomorrow.Date);
+            if (storedData.Any())
+                return storedData.Select(d => new TimeValuePair(d.TimeStamp, d.Value)).ToList();
 
             List<string> path = new() {
                 "watthours",
-                latitude,
-                longitude,
-                declination,
-                azimuth,
-                peakPower
+                _latitude,
+                _longitude,
+                _declination,
+                _azimuth,
+                _peakPower
             };
 
             Dictionary<string, string> queryParams = new() {
@@ -34,6 +45,8 @@ namespace PredikceVytěžováníFVE.Services {
 
             string url = Helpers.UriHelper.CreateUrl(path, queryParams);
 
+            HttpClient client = new();
+            client.BaseAddress = new Uri(host);
             client.DefaultRequestHeaders
                   .Accept
                   .Add(new MediaTypeWithQualityHeaderValue("application/xml"));
@@ -49,7 +62,31 @@ namespace PredikceVytěžováníFVE.Services {
                 if (deserialized == null)
                     throw new HttpRequestException("No content found");
 
-                return deserialized;
+
+
+                var hourList = DataFilterHelper.GetHourlyDateTimes(tomorrow);
+                var cummulativeList = deserialized.Result.Data.ToList();
+                decimal lastValue = 0;
+                List<TimeValuePair> result = [];
+                foreach(var hour in hourList)
+                {
+                    decimal value = 0;
+                    var data = cummulativeList.Where(x => x.Key.Date == hour.Date && x.Key.Hour == hour.Hour).LastOrDefault();
+                    if (data != null)
+                    {
+                        value = data.Value - lastValue;
+                        lastValue = data.Value;
+                    }
+                    result.Add(new (hour, value));
+                }
+
+                db.ForecastSolarData.AddRange(result.Select(r => new Models.DB.ForecastSolarBo {
+                    TimeStamp = r.DateTime,
+                    Value = r.Value
+                }));
+                await db.SaveChangesAsync();
+
+                return result;
             }
             string errorMessage = await response.Content.ReadAsStringAsync();
             throw new HttpRequestException(errorMessage);
@@ -72,7 +109,8 @@ namespace PredikceVytěžováníFVE.Services {
             };
 
             string url = Helpers.UriHelper.CreateUrl(path, queryParams);
-
+            HttpClient client = new();
+            client.BaseAddress = new Uri(host);
             client.DefaultRequestHeaders
                   .Accept
                   .Add(new MediaTypeWithQualityHeaderValue("application/xml"));

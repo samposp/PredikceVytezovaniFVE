@@ -1,3 +1,4 @@
+using EasyCronJob.Core;
 using Microsoft.EntityFrameworkCore;
 using NLog;
 using NLog.Extensions.Logging;
@@ -5,7 +6,6 @@ using NLog.Web;
 using PredikceVytìžováníFVE.Data;
 using PredikceVytìžováníFVE.Hubs;
 using PredikceVytìžováníFVE.Services;
-using EasyCronJob.Core;
 
 // Early init of NLog to allow startup and exception logging, before host is built
 var config = new ConfigurationBuilder()
@@ -34,20 +34,23 @@ try
     });
     builder.Services.AddHostedService<MqttBackgroundTask>();
     builder.Services.AddSingleton<SpotSoapService>();
-    builder.Services.AddSingleton<PredicitonService>();
+    builder.Services.AddSingleton<PredictitonService>();
+    builder.Services.AddTransient<PVForecastService>();
+    builder.Services.AddTransient<ForecastService>();
+    builder.Services.AddTransient<MqttDataService>();
     builder.Services.ApplyResulation<PredictionSechduleJob>(options =>
     {
         options.CronExpression = "0 23 * * *";
         options.TimeZoneInfo = TimeZoneInfo.Local;
         options.CronFormat = Cronos.CronFormat.Standard;
     });
-builder.Services.AddControllers();
-builder.Services.AddOpenApiDocument();
-builder.Services.AddRazorPages();
-builder.Services.AddSignalR();
-builder.Services.AddDbContext<FVEDbContext>(options => {
-    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
-});
+    builder.Services.AddControllers();
+    builder.Services.AddOpenApiDocument();
+    builder.Services.AddRazorPages();
+    builder.Services.AddSignalR();
+    builder.Services.AddDbContext<FVEDbContext>(options => {
+        options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
+    });
 
 
     var app = builder.Build();
@@ -71,6 +74,12 @@ builder.Services.AddDbContext<FVEDbContext>(options => {
     app.UseStaticFiles();
     app.MapRazorPages();
     app.MapHub<MqttHub>("/mqtthub");
+
+    using (var serviceScope = app.Services.GetService<IServiceScopeFactory>()?.CreateScope())
+    {
+        var context = serviceScope?.ServiceProvider.GetRequiredService<FVEDbContext>();
+        context?.Database.Migrate();
+    }
 
     app.Run();
 }

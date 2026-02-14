@@ -1,42 +1,77 @@
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using PredikceVytěžováníFVE.Data;
+using PredikceVytěžováníFVE.Helpers;
 using PredikceVytěžováníFVE.Models.OpenWeather;
 using PredikceVytěžováníFVE.Services;
 
-namespace PredikceVytěžováníFVE.Pages {
-    public class PredictModel : PageModel
+namespace PredikceVytěžováníFVE.Pages; 
+public class PredictModel(ILogger<PredictModel> logger, PVForecastService fveForecastService, SpotSoapService spot, PredictitonService predictionService, ForecastService forecastService) : PageModel
+{
+    [BindProperty]
+    public DateTime DataDate { get; set; }
+
+    [BindProperty]
+    public List<DateTime> SpotTimeStamps { get; set; } = [];
+    [BindProperty]
+    public List<float> SpotPrice { get; set; } = [];
+
+    [BindProperty]
+    public List<DateTime> FVEPredictionTimeStamps { get; set; } = [];
+    [BindProperty]
+    public List<float> FVEPrediction { get; set; } = [];
+
+    [BindProperty]
+    public List<DateTime> ConsumptionPredictionTimeStamps { get; set; } = [];
+    [BindProperty]
+    public List<float> ConsumptionPrediction { get; set; } = [];
+
+    [BindProperty]
+    public bool UseFVEProduction { get; set; } = true;
+
+    [BindProperty]
+    public List<DateTime> PredictedCostTimeStamps { get; set; } = [];
+    [BindProperty]
+    public List<float> PredictedCost { get; set; } = [];
+    public async Task OnGet() {
+
+        DataDate = DateTime.Now;
+        DataDate = new DateTime(2026, 1, 27);
+
+        await GetData();
+    }
+
+    public async Task OnPost()
     {
-        //private readonly PredicitonService prediction = new();
-        private readonly ILogger<PredictModel> _logger;
-        private readonly FVEDbContext _database;
+        await GetData();
+        logger.LogError(UseFVEProduction.ToString());
+    }
 
-        public List<string> labels { get; set; } = new();
-        public List<int> data { get; set; } = new();
+    private async Task GetData()
+    {
+        var spotData = await spot.GetSoapData(DataDate);
+        SpotTimeStamps = spotData?.Select(x => x.DateTime).ToList() ?? [];
+        SpotPrice = spotData?.Select(x => (float)x.Value).ToList() ?? [];
 
+        var fveForecast = await forecastService.GetTomorrowWatthours();
+        //var fveForecast = fveForecastService.GetPrediction(DataDate);
+        FVEPredictionTimeStamps = fveForecast?.Select(x => x.DateTime).ToList() ?? [];
+        FVEPrediction = fveForecast?.Select(x => (float)x.Value).ToList() ?? [];
 
-        public PredictModel(ILogger<PredictModel> logger, FVEDbContext database) {
-            _logger = logger;
-            _database = database;
-        }
+        var consumptionPred = await predictionService.ConsumptionPrediction();
+        ConsumptionPredictionTimeStamps = DataFilterHelper.GetHourlyDateTimes(DataDate);
+        ConsumptionPrediction = ConsumptionPredictionTimeStamps.Select(x => (float)consumptionPred/24).ToList();
 
-        public async Task OnGet() {
-            for (int i = 0; i < 24; i++) {
-                labels.Add(i.ToString());
-            }
-            //await prediction.Hourly();
-            //data = prediction.HourlyPrice;
+        PredictedCostTimeStamps = DataFilterHelper.GetHourlyDateTimes(DataDate);
+        PredictedCost = [];
+        for (int i = 0; i < PredictedCostTimeStamps.Count; i++)
+        {
+            var consumption = ConsumptionPrediction[i];
+            var spot = SpotPrice[i] / 1000; // From EUR/MWh to EUR/kWh
+            var fveProduction = UseFVEProduction ? FVEPrediction[i] / 10 : 0;
 
-            DateTime today = DateTime.Now.AddDays(-1);
-
-            //var forecast = _database.forecastData.Where(x => x.TimeStamp == today).OrderBy(x=>x.TimeStamp);
-            //labels = forecast.Select(x=>x.TimeStamp.ToShortTimeString()).ToList();
-
-            data = new();
-            int previous = 0;
-            //forecast.Select(x => x.Value).ToList().ForEach(item => {
-            //    data.Add(item - previous);
-            //    previous = item;
-            //});
+            PredictedCost.Add((consumption - fveProduction) * spot);
         }
     }
+
 }

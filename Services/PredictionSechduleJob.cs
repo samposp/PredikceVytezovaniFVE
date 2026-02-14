@@ -5,9 +5,9 @@ namespace PredikceVytěžováníFVE.Services;
 public class PredictionSechduleJob : CronJobService
 {
     private readonly ILogger<PredictionSechduleJob> _logger;
-    private readonly PredicitonService _predictionService;
+    private readonly PredictitonService _predictionService;
 
-    public PredictionSechduleJob(ICronConfiguration<PredictionSechduleJob> cronConfiguration, ILogger<PredictionSechduleJob> logger, PredicitonService predictionService) 
+    public PredictionSechduleJob(ICronConfiguration<PredictionSechduleJob> cronConfiguration, ILogger<PredictionSechduleJob> logger, PredictitonService predictionService) 
         : base(cronConfiguration.CronExpression,cronConfiguration.TimeZoneInfo,cronConfiguration.CronFormat)
     {
         _logger = logger;

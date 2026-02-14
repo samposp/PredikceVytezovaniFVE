@@ -1,18 +1,92 @@
 ﻿@page
-@model PredikceVytěžováníFVE.Pages.PredictModel
+@model PredictModel
 @{
     ViewData["Title"] = "FVE data";
 }
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <div class="text-center">
-     <div class="box-body">
-        @{Chart(Model.labels, Model.data, "Price", "bar");}
-        @Html.Raw(Json.Serialize(Model.labels))
-    </div>  
+    <div class="box-body">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-2 col-md-3 col-sm-4">
+                    <div class="card mb-4">
+                        <form method="post">
+                            @* @Html.AntiForgeryToken() *@
+                            <input asp-for="DataDate" type="date" class="form-control" onchange="this.form.submit()" />
+                            <input type="checkbox" asp-for="UseFVEProduction" onchange="this.form.submit()" />
+
+                        </form>
+                    </div>
+                </div>
+
+                @{
+                    Chart(Model.SpotTimeStamps, Model.SpotPrice, "Spot [EUR/MWh]");
+                    Chart(Model.FVEPredictionTimeStamps, Model.FVEPrediction, "predpoved FVE ");
+                    Chart(Model.ConsumptionPredictionTimeStamps, Model.ConsumptionPrediction, "consumption [kWh]", "bar");
+                    Chart(Model.PredictedCostTimeStamps, Model.PredictedCost, "Predicted cost [EUR]", "bar");
+
+                }
+            </div>
+        </div>
+        @* @{Chart(Model.labels, Model.data, "Price", "bar");} *@
+        @* @Html.Raw(Json.Serialize(Model.labels)) *@
+
+    </div>
 </div>
 
+@{
+    void Chart<L, V>(List<L> labels, List<V> values, string chartName, string type = "line")
+    {
+        <div class="col-xl-6 col-md-8 col-sm-12">
+            <div class="card mb-4">
+                <canvas id="@chartName" style="width:100%; height:300px"></canvas>
+            </div>
+        </div>
+        <script type="text/javascript">
+            $(function () {
+                let ctx = document.getElementById("@chartName").getContext('2d');
+                let data = {
+                    labels: JSON.parse('@Html.Raw(Json.Serialize(labels))'),
+                    datasets: [{
+                        label: "@chartName",
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1,
+                        data: JSON.parse('@Html.Raw(Json.Serialize(values))')
+                    }]
+                };
 
+                var options = {
+                    responsive: true,
+                    scales: {
+                        x: {
+                            type: 'time',
+                            time: {
+                                unit: 'hour',
+                                displayFormats: {
+                                    hour: "HH:mm"
+                                }
+                            }
+                        },
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+
+                var myChart = new Chart(ctx, {
+                    options: options,
+                    data: data,
+                    type: "@type"
+                });
+            });
+        </script>
+    }
+}
+
+@* 
 @{
     void Chart<L, V>(List<L> labels, List<V> values, string chartName, string type = "line") {
             <div class="col-xl-6 col-md-8 col-sm-12">
@@ -88,4 +162,4 @@
                 });
             </script>
     }
-}
+} *@

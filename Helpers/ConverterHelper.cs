@@ -26,5 +26,12 @@ namespace PredikceVytěžováníFVE.Helpers {
                 Value = (decimal)spotPrice.Price
             };
         }
+        public static DateTime ToDateTime(string? date, string? time)
+        {
+            string format = "dd.MM.yyyy|HH:mm:ss";
+            string dateTime = $"{date}|{time}";
+
+            return  DateTime.ParseExact(dateTime, format, System.Globalization.CultureInfo.InvariantCulture);
+        }
     }
 }

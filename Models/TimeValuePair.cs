@@ -1,11 +1,16 @@
-﻿namespace PredikceVytěžováníFVE.Models {
-    public readonly struct TimeValuePair {
-        public readonly DateTime Time;
-        public readonly decimal Value;
+﻿using Microsoft.EntityFrameworkCore;
+using PredikceVytěžováníFVE.Helpers;
 
-        public TimeValuePair(DateTime time, decimal value) {
-            Time = time;
-            Value = value;
-        }
-    };
-}
+namespace PredikceVytěžováníFVE.Models;
+
+[PrimaryKey(nameof(DateTime))]
+public class TimeValuePair {
+    public DateTime DateTime { get; set; }
+    public decimal Value { get; set; }
+
+    public TimeValuePair(DateTime time, decimal value) {
+        DateTime = time;
+        Value = value;
+    }
+    public TimeValuePair() { }
+};

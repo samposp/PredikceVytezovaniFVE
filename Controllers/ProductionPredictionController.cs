@@ -8,22 +8,22 @@ namespace PredikceVytěžováníFVE.Controllers
     [ApiController]
     public class ProductionPredictionController : ControllerBase
     {
-        readonly private PVForcastService pvForcastService = new();
+        //readonly private PVForcastService pvForcastService = new();
         
-        readonly private ForecastService forecastService = new();
+        //readonly private ForecastService forecastService = new();
 
-        readonly private MQTTService mqttService = new("147.230.76.38");
+        //readonly private MQTTService mqttService = new("147.230.76.38");
 
         [HttpGet]
         public async void GetPrediction()
-        {
+        {   
             string latitude = "50.79";
             string longitude = "15.145";
             string azimuth = "-15";
             string peakPower = "19.9";
             string declination = "35";
-            var a = await forecastService.GetWatthours(latitude, longitude, peakPower, declination, azimuth);
-            Console.WriteLine(a);
+            //var a = await forecastService.GetWatthours(latitude, longitude, peakPower, declination, azimuth);
+            //Console.WriteLine(a);
         }
 
         [HttpGet("/Spot")]
