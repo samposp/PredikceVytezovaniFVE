@@ -1,0 +1,15 @@
+{
+  "Fve": {
+    "Latitude": "50.793",
+    "Longitude": "15.145",
+    "PeakPower": 19.9,
+    "BatteryCapacity": 2,
+    "Declination": 35,
+    "Azimuth": -15
+  },
+  "Api": {
+    "MqttBroker": "cassandra2.tul.cz",
+    "MqttTopic": "FVE/Ibehej_TX",
+    "PvForecastApiKey": "esvk7s"
+  }
+}

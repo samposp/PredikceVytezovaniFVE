@@ -32,4 +32,9 @@
   <ItemGroup>
     <PackageReference Include="System.ServiceModel.Primitives" Version="8.*" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Update="settings.config.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
 </Project>

@@ -1,18 +1,29 @@
 ﻿using PredikceVytěžováníFVE.Data;
 using PredikceVytěžováníFVE.Models;
 using PublicOTEService;
+using SQLitePCL;
 
 namespace PredikceVytěžováníFVE.Services; 
-public class PredictitonService(SpotSoapService soapClient, PVForecastService forecastService, ILogger<PredictitonService> logger) {
+public class PredictitonService {
     public List<double> HourlyEnergy = new();
     public List<double> HourlyPrice = new();
 
     private readonly OpenMeteoService meteoService = new();
+    private readonly SpotSoapService soapClient;
+    private readonly PVForecastService forecastService;
+    private readonly ILogger<PredictitonService> logger;
 
-    // TODO get from config
-    private const string _latitude = "50.79";
-    private const string _longitude = "15.145";
+    private readonly string _latitude;
+    private readonly string _longitude;
 
+    public PredictitonService(SpotSoapService soapClient, PVForecastService forecastService, ILogger<PredictitonService> logger, ConfigurationService configuration)
+    {
+        this.soapClient = soapClient;
+        this.forecastService = forecastService;
+        this.logger = logger;
+        _latitude = configuration.Settings.Fve.Latitude ?? throw new Exception("Missing latitude");
+        _longitude = configuration.Settings.Fve.Longitude ?? throw new Exception("Missing longitude");
+    }
 
     public async Task<double> ConsumptionPrediction() {
 

@@ -6,17 +6,26 @@ using System;
 
 namespace PredikceVytěžováníFVE.Services {
     // !!!This is the right one!!!
-    public class PVForecastService(IServiceProvider serviceProvider) {
+    public class PVForecastService {
 
         private readonly string host = "https://www.pvforecast.cz/api/";
+        private readonly IServiceProvider serviceProvider;
 
-        // TODO: Read from config to be able to change it
-        private readonly string _apiKey = "esvk7s";
-        private string _latitude = "50.793";
-        private string _longitude = "15.138";
+        private readonly string _apiKey;
+        private string _latitude;
+        private string _longitude;
 
 
         // http://www.pvforecast.cz/api/?key=esvk7s&lat=50.793&lon=15.138
+
+        public PVForecastService(IServiceProvider serviceProvider, ConfigurationService configuration)
+        {
+            this.serviceProvider = serviceProvider;
+            _latitude = configuration.Settings.Fve.Latitude ?? throw new Exception("Missing latitude");
+            _longitude = configuration.Settings.Fve.Longitude ?? throw new Exception("Missing longitude");
+            _apiKey = configuration.Settings.Api.PvForecastApiKey ?? throw new Exception("Missing PvForecastApiKey");
+
+        }
 
         public IEnumerable<TimeValuePair> GetPrediction(DateTime date)
         {

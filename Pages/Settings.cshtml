@@ -1,0 +1,88 @@
+﻿@page
+@model PredikceVytěžováníFVE.Pages.SettingsModel
+@{
+    ViewData["Title"] = "Nastavení";
+}
+
+<form method="post">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="container">
+                    <div class="row">
+                        <div class="form-group col-xl-4 col-md-6 col-sm-8">
+                            <label class="control-label">Latitude</label>
+                            <input asp-for="FveInfo.Latitude" type="text" class="form-control" />
+                        </div>
+                        <div class="form-group col-xl-4 col-md-6 col-sm-8">
+                            <label class="control-label">Longitude</label>
+                            <input asp-for="FveInfo.Longitude" type="text" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-xl-4 col-md-6 col-sm-8">
+                            <label class="control-label">PeakPower</label>
+                            <input asp-for="FveInfo.PeakPower" type="number" class="form-control" />
+                        </div>
+                        <div class="form-group col-xl-4 col-md-6 col-sm-8">
+                            <label class="control-label">BatteryCapacity</label>
+                            <input asp-for="FveInfo.BatteryCapacity" type="number" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-xl-4 col-md-6 col-sm-8">
+                            <label class="control-label">Declination</label>
+                            <input asp-for="FveInfo.Declination" type="number" class="form-control" />
+                        </div>
+                        <div class="form-group col-xl-4 col-md-6 col-sm-8">
+                            <label class="control-label">Azimuth</label>
+                            <input asp-for="FveInfo.Azimuth" type="number" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="container">
+                    <div class="row">
+                        <div class="form-group col-xl-4 col-md-6 col-sm-8">
+                            <label class="control-label">MqttBroker</label>
+                            <input asp-for="ApiInfo.MqttBroker" type="text" class="form-control" />
+                        </div>
+                        <div class="form-group col-xl-4 col-md-6 col-sm-8">
+                            <label class="control-label">MqttTopic</label>
+                            <input asp-for="ApiInfo.MqttTopic" type="text" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-xl-4 col-md-6 col-sm-8">
+                            <label class="control-label">PvForecastApiKey</label>
+                            <input asp-for="ApiInfo.PvForecastApiKey" type="text" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-xl-1 col-md-1 col-sm-1 m-2">
+                <button type="submit" class="btn btn-primary">Uložit změny</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+@{
+    void Card<T>(string title, string id, string initValue)
+    {
+        <div class="col-xl-2 col-md-3 col-sm-4">
+            <div class="card bg-secondary mb-4">
+                <div class="card-header">
+                    @title
+                </div>
+                <div class="card-body" id=@id>
+                    @initValue
+                </div>
+            </div>
+        </div>
+    }
+}

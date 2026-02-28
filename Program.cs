@@ -18,11 +18,12 @@ var logger = LogManager.Setup()
 logger.Info("init main");
 try
 {
-
     var builder = WebApplication.CreateBuilder(args);
 
     builder.Logging.ClearProviders();
     builder.Host.UseNLog();
+
+    builder.Services.AddSingleton<ConfigurationService>();
 
     builder.Services.AddControllers();
     builder.Services.AddOpenApiDocument();

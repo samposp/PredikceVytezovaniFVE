@@ -16,15 +16,18 @@ namespace PredikceVytěžováníFVE.Services
     {
 
         private readonly IHubContext<MqttHub> _hubContext;
-        private readonly MQTTService mqttService = new("cassandra2.tul.cz");
+        private readonly MQTTService mqttService;
         private readonly ILogger<MqttBackgroundTask> _logger;
         private readonly IServiceProvider _serviceProvider;
+        private readonly string mqttTopic;
 
-        public MqttBackgroundTask(IHubContext<MqttHub> hubContext, ILogger<MqttBackgroundTask> logger, IServiceProvider serviceProvider)
+        public MqttBackgroundTask(IHubContext<MqttHub> hubContext, ILogger<MqttBackgroundTask> logger, IServiceProvider serviceProvider, ConfigurationService configuration)
         {
             _hubContext = hubContext;
             _logger = logger;
             _serviceProvider = serviceProvider;
+            mqttService = new(configuration.Settings.Api.MqttBroker ?? throw new Exception("missing mqtt broker"));
+            mqttTopic = configuration.Settings.Api.MqttTopic  ?? throw new Exception("missing mqtt topic");
         }
 
         public async Task StartAsync(CancellationToken cancellationToken)
@@ -41,7 +44,7 @@ namespace PredikceVytěžováníFVE.Services
 
             try
             {
-                await mqttService.Subscribe("FVE/Ibehej_TX", async e =>
+                await mqttService.Subscribe(mqttTopic, async e =>
                 {
                     string message = e.ApplicationMessage.ConvertPayloadToString();
                     _logger.LogInformation("Messege recieved from mqtt: {message}", message);

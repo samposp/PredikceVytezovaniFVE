@@ -9,16 +9,27 @@ using System.Net.Http.Headers;
 using System.Xml.Serialization;
 
 namespace PredikceVytěžováníFVE.Services {
-    public class ForecastService(IServiceProvider serviceProvider) {
+    public class ForecastService {
 
         private static readonly string host = "https://api.forecast.solar/estimate/";
+        private readonly IServiceProvider serviceProvider;
 
         // TODO get from config
-        string _latitude = "50.79";
-        string _longitude = "15.145";
-        string _azimuth = "-15";
-        string _peakPower = "19.9";
-        string _declination = "35";
+        string _latitude;
+        string _longitude;
+        string _azimuth;
+        string _peakPower;
+        string _declination;
+
+        public ForecastService(IServiceProvider serviceProvider, ConfigurationService configuration)
+        {
+            this.serviceProvider = serviceProvider;
+            _latitude = configuration.Settings.Fve.Latitude ?? throw new Exception("Missing latitude");
+            _longitude = configuration.Settings.Fve.Longitude ?? throw new Exception("Missing logitude");
+            _azimuth = configuration.Settings.Fve.Azimuth.ToString() ?? "0";
+            _peakPower = configuration.Settings.Fve.PeakPower.ToString()?? throw new Exception("Missing preak power");
+            _declination = configuration.Settings.Fve.Declination.ToString() ?? "0";
+        }
 
         public async Task<List<TimeValuePair>> GetTomorrowWatthours() 
         {    
