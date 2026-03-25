@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PredikceVytěžováníFVE.Data;
 
@@ -10,27 +11,14 @@ using PredikceVytěžováníFVE.Data;
 namespace PredikceVytěžováníFVE.Migrations
 {
     [DbContext(typeof(FVEDbContext))]
-    partial class FVEDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260319165147_Add weather forecast")]
+    partial class Addweatherforecast
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.2");
-
-            modelBuilder.Entity("PredikceVytěžováníFVE.Models.DB.ConsumptionForecastBo", b =>
-                {
-                    b.Property<DateTime>("TimeStamp")
-                        .HasColumnType("TEXT")
-                        .HasColumnName("index");
-
-                    b.Property<decimal?>("Forecast")
-                        .HasColumnType("TEXT")
-                        .HasColumnName("forecast");
-
-                    b.HasKey("TimeStamp");
-
-                    b.ToTable("ConsumptionForecastData");
-                });
 
             modelBuilder.Entity("PredikceVytěžováníFVE.Models.DB.ForecastSolarBo", b =>
                 {
@@ -43,22 +31,6 @@ namespace PredikceVytěžováníFVE.Migrations
                     b.HasKey("TimeStamp");
 
                     b.ToTable("ForecastSolarData");
-                });
-
-            modelBuilder.Entity("PredikceVytěžováníFVE.Models.DB.HourlyBo", b =>
-                {
-                    b.Property<DateTime>("TimeStamp")
-                        .HasColumnType("TEXT");
-
-                    b.Property<decimal?>("P_HOME")
-                        .HasColumnType("TEXT");
-
-                    b.Property<decimal?>("Temperature")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("TimeStamp");
-
-                    b.ToTable("HourlyData");
                 });
 
             modelBuilder.Entity("PredikceVytěžováníFVE.Models.DB.PvForecastBo", b =>

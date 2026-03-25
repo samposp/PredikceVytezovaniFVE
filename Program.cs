@@ -35,7 +35,9 @@ try
     });
     builder.Services.AddHostedService<MqttBackgroundTask>();
     builder.Services.AddSingleton<SpotSoapService>();
+    builder.Services.AddTransient<OpenMeteoService>();
     builder.Services.AddSingleton<PredictitonService>();
+    builder.Services.AddTransient<ConcumptionPredictionService>();
     builder.Services.AddTransient<PVForecastService>();
     builder.Services.AddTransient<ForecastService>();
     builder.Services.AddTransient<MqttDataService>();
@@ -53,12 +55,11 @@ try
         options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
     });
 
-
     var app = builder.Build();
 
     app.UseHttpsRedirection();
     app.UseRouting();
-    app.UseAuthorization();
+    //app.UseAuthorization();
     app.MapControllers();
 
     if (app.Environment.IsDevelopment())

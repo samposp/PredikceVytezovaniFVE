@@ -8,34 +8,29 @@ public class PredictitonService {
     public List<double> HourlyEnergy = new();
     public List<double> HourlyPrice = new();
 
-    private readonly OpenMeteoService meteoService = new();
+    private readonly OpenMeteoService meteoService;
     private readonly SpotSoapService soapClient;
-    private readonly PVForecastService forecastService;
+    private readonly PVForecastService fveforecastService;
     private readonly ILogger<PredictitonService> logger;
 
-    private readonly string _latitude;
-    private readonly string _longitude;
-
-    public PredictitonService(SpotSoapService soapClient, PVForecastService forecastService, ILogger<PredictitonService> logger, ConfigurationService configuration)
+    public PredictitonService(SpotSoapService soapClient, PVForecastService forecastService, ILogger<PredictitonService> logger, OpenMeteoService meteoService)
     {
         this.soapClient = soapClient;
-        this.forecastService = forecastService;
+        this.fveforecastService = forecastService;
         this.logger = logger;
-        _latitude = configuration.Settings.Fve.Latitude ?? throw new Exception("Missing latitude");
-        _longitude = configuration.Settings.Fve.Longitude ?? throw new Exception("Missing longitude");
+        this.meteoService = meteoService;
     }
 
-    public async Task<double> ConsumptionPrediction() {
+    public async Task<double> ConsumptionPrediction(DateTime date) {
 
-        OpenMeteoTemperature meteoResponse = await meteoService.GetTomorrowTemperature(_latitude, _longitude);
-        double minTemp = meteoResponse.daily.temperature_2m_min[0];
-        double maxTemp = meteoResponse.daily.temperature_2m_max[0];
+        var meteoResponse = await meteoService.GetTomorrowTemperature(date);
 
         // from linear regression
-        double coef_min = -1.48756492;
-        double coef_max = -0.52444613;
-        double intercept = 60.11416895;
-        return (intercept + coef_min * minTemp + coef_max * maxTemp);
+        //double coef_min = -1.48756492;
+        //double coef_max = -0.52444613;
+        //double intercept = 60.11416895;
+        //return (intercept + coef_min * minTemp + coef_max * maxTemp);
+        return 1;
     }
 
     public async Task Predict()
@@ -45,19 +40,46 @@ public class PredictitonService {
     public async Task Hourly() {
         
         DateTime tomorrow = DateTime.Now.AddDays(1);
-        IEnumerable<TimeValuePair> pvForecast = await forecastService.GetTommorowPrediciton();
-        List<TimeValuePair>? spot = await soapClient.GetSoapData(tomorrow);
-        if (spot == null)
+        IEnumerable<TimeValuePair> pvForecast = await fveforecastService.GetTommorowPrediciton();
+        //var fveForecast = await forecastService.GetTomorrowWatthours();
+        List<TimeValuePair>? spotData = await soapClient.GetHourlyAverageSoapData(tomorrow);
+        if (spotData == null)
         {
             logger.LogError("Spot data is null, cannot predict");
             return;
         }
 
-        double pred = await ConsumptionPrediction();
+        double pred = await ConsumptionPrediction(tomorrow);
         double hourPred = pred / 24;
         for (int i = 0; i < 24; i++) {
-            HourlyPrice.Add(hourPred * (double)spot[i].Value/1000);
+            HourlyPrice.Add(hourPred * (double)spotData[i].Value/1000); // EUR/kWh
         }
+
+
+        var spotTimeStamps = spotData?.Select(x => x.DateTime).ToList() ?? [];
+        var spotPrice = spotData?.Select(x => (float)x.Value).ToList() ?? [];
+
+        //var fveForecast = fveForecastService.GetPrediction(DataDate);
+        //FVEPredictionTimeStamps = fveForecast?.Select(x => x.DateTime).ToList() ?? [];
+        //FVEPrediction = fveForecast?.Select(x => (float)x.Value / 1000).ToList() ?? [];
+
+        //var consumptionPred = await predictionService.ConsumptionPrediction();
+        //ConsumptionPredictionTimeStamps = DataFilterHelper.GetHourlyDateTimes(DataDate);
+        //ConsumptionPrediction = ConsumptionPredictionTimeStamps.Select(x => (float)consumptionPred/24).ToList();
+
+        //var batteryInitial = 20;
+
+
+        //PredictedCostTimeStamps = DataFilterHelper.GetHourlyDateTimes(DataDate);
+        //PredictedCost = [];
+        //for (int i = 0; i < PredictedCostTimeStamps.Count; i++)
+        //{
+        //    var consumption = ConsumptionPrediction[i];
+        //    var spot = SpotPrice[i] / 1000; // From EUR/MWh to EUR/kWh
+        //    var fveProduction = UseFVEProduction ? FVEPrediction[i] : 0;
+
+        //    PredictedCost.Add((consumption - fveProduction) * spot);
+        //}
     }
 
 }

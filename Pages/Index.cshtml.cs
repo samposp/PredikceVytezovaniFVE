@@ -14,41 +14,45 @@ namespace PredikceVytìžováníFVE.Pages
     public class IndexModel(ILogger<IndexModel> logger, MqttDataService mqttData) : PageModel
     {
 
-        public FVEData initData = new();
+        public MqttData initData = new();
         public List<int> Battery = [];
         public List<DateTime> timestamps = [];
+        public List<float> Consumption = [];
+        public List<float> Production = [];
+        public List<float> Grid = [];
+        //public List<float> ToBat = [];
+        //public List<float> FromBat = [];
+        //public List<float> Sell = [];
+        //public List<float> Buy = [];
+
 
         [BindProperty]
-        public DateTime DataDate { get; set; }
+        public DateTime DataDate { get; set; } = DateTime.Now;
 
         public void OnGet()
         {
-            //DataDate = DateTime.Now.AddDays(-1);
-            DataDate = new DateTime(2026, 1, 22);
-            //var data = await spotService.GetSoapData(DataDate);
             GetData();
-
         }
 
         public void GetData()
         {
             var chartData = mqttData.GetMqttDataByDate(DataDate);
 
-            chartData = DataFilterHelper.FilterDateTime(chartData);
+            chartData = DataFilterHelper.FilterDateTime(chartData, new TimeSpan(0,5,0));
 
             if (chartData.Count != 0)
-                initData = ConverterHelper.ToFVEData(chartData.Last());
+                initData = chartData.Last();
             timestamps = chartData.Select(x => ConverterHelper.ToDateTime(x.Date, x.Time)).ToList();
-            //Battery = chartData.Where(x => x.SoC != null).Select(x => (int)x.SoC!).ToList();
-            Battery = chartData.Where(x => x.P_PV != null).Select(x => (int)x.P_PV!).ToList();
-
+            Battery = chartData.Where(x => x.SoC != null).Select(x => (int)x.SoC!).ToList();
+            Production = chartData.Where(x => x.P_PV != null).Select(x => (float)x.P_PV!).ToList();
+            Consumption = chartData.Where(x => x.P_HOME != null).Select(x => (float)x.P_HOME!).ToList();
+            Grid = chartData.Where(x => x.P_GRID != null).Select(x => (float)-x.P_GRID!).ToList();
+            //ToBat = chartData.Where(x => x.ToBAT != null).Select(x => (float)-x.ToBAT!).ToList();
+            //FromBat = chartData.Where(x => x.FromBAT != null).Select(x => (float)-x.FromBAT!).ToList();
+            //Sell = chartData.Where(x => x.SELL != null).Select(x => (float)x.SELL!).ToList();
+            //Buy = chartData.Where(x => x.BUY != null).Select(x => (float)x.BUY!).ToList();
 
         } 
-
-        public void OnPost()
-        {
-            GetData();
-        }
 
     }
 }

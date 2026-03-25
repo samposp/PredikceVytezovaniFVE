@@ -5,33 +5,65 @@ using PublicOTEService;
 namespace PredikceVytěžováníFVE.Helpers {
     public class ConverterHelper {
         public static FVEData ToFVEData(MqttData message) {
-            return new() {
+            return new()
+            {
                 BatteryPercentage = message.SoC,
                 BatteryOutput = message.P_Batt,
-                PVOutput = message.P_Inv,
+                PVOutput = message.P_PV,
+                Consumption = (float?)message.Consumption,
+                Grid = (float?)message.P_GRID,
+
                 PVEnergyCumulative = message.PVenergy,
                 OutputCumulative = message.Output,
                 InputCumulative = message.Consumption,
-                Timestamp = DateTime.Parse(message.Date + " " + message.Time)
+                Timestamp = ToDateTime(message.Date, message.Time)
             };
         }
         public static TimeValuePair ToTimeValuePair(SpotBo spotBo) {
             return new TimeValuePair(spotBo.DateTime, spotBo.Value);
         }
+
+        public static TimeValuePair ToTimeValuePair(ConsumptionForecastBo spotBo) {
+            return new TimeValuePair(spotBo.TimeStamp, spotBo.Forecast ?? 0);
+        }
         public static SpotBo ToSpotBo(GetDamPricePeriodEResponseItem spotPrice) {
             DateTime dateTime = spotPrice.Date;
-            dateTime = dateTime.AddHours(spotPrice.PeriodIndex - 1);
+            dateTime = dateTime.AddMinutes((spotPrice.PeriodIndex - 1)*15);
             return new SpotBo {
                 DateTime = dateTime,
                 Value = (decimal)spotPrice.Price
             };
         }
+
+        public static TimeValuePair ToTimeValuePair(WeatherForecastBo weatherBo) {
+            return new TimeValuePair(weatherBo.TimeStamp, weatherBo.Temperature);
+        }
+
+        public static WeatherForecastBo ToWeatherForecastBo(TimeValuePair data) {
+            return new WeatherForecastBo {
+                TimeStamp = data.DateTime,
+                Temperature = data.Value
+            };
+        }
+
         public static DateTime ToDateTime(string? date, string? time)
         {
             string format = "dd.MM.yyyy|HH:mm:ss";
             string dateTime = $"{date}|{time}";
 
             return  DateTime.ParseExact(dateTime, format, System.Globalization.CultureInfo.InvariantCulture);
+        }
+
+        public static List<float> FromCummulative(List<float> list)
+        {
+            float lastVal = 0;
+            List<float> newList = [];
+            foreach (float val in list)
+            {
+                newList.Add(val - lastVal);
+                lastVal = val;
+            }
+            return newList;
         }
     }
 }

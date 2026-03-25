@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PredikceVytěžováníFVE.Data;
 
@@ -10,9 +11,11 @@ using PredikceVytěžováníFVE.Data;
 namespace PredikceVytěžováníFVE.Migrations
 {
     [DbContext(typeof(FVEDbContext))]
-    partial class FVEDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260320095633_Add consumption forecast")]
+    partial class Addconsumptionforecast
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.2");
@@ -29,7 +32,7 @@ namespace PredikceVytěžováníFVE.Migrations
 
                     b.HasKey("TimeStamp");
 
-                    b.ToTable("ConsumptionForecastData");
+                    b.ToTable("ConsumptionData");
                 });
 
             modelBuilder.Entity("PredikceVytěžováníFVE.Models.DB.ForecastSolarBo", b =>
@@ -58,7 +61,7 @@ namespace PredikceVytěžováníFVE.Migrations
 
                     b.HasKey("TimeStamp");
 
-                    b.ToTable("HourlyData");
+                    b.ToTable("HourlyConsumptionData");
                 });
 
             modelBuilder.Entity("PredikceVytěžováníFVE.Models.DB.PvForecastBo", b =>

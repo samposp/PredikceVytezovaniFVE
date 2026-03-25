@@ -4,85 +4,245 @@
     ViewData["Title"] = "Nastavení";
 }
 
-<form method="post">
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<form method="post" class="form-horizontal">
     <div class="container">
         <div class="row">
-            <div class="col">
-                <div class="container">
-                    <div class="row">
-                        <div class="form-group col-xl-4 col-md-6 col-sm-8">
-                            <label class="control-label">Latitude</label>
-                            <input asp-for="FveInfo.Latitude" type="text" class="form-control" />
-                        </div>
-                        <div class="form-group col-xl-4 col-md-6 col-sm-8">
-                            <label class="control-label">Longitude</label>
-                            <input asp-for="FveInfo.Longitude" type="text" class="form-control" />
-                        </div>
+            <div class="col col-md-4 mt-2">
+                <h4>Informace o fotovoltaické elektrárně</h4>
+                <div class="form-group row p-2">
+                    <label class="col-form-label col-sm-8">Zeměpisná šířka</label>
+                    <div class="col-sm-4">
+                        <input asp-for="FveInfo.Latitude" type="number" class="form-control" />
                     </div>
-                    <div class="row">
-                        <div class="form-group col-xl-4 col-md-6 col-sm-8">
-                            <label class="control-label">PeakPower</label>
-                            <input asp-for="FveInfo.PeakPower" type="number" class="form-control" />
-                        </div>
-                        <div class="form-group col-xl-4 col-md-6 col-sm-8">
-                            <label class="control-label">BatteryCapacity</label>
-                            <input asp-for="FveInfo.BatteryCapacity" type="number" class="form-control" />
-                        </div>
+                </div>
+                <div class="form-group row p-2">
+                    <label class="col-form-label col-sm-8">Zeměpisná délka</label>
+                    <div class="col-sm-4">
+                        <input asp-for="FveInfo.Longitude" type="number" class="form-control" />
                     </div>
-                    <div class="row">
-                        <div class="form-group col-xl-4 col-md-6 col-sm-8">
-                            <label class="control-label">Declination</label>
-                            <input asp-for="FveInfo.Declination" type="number" class="form-control" />
-                        </div>
-                        <div class="form-group col-xl-4 col-md-6 col-sm-8">
-                            <label class="control-label">Azimuth</label>
-                            <input asp-for="FveInfo.Azimuth" type="number" class="form-control" />
-                        </div>
+                </div>
+                <div class="form-group row p-2">
+                    <label class="col-form-label col-sm-8">Úhel nakolonění</label>
+                    <div class="col-sm-4">
+                        <input asp-for="FveInfo.Declination" type="number" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group row p-2">
+                    <label class="col-form-label col-sm-8">Azimut</label>
+                    <div class="col-sm-4">
+                        <input asp-for="FveInfo.Azimuth" type="number" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group row p-2">
+                    <label class="col-form-label col-sm-8">Maximální výkon [kWh]</label>
+                    <div class="col-sm-4">
+                        <input asp-for="FveInfo.PeakPower" type="number" class="form-control" />
                     </div>
                 </div>
             </div>
-            <div class="col">
+            <div class="col col-md-4 mt-2">
                 <div class="container">
-                    <div class="row">
-                        <div class="form-group col-xl-4 col-md-6 col-sm-8">
-                            <label class="control-label">MqttBroker</label>
+                    <h4>Informace o Baterii</h4>
+                    <div class="form-group row p-2">
+                        <label class="col-form-label col-sm-8">Kapacita baterie [kWh]</label>
+                        <div class="col-sm-4">
+                            <input asp-for="BatteryInfo.Capacity" type="number" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group row p-2">
+                        <label class="col-form-label col-sm-8">Rychlost nabíjení [kW/h]</label>
+                        <div class="col-sm-4">
+                            <input asp-for="BatteryInfo.ChargeSpeed" type="number" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group row p-2">
+                        <label class="col-form-label col-sm-8">Minimánlní kapacita [%]</label>
+                        <div class="col-sm-4">
+                            <input asp-for="BatteryInfo.MinLevel" type="number" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group row p-2">
+                        <label class="col-form-label col-sm-8">Maximální kapacita [%]</label>
+                        <div class="col-sm-4">
+                            <input asp-for="BatteryInfo.MaxLevel" type="number" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+                @* </div>
+            <div class="col col-md-4 mt-2"> *@
+                <div class="container pt-3">
+                    <h4>Informace o Mqtt, api</h4>
+                    <div class="form-group row p-2">
+                        <label class="col-form-label col-sm-6">Mqtt Broker</label>
+                        <div class="col-sm-6">
                             <input asp-for="ApiInfo.MqttBroker" type="text" class="form-control" />
                         </div>
-                        <div class="form-group col-xl-4 col-md-6 col-sm-8">
-                            <label class="control-label">MqttTopic</label>
+                    </div>
+                    <div class="form-group row p-2">
+                        <label class="col-form-label col-sm-6">Mqtt Topic</label>
+                        <div class="col-sm-6">
                             <input asp-for="ApiInfo.MqttTopic" type="text" class="form-control" />
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="form-group col-xl-4 col-md-6 col-sm-8">
-                            <label class="control-label">PvForecastApiKey</label>
+                    <div class="form-group row p-2">
+                        <label class="col-form-label col-sm-6">Klíč k PV Forecast</label>
+                        <div class="col-sm-6">
                             <input asp-for="ApiInfo.PvForecastApiKey" type="text" class="form-control" />
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="form-group col-xl-1 col-md-1 col-sm-1 m-2">
-                <button type="submit" class="btn btn-primary">Uložit změny</button>
+            <div class="col col-md-4 mt-2">
+                <div class="container">
+                    <h4>Modely pro předpověď spotřeby</h4>
+                    <div class="form-group row p-2">
+                        <label class="col-form-label col-sm-8">Počet dnů pro trénování modelů</label>
+                        <div class="col-sm-4">
+                            <input asp-for="ModelInfo.HistoryDays" type="number" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group row p-2">
+                        <label class="col-form-label col-sm-8">Přetrénovat modely</label>
+                        <div class="col-sm-4">
+                            <input asp-for="ModelInfo.Retrain" type="checkbox" class="form-check-label" />
+                        </div>
+                    </div>
+                    <h6>SARIMA</h6>
+                    <div class="form-group row p-2">
+                        <label class="col-form-label col-sm-6">Order</label>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="col nopadding">
+                                    <input asp-for="ModelInfo.SARIMAX.Order[0]" type="" class="form-control" />
+                                </div>
+                                <div class="col nopadding">
+                                    <input asp-for="ModelInfo.SARIMAX.Order[1]" type="" class="form-control" />
+                                </div>
+                                <div class="col nopadding">
+                                    <input asp-for="ModelInfo.SARIMAX.Order[2]" type="" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row p-2">
+                        <label class="col-form-label col-sm-6">Seasonal Order</label>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="col nopadding">
+                                    <input asp-for="ModelInfo.SARIMAX.SeasonalOrder[0]" type="" class="form-control" />
+                                </div>
+                                <div class="col nopadding">
+                                    <input asp-for="ModelInfo.SARIMAX.SeasonalOrder[1]" type="" class="form-control" />
+                                </div>
+                                <div class="col nopadding">
+                                    <input asp-for="ModelInfo.SARIMAX.SeasonalOrder[2]" type="" class="form-control" />
+                                </div>
+                                <div class="col nopadding">
+                                    <input asp-for="ModelInfo.SARIMAX.SeasonalOrder[3]" type="" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h6>XGBoost</h6>
+                    <div class="form-group row p-2">
+                        <label class="col-form-label col-sm-8">Max depth</label>
+                        <div class="col-sm-4">
+                            <input asp-for="ModelInfo.XGBoostParams.MaxDepth" type="number" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group row p-2">
+                        <label class="col-form-label col-sm-8">Subsample</label>
+                        <div class="col-sm-4">
+                            <input asp-for="ModelInfo.XGBoostParams.Subsample" type="number" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group row p-2">
+                        <label class="col-form-label col-sm-8">N estimators</label>
+                        <div class="col-sm-4">
+                            <input asp-for="ModelInfo.XGBoostParams.NEstimators" type="number" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group row p-2">
+                        <label class="col-form-label col-sm-8">Learning Rate</label>
+                        <div class="col-sm-4">
+                            <input asp-for="ModelInfo.XGBoostParams.LearningRate" type="number" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group row p-2">
+                        <label class="col-form-label col-sm-8">ColsampleBytree</label>
+                        <div class="col-sm-4">
+                            <input asp-for="ModelInfo.XGBoostParams.ColsampleBytree" type="number" class="form-control" />
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-xl-4 col-md-4 col-sm-3 m-4">
+                    <button type="button" id="openSaveDialog" class="btn btn-primary">Uložit změny</button>
+                </div>
             </div>
         </div>
     </div>
+    <dialog id="saveDialog">
+        <div class="mb-3">
+            <h5>Potvrzení uložení</h5>
+            <p>Zadejte heslo pro uložení změn.</p>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="SavePassword" class="form-label">Heslo</label>
+            <input asp-for="SavePassword" type="password" class="form-control" autocomplete="off" />
+            <span asp-validation-for="SavePassword" class="text-danger"></span>
+        </div>
+
+        <div class="d-flex gap-2">
+            <button type="button" id="confirmSave" class="btn btn-primary">Potvrdit</button>
+            <button type="button" id="cancelSave" class="btn btn-secondary">Zrušit</button>
+        </div>
+    </dialog>
 </form>
 
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
 
-@{
-    void Card<T>(string title, string id, string initValue)
-    {
-        <div class="col-xl-2 col-md-3 col-sm-4">
-            <div class="card bg-secondary mb-4">
-                <div class="card-header">
-                    @title
-                </div>
-                <div class="card-body" id=@id>
-                    @initValue
-                </div>
-            </div>
-        </div>
-    }
+    <script>
+        const form = document.querySelector("form");
+        const dialog = document.getElementById("saveDialog");
+        const openButton = document.getElementById("openSaveDialog");
+        const confirmButton = document.getElementById("confirmSave");
+        const cancelButton = document.getElementById("cancelSave");
+        const passwordInput = document.getElementById("SavePassword");
+
+        openButton.addEventListener("click", function () {
+            if (dialog.showModal) {
+                dialog.showModal();
+                setTimeout(() => passwordInput?.focus(), 0);
+            } else {
+                // fallback for very old browsers
+                dialog.setAttribute("open", "open");
+                passwordInput?.focus();
+            }
+        });
+
+        cancelButton.addEventListener("click", function () {
+            dialog.close();
+        });
+
+        confirmButton.addEventListener("click", function () {
+            form.submit();
+        });
+    </script>
+}
+@if (!ViewContext.ModelState.IsValid)
+{
+    <script>
+        window.addEventListener("load", () => {
+            const dialog = document.getElementById("saveDialog");
+            if (dialog && dialog.showModal) {
+                dialog.showModal();
+            }
+        });
+    </script>
 }

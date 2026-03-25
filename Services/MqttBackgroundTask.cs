@@ -61,7 +61,7 @@ namespace PredikceVytěžováníFVE.Services
                     using IServiceScope scope = _serviceProvider.CreateScope();
                     MqttDataService mqttDataService = scope.ServiceProvider.GetRequiredService<MqttDataService>();
                     if (await mqttDataService.SaveMqttData(mqttMessage))
-                        await _hubContext.Clients.All.SendAsync("ReceiveMqtt", ConverterHelper.ToFVEData(mqttMessage));
+                        await _hubContext.Clients.All.SendAsync("ReceiveMqtt", mqttMessage, cancellationToken);
                 });
             }
             catch (Exception ex)

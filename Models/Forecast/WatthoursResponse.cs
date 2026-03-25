@@ -15,7 +15,7 @@ namespace PredikceVytěžováníFVE.Models.Forecast {
         public DateTime Key { get; set; }
 
         [XmlElement(ElementName = "value")]
-        public int Value { get; set; }
+        public decimal Value { get; set; }
     }
 
     [XmlRoot(ElementName = "result")]
@@ -35,7 +35,7 @@ namespace PredikceVytěžováníFVE.Models.Forecast {
         public double Longitude { get; set; }
 
         [XmlElement(ElementName = "distance")]
-        public int Distance { get; set; }
+        public double Distance { get; set; }
 
         [XmlElement(ElementName = "place")]
         public string Place { get; set; }

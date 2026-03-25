@@ -1,22 +1,35 @@
 ﻿@page
 @model PredikceVytěžováníFVE.Pages.FVEModel
-@using Microsoft.AspNetCore.SignalR.Client
 @{
     ViewData["Title"] = "FVE";
 }
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-
-
 <div class="text-center">
     <div class="box-body">
         <div class="container">
-            <div id="mqtt"></div>
+            <div class="row">
+                <div class="col-xl-2 col-md-3 col-sm-4">
+                    <div class="card mb-4">
+                        <form method="post">
+                            <input asp-for="DataDate" type="date" class="form-control" onchange="this.form.submit()" />
+                        </form>
+                    </div>
+                </div>
+            </div>
             <div class="row">
                 @{
-                    Chart(Model.Timestapms, Model.BatteryLevel, "Baterie [%]");
-                    Chart(Model.Timestapms, Model.FVEPower, "FVE");
+                    Chart(Model.timestamps, Model.Battery, "Baterie [%]");
+                    Chart(Model.timestamps, Model.Consumption, "Spotreba [W]");
+                    Chart(Model.timestamps, Model.ToBat, "Do baterie [W]");
+
+                    Chart(Model.timestamps, Model.Production, "Energie z FVE [W]");
+                    Chart(Model.timestamps, Model.FromBat, "Z baterie [W]");
+
+                    Chart(Model.timestamps, Model.Grid, "Energie ze site [W]");
+                    Chart(Model.timestamps, Model.Sell, "Prodej [W]");
+                    Chart(Model.timestamps, Model.Buy, "Koupe [W]");
 
                 }
             </div>
@@ -26,7 +39,8 @@
 
 
 @{
-    void Chart<L, V>(List<L> labels, List<V> values, string chartName, string type = "line") {
+    void Chart<L, V>(List<L> labels, List<V> values, string chartName, string type = "line")
+    {
         <div class="col-xl-6 col-md-8 col-sm-12">
             <div class="card mb-4">
                 <canvas id="@chartName" style="width:100%; height:300px"></canvas>
@@ -47,49 +61,27 @@
                 };
 
                 var options = {
-                    maintainAspectRatio: false,
+                    responsive: true,
                     scales: {
-                        yAxes: [{
-                            ticks: {
-                                min: 0,
-                                beginAtZero: true
-                            },
-                            gridLines: {
-                                display: true,
-                                color: "rgba(255,99,164,0.2)"
+                        x: {
+                            type: 'time',
+                            time: {
+                                unit: 'hour',
+                                displayFormats: {
+                                    hour: "HH:mm"
+                                }
                             }
-                        }],
-                        xAxes: [{
-                            ticks: {
-                                min: 0,
-                                beginAtZero: true
-                            },
-                            gridLines: {
-                                display: false
-                            }
-                        }]
-                    }
-                };
-
-                var scales = {
-                    x: {
-                        type: 'time',
-                        time: {
-                            unit: 'hour'
                         },
-                                            time: {
-                            // Luxon format string
-                            tooltipFormat: 'DD T'
-                        },
+                        y: {
+                            beginAtZero: true
+                        }
                     }
                 }
 
                 var myChart = new Chart(ctx, {
                     options: options,
                     data: data,
-                    type: "@type",
-                    scales: scales
-
+                    type: "@type"
                 });
             });
         </script>

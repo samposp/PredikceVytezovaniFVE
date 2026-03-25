@@ -1,9 +1,8 @@
 {
   "Fve": {
     "Latitude": "50.793",
-    "Longitude": "15.145",
-    "PeakPower": 19.9,
-    "BatteryCapacity": 2,
+    "Longitude": "15.138",
+    "PeakPower": 9.9,
     "Declination": 35,
     "Azimuth": -15
   },
@@ -11,5 +10,35 @@
     "MqttBroker": "cassandra2.tul.cz",
     "MqttTopic": "FVE/Ibehej_TX",
     "PvForecastApiKey": "esvk7s"
+  },
+  "Model": {
+    "HistoryDays": 30,
+    "Retrain": false,
+    "SARIMAX": {
+      "Order": [
+        2,
+        0,
+        0
+      ],
+      "seasonal_order": [
+        1,
+        1,
+        0,
+        24
+      ]
+    },
+    "XGBoostParams": {
+      "Subsample": 1,
+      "n_estimators": 100,
+      "max_depth": 7,
+      "learning_rate": 0.01,
+      "colsample_bytree": 0.7
+    }
+  },
+  "Battery": {
+    "MinLevel": 20,
+    "MaxLevel": 95,
+    "ChargeSpeed": 10,
+    "Capacity": 14.4
   }
 }

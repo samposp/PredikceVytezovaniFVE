@@ -2,6 +2,8 @@
 using PredikceVytěžováníFVE.Data;
 using PredikceVytěžováníFVE.Helpers;
 using PredikceVytěžováníFVE.Models;
+using System.Globalization;
+using System.Numerics;
 
 namespace PredikceVytěžováníFVE.Services;
 
@@ -39,5 +41,20 @@ public class MqttDataService(FVEDbContext db, ILogger<MqttDataService> logger)
             x.DateTime = ConverterHelper.ToDateTime(x.Date, x.Time);
             return x;
         }).ToList();
+    }
+
+    public float? GetLastBattery()
+    {
+        return db.MqttData.AsEnumerable().OrderBy(x => x.Date).ThenBy(x => x.Time).Max(new DateTimeComparer())?.SoC;
+    }
+}
+
+public class DateTimeComparer : IComparer<MqttData>
+{
+    public int Compare(MqttData? x, MqttData? y)
+    {
+        var date1 = ConverterHelper.ToDateTime(x?.Date, x?.Time);
+        var date2 = ConverterHelper.ToDateTime(y?.Date, y?.Time);
+        return DateTime.Compare(date1, date2);
     }
 }

@@ -8,5 +8,8 @@ namespace PredikceVytěžováníFVE.Data {
         public DbSet<SpotBo> SpotData { get; set; }
         public DbSet<PvForecastBo> PvForecastData { get; set; }
         public DbSet<ForecastSolarBo> ForecastSolarData { get; set; }
+        public DbSet<WeatherForecastBo> WeatherForecastData { get; set; }
+        public DbSet<HourlyBo> HourlyData { get; set; }
+        public DbSet<ConsumptionForecastBo> ConsumptionForecastData { get; set; }
     }
 }

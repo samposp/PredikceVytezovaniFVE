@@ -14,7 +14,6 @@ namespace PredikceVytěžováníFVE.Services {
         private static readonly string host = "https://api.forecast.solar/estimate/";
         private readonly IServiceProvider serviceProvider;
 
-        // TODO get from config
         string _latitude;
         string _longitude;
         string _azimuth;

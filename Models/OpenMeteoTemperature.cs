@@ -1,8 +1,15 @@
-﻿namespace PredikceVytěžováníFVE.Models {
+﻿
+namespace PredikceVytěžováníFVE.Models {
     public class Daily {
         public List<string> time { get; set; }
         public List<double> temperature_2m_max { get; set; }
         public List<double> temperature_2m_min { get; set; }
+    }
+
+    public class Hourly
+    {
+        public List<string> time { get; set; }
+        public List<double> temperature_2m { get; set; }
     }
 
     public class DailyUnits {
@@ -21,6 +28,7 @@
         public double elevation { get; set; }
         public DailyUnits daily_units { get; set; }
         public Daily daily { get; set; }
+        public Hourly hourly { get; set; }
     }
 
 }

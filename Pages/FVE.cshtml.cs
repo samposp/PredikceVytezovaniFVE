@@ -10,39 +10,55 @@ using PredikceVytěžováníFVE.Hubs;
 using PredikceVytěžováníFVE.Models;
 using PredikceVytěžováníFVE.Models.DB;
 using PredikceVytěžováníFVE.Models.Forecast;
+using PredikceVytěžováníFVE.Services;
 
 namespace PredikceVytěžováníFVE.Pages
 {
-    public class FVEModel : PageModel
+    public class FVEModel(MqttDataService mqttData) : PageModel
     {
-        private readonly FVEDbContext _db;
+        public List<int> Battery = [];
+        public List<DateTime> timestamps = [];
+        public List<float> Consumption = [];
+        public List<float> Production = [];
+        public List<float> Grid = [];
+        public List<float> ToBat = [];
+        public List<float> FromBat = [];
+        public List<float> Sell = [];
+        public List<float> Buy = [];
 
-        public List<int> BatteryLevel = new();
-        public List<string> Timestapms = new();
-        public List<int> FVEPower = new();
 
-        public FVEData initData = new();
+        [BindProperty]
+        public DateTime DataDate { get; set; }
 
-        public FVEModel(FVEDbContext database)
-        {
-            _db = database;
-        }
         public void OnGet()
+        {
+            DataDate = new DateTime(2026, 1, 22);
+
+            GetData();
+        }
+
+        public void GetData()
+        {
+            var chartData = mqttData.GetMqttDataByDate(DataDate);
+
+            chartData = DataFilterHelper.FilterDateTime(chartData);
+
+            timestamps = chartData.Select(x => ConverterHelper.ToDateTime(x.Date, x.Time)).ToList();
+            Battery = chartData.Where(x => x.SoC != null).Select(x => (int)x.SoC!).ToList();
+            Production = chartData.Where(x => x.P_PV != null).Select(x => (float)x.P_PV!).ToList();
+            Consumption = chartData.Where(x => x.P_HOME != null).Select(x => (float)x.P_HOME!).ToList();
+            Grid = chartData.Where(x => x.P_GRID != null).Select(x => (float)-x.P_GRID!).ToList();
+            ToBat = chartData.Where(x => x.ToBAT != null).Select(x => (float)-x.ToBAT!).ToList();
+            FromBat = chartData.Where(x => x.FromBAT != null).Select(x => (float)-x.FromBAT!).ToList();
+            Sell = chartData.Where(x => x.SELL != null).Select(x => (float)x.SELL!).ToList();
+            Buy = chartData.Where(x => x.BUY != null).Select(x => (float)x.BUY!).ToList();
+
+        } 
+
+        public void OnPost()
         {
             GetData();
         }
 
-        private void GetData() {
-            string date = DateTime.Now.ToString("d.M.yyyy");
-            date = "28.2.2025";
-            List<MqttData> chartData = _db.MqttData.Where(x => x.Date!.Equals(date)).OrderBy(x => x.Time).ToList();
-            if (chartData.Count == 0)
-                return;
-            initData = ConverterHelper.ToFVEData(chartData.Last());
-            BatteryLevel = chartData.Where(x => x.SoC != null).Select(x => (int)x.SoC!).ToList();
-
-            FVEPower = chartData.Where(x => x.P_PV != null).Select(x => (int)x.P_PV!).ToList();
-
-        } 
     }
 }

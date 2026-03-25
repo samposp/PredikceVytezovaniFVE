@@ -4,7 +4,7 @@ public static class DataFilterHelper
 {
     public static List<T> FilterDateTime<T>(List<T> inputList, TimeSpan? timeStep = null) where T : HasTimeStamp
     {
-        timeStep ??= new TimeSpan(0, 5, 0);
+        timeStep ??= new TimeSpan(0, 30, 0);
 
         if (inputList.Count == 0)
             return [];
