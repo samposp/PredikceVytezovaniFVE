@@ -41,6 +41,7 @@ try
     builder.Services.AddTransient<PVForecastService>();
     builder.Services.AddTransient<ForecastService>();
     builder.Services.AddTransient<MqttDataService>();
+    builder.Services.AddTransient<PredictionDataService>();
     builder.Services.ApplyResulation<PredictionSechduleJob>(options =>
     {
         options.CronExpression = "0 23 * * *";

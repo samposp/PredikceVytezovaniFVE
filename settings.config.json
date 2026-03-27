@@ -38,7 +38,7 @@
   "Battery": {
     "MinLevel": 20,
     "MaxLevel": 95,
-    "ChargeSpeed": 10,
+    "ChargeSpeed": 9.8,
     "Capacity": 14.4
   }
 }

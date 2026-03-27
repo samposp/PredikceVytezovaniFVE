@@ -1,25 +1,36 @@
-﻿namespace PredikceVytěžováníFVE.Helpers;
+﻿using PredikceVytěžováníFVE.Models;
+
+namespace PredikceVytěžováníFVE.Helpers;
 
 public static class DataFilterHelper
 {
-    public static List<T> FilterDateTime<T>(List<T> inputList, TimeSpan? timeStep = null) where T : HasTimeStamp
+    public static List<MqttData> FilterDateTime(List<MqttData> inputList, TimeSpan? timeStep = null)
     {
         timeStep ??= new TimeSpan(0, 30, 0);
 
         if (inputList.Count == 0)
             return [];
-
-        List<T> outputList = [inputList[0]];
+        inputList.RemoveAt(0);
+        if (inputList.Count == 0)
+            return [];
+        List<MqttData> outputList = [inputList[0]];
         DateTime lastTime = DateTime.MinValue;
+        MqttData sumValues = new();
+        int count = 0;
         foreach (var item in inputList.ToList())
         {
+            count++;
+            sumValues += item;
             if (item.DateTime.HasValue)
             {
                 var timeDifference = item.DateTime.Value - lastTime;
                 if (timeDifference > timeStep)
                 {
                     lastTime = item.DateTime.Value;
+                    var average = sumValues / count;
                     outputList.Add(item);
+                    sumValues = new();
+                    count = 0;
                 }
             }
         }

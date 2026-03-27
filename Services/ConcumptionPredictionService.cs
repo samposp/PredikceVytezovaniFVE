@@ -2,7 +2,6 @@
 using PredikceVytěžováníFVE.Helpers;
 using PredikceVytěžováníFVE.Models;
 using System.Diagnostics;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace PredikceVytěžováníFVE.Services;
 

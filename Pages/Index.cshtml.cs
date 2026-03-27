@@ -38,7 +38,7 @@ namespace PredikceVytìžováníFVE.Pages
         {
             var chartData = mqttData.GetMqttDataByDate(DataDate);
 
-            chartData = DataFilterHelper.FilterDateTime(chartData, new TimeSpan(0,5,0));
+            chartData = DataFilterHelper.FilterDateTime(chartData, new TimeSpan(0,15,0));
 
             if (chartData.Count != 0)
                 initData = chartData.Last();

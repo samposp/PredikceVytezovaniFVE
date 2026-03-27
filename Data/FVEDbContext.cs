@@ -11,5 +11,6 @@ namespace PredikceVytěžováníFVE.Data {
         public DbSet<WeatherForecastBo> WeatherForecastData { get; set; }
         public DbSet<HourlyBo> HourlyData { get; set; }
         public DbSet<ConsumptionForecastBo> ConsumptionForecastData { get; set; }
+        public DbSet<ControlPredictionBo> PredictedControlData { get; set; }
     }
 }

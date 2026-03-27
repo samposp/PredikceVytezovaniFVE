@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.SignalR;
+using Microsoft.Extensions.Configuration;
 using PredikceVytěžováníFVE.Data;
 using PredikceVytěžováníFVE.Helpers;
 using PredikceVytěžováníFVE.Models;
@@ -7,7 +8,7 @@ using System.Numerics;
 
 namespace PredikceVytěžováníFVE.Services;
 
-public class MqttDataService(FVEDbContext db, ILogger<MqttDataService> logger)
+public class MqttDataService(IServiceProvider serviceProvider, ILogger<MqttDataService> logger)
 {
     public async Task<bool> SaveMqttData(MqttData data)
     {
@@ -16,6 +17,8 @@ public class MqttDataService(FVEDbContext db, ILogger<MqttDataService> logger)
             logger.LogWarning("Date or Time is null. Cannot save MQTT data.");
             return false;
         }
+        using var scope = serviceProvider.CreateScope();
+        var db = scope.ServiceProvider.GetRequiredService<FVEDbContext>();
         bool entryExists = db.MqttData.Any(x => x.Date!.Equals(data.Date) && x.Time!.Equals(data.Time));
 
         if (entryExists)
@@ -33,8 +36,9 @@ public class MqttDataService(FVEDbContext db, ILogger<MqttDataService> logger)
     public List<MqttData> GetMqttDataByDate(DateTime date)
     {
         string dateString = date.ToString("dd.MM.yyyy");
-
-        List<MqttData> mqttData = [.. db.MqttData.AsEnumerable().Where(x => x.Date!.Equals(dateString, StringComparison.InvariantCultureIgnoreCase)).OrderBy(x => x.Time)];
+        using var scope = serviceProvider.CreateScope();
+        var db = scope.ServiceProvider.GetRequiredService<FVEDbContext>();
+        List<MqttData> mqttData = [.. db.MqttData.Where(x => x.Date! ==dateString).OrderBy(x => x.Time)];
 
         return mqttData.Select(x =>
         {
@@ -45,6 +49,8 @@ public class MqttDataService(FVEDbContext db, ILogger<MqttDataService> logger)
 
     public float? GetLastBattery()
     {
+        using var scope = serviceProvider.CreateScope();
+        var db = scope.ServiceProvider.GetRequiredService<FVEDbContext>();
         return db.MqttData.AsEnumerable().OrderBy(x => x.Date).ThenBy(x => x.Time).Max(new DateTimeComparer())?.SoC;
     }
 }

@@ -13,6 +13,7 @@ namespace PredikceVytěžováníFVE.Services {
 
         private static readonly string host = "https://api.forecast.solar/estimate/";
         private readonly IServiceProvider serviceProvider;
+        private readonly ILogger _logger;
 
         string _latitude;
         string _longitude;
@@ -20,9 +21,10 @@ namespace PredikceVytěžováníFVE.Services {
         string _peakPower;
         string _declination;
 
-        public ForecastService(IServiceProvider serviceProvider, ConfigurationService configuration)
+        public ForecastService(IServiceProvider serviceProvider, ConfigurationService configuration, ILogger<ForecastService> logger)
         {
             this.serviceProvider = serviceProvider;
+            _logger = logger;
             _latitude = configuration.Settings.Fve.Latitude ?? throw new Exception("Missing latitude");
             _longitude = configuration.Settings.Fve.Longitude ?? throw new Exception("Missing logitude");
             _azimuth = configuration.Settings.Fve.Azimuth.ToString() ?? "0";
@@ -30,15 +32,20 @@ namespace PredikceVytěžováníFVE.Services {
             _declination = configuration.Settings.Fve.Declination.ToString() ?? "0";
         }
 
-        public async Task<List<TimeValuePair>> GetTomorrowWatthours() 
+        public async Task<List<TimeValuePair>> GetWatthours(DateTime date) 
         {    
-            DateTime tomorrow = DateTime.Now.AddDays(1);
-            tomorrow = DateTime.Now;
             using var scope = serviceProvider.CreateScope();
             var db = scope.ServiceProvider.GetRequiredService<FVEDbContext>();
-            var storedData = db.ForecastSolarData.Where(p => p.TimeStamp.Date == tomorrow.Date);
+            var storedData = db.ForecastSolarData.Where(p => p.TimeStamp.Date == date.Date);
             if (storedData.Any())
                 return storedData.Select(d => new TimeValuePair(d.TimeStamp, d.Value)).ToList();
+
+            var tommorow = DateTime.Now.AddDays(1);
+            if (date.Date != DateTime.Now.Date && date.Date != tommorow.Date)
+            {
+                _logger.LogWarning("Can not get prediction data for fve for the date: {date}", date.ToShortDateString());
+                return [];
+            }
 
             List<string> path = new() {
                 "watthours",
@@ -72,9 +79,7 @@ namespace PredikceVytěžováníFVE.Services {
                 if (deserialized == null)
                     throw new HttpRequestException("No content found");
 
-
-
-                var hourList = DataFilterHelper.GetHourlyDateTimes(tomorrow);
+                var hourList = DataFilterHelper.GetHourlyDateTimes(date);
                 var cummulativeList = deserialized.Result.Data.ToList();
                 decimal lastValue = 0;
                 List<TimeValuePair> result = [];

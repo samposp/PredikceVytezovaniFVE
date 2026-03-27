@@ -32,7 +32,7 @@ namespace PredikceVytěžováníFVE.Pages
 
         public void OnGet()
         {
-            DataDate = new DateTime(2026, 1, 22);
+            DataDate = DateTime.Now.AddDays(-1);
 
             GetData();
         }

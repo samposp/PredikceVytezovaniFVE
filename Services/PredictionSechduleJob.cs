@@ -16,7 +16,7 @@ public class PredictionSechduleJob : CronJobService
     public async override Task<Task> DoWork(CancellationToken cancellationToken)
     {
         _logger.LogInformation("Starting prediction Service");
-        await _predictionService.Predict();
+        await _predictionService.Predict(DateTime.Now.AddDays(1));
         _logger.LogInformation("Prediction has ended");
         return base.DoWork(cancellationToken);
     }
