@@ -2,6 +2,7 @@ import sqlite3
 import pandas as pd
 import requests
 import json
+import sys
 
 def get_location(config_path="settings.config.json"):
     # Load JSON config
@@ -57,8 +58,7 @@ def process_fve_data(
     db_path="FVEDB.db",
     raw_table="MqttData",
     processed_table="HourlyData",
-    date_col="Date",
-    time_col="Time",
+    datetime_col="DateTime",
     value_col="P_HOME",
     timestamp_col="TimeStamp",
     battery_col="P_BAT"
@@ -90,21 +90,22 @@ def process_fve_data(
     # Build query for raw data
     if last_ts is None:
         query_raw = f"""
-            SELECT {date_col}, {time_col}, {value_col}, {battery_col}
+            SELECT {datetime_col}, {value_col}, {battery_col}
             FROM {raw_table}
-            ORDER BY {date_col}, {time_col}
+            ORDER BY {datetime_col}
         """
     else:
-        last_date = last_ts.strftime("%d.%m.%Y")
-        last_time = last_ts.strftime("%H:%M:%S")
+        last_ts_str = last_ts.strftime("%Y-%m-%d %H:%M:%S")
         query_raw = f"""
-            SELECT {date_col}, {time_col}, {value_col}, {battery_col}
+            SELECT {datetime_col}, {value_col}, {battery_col}
             FROM {raw_table}
-            WHERE ({date_col} || ' ' || {time_col}) > '{last_date} {last_time}'
-            ORDER BY {date_col}, {time_col}
+            WHERE {datetime_col} > ?
+            ORDER BY {datetime_col}
         """
-
-    raw_df = pd.read_sql_query(query_raw, conn)
+    if last_ts is None:
+        raw_df = pd.read_sql_query(query_raw, conn)
+    else:
+        raw_df = pd.read_sql_query(query_raw, conn, params=(last_ts_str,))
 
     if raw_df.empty:
         print("No new data to process.")
@@ -113,12 +114,10 @@ def process_fve_data(
 
     # Data preparation
     df = raw_df.copy()
-    df[timestamp_col] = pd.to_datetime(
-        df[date_col] + " " + df[time_col],
-        format="%d.%m.%Y %H:%M:%S"
-    )
+    df[timestamp_col] = pd.to_datetime(df[datetime_col], errors="coerce")
+    df = df.dropna(subset=[timestamp_col])
     df = df.set_index(timestamp_col)
-    df = df.drop([date_col, time_col], axis=1)
+    df = df.drop(columns=[datetime_col])
 
     df[value_col] = (df[value_col] + df[battery_col]).abs()
 
@@ -142,6 +141,10 @@ def process_fve_data(
     processed_df = processed_df.join(temp_df)
     processed_df.index.name = timestamp_col
     processed_df = processed_df.reset_index()
+
+    # Store timestamps as SQLite-friendly text
+    processed_df[timestamp_col] = processed_df[timestamp_col].dt.strftime("%Y-%m-%d %H:%M:%S")
+
     # Save to DB
     processed_df.to_sql(processed_table, conn, if_exists='append', index=False)
 

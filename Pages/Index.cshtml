@@ -7,23 +7,37 @@
 <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <div class="text-center">
-    <div class="box-body">
+    <div class="text-sm-end"><small>Aktualizováno: <span id="lastTime">@Model.LastUpdate.ToString()</span></small></div>
 
+    <div class="box-body">
         <div class="container">
-            <h4>Aktuální data</h4>
+            <div class="row"><h4>Aktuální data</h4></div>
             <div class="row">
                 @{
                     // This is updated with signalR in MqttHub.js file!!!
                     Card("Baterie", "batteryPercentage", Model.initData.SoC, "%");
                     Card("Příkon ze sítě", "grid", -Model.initData.P_GRID, "W");
-                    Card("Výkon měniče", "PVEnergy", Model.initData.P_PV, "W");
-                    Card("Celková spotřeba", "consumption", Model.initData.Consumption, "W");
+                    Card("Výkon FVE", "PVEnergy", Model.initData.P_PV, "W");
+                    Card("Výkon baterie", "battery", Model.initData.P_BAT, "W");
+                    Card("Spotřeba", "consumption", Model.initData.P_HOME, "W");
+                    Card("Cena za kW", "prize", Model.initData.PRICE_CZK, "CZK");
+                }
+            </div>
+            <div class="row"><h4>Celková data z <span id="date">@Model.initData.Date</span></h4></div>
+            <div class="row">
+                @{
+                    Card("Nakoupeno", "buy", Model.initData.BUY, "CZK");
+                    Card("Prodáno", "sell", Model.initData.SELL, "CZK");
+                    Card("Energie z FVE", "fve", Model.initData.PVenergy, "kWh");
+                    Card("Do baterie", "toBat", Model.initData.ToBAT, "kWh");
+                    Card("Z baterie", "fromBat", Model.initData.FromBAT, "kWh");
 
+                    <hr />
                     Chart(Model.timestamps, Model.Battery, "batteryGraph", "Baterie [%]");
                     Chart(Model.timestamps, Model.Consumption, "consumptionGraph", "Spotřeba [W]");
                     // Chart(Model.timestamps, Model.ToBat, "Do baterie [W]");
 
-                    Chart(Model.timestamps, Model.Production, "fveGraph", "Výkon fotovoltaické elektrátny [W]");
+                    Chart(Model.timestamps, Model.Production, "fveGraph", "Výkon fotovoltaické elektrárny [W]");
                     // Chart(Model.timestamps, Model.FromBat, "Z baterie [W]");
 
                     Chart(Model.timestamps, Model.Grid, "gridGraph", "Příkon ze sítě [W]");
@@ -46,8 +60,8 @@
                 <div class="card-header">
                     @title
                 </div>
-                <div class="card-body" id=@id>
-                    @initValue @unit
+                <div class="card-body" >
+                    <span id=@id>@initValue</span> @unit
                 </div>
             </div>
         </div>
@@ -64,8 +78,9 @@
         </div>
         <script type="text/javascript">
             $(function () {
-                let ctx = document.getElementById("@id").getContext('2d');
-                let data = {
+                window.charts = window.charts || {};
+                const ctx = document.getElementById("@id").getContext('2d');
+                const data = {
                     labels: JSON.parse('@Html.Raw(Json.Serialize(labels))'),
                     datasets: [{
                         label: "@Html.Raw(title)",
@@ -94,7 +109,7 @@
                     }
                 }
 
-                var myChart = new Chart(ctx, {
+                window.charts["@id"] = new Chart(ctx, {
                     options: options,
                     data: data,
                     type: "@type"

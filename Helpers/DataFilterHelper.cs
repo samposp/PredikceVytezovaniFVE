@@ -6,7 +6,7 @@ public static class DataFilterHelper
 {
     public static List<MqttData> FilterDateTime(List<MqttData> inputList, TimeSpan? timeStep = null)
     {
-        timeStep ??= new TimeSpan(0, 30, 0);
+        timeStep ??= new TimeSpan(0, 15, 0);
 
         if (inputList.Count == 0)
             return [];
@@ -48,6 +48,43 @@ public static class DataFilterHelper
             dateTimes.Add(date.AddHours(i));
         }
         return dateTimes;
+    }
+
+    public static List<float> InterpolateHourlyToQuarterHourly(List<float> hourly)
+    {
+        if (hourly.Count != 24)
+            throw new Exception("Expected 24 hourly values.");
+
+        var result = new List<float>(96);
+
+        for (int h = 0; h < 24; h++)
+        {
+            float v0 = hourly[h];
+            float v1 = (h < 23) ? hourly[h + 1] : hourly[h]; // hold last hour flat
+
+            result.Add(v0);                           // :00
+            result.Add(v0 + (v1 - v0) * 0.25f);      // :15
+            result.Add(v0 + (v1 - v0) * 0.50f);      // :30
+            result.Add(v0 + (v1 - v0) * 0.75f);      // :45
+        }
+
+        return result;
+    }
+
+    public static List<float> QuarterHourlyAddedToHourly(List<float> quarterHourly)
+    {
+        if (quarterHourly.Count != 96)
+            throw new Exception("Expected 96 quarter hourly values.");
+
+        var hourly = new List<float>(24);
+
+        for (int i = 0; i < 96; i+=4)
+        {
+            var hourSum = quarterHourly[i] + quarterHourly[i + 1] + quarterHourly[i + 2] + quarterHourly[i + 3];
+            hourly.Add(hourSum);
+        }
+
+        return hourly;
     }
 
 }

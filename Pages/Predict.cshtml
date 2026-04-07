@@ -10,7 +10,11 @@
 <div class="text-center">
     <div class="box-body">
         <div class="container">
+            <div><h5>@Model.DateMessage</h5></div>
             <div class="row">
+                @* <form method="post">
+                    <button type="submit" class="btn btn-primary">Vytvoř predikci</button>
+                </form> *@
                 @* <div class="col-xl-2 col-md-3 col-sm-4">
                     <div class="card mb-4">
                         <form method="post">
@@ -22,11 +26,13 @@
                 </div> *@
 
                 @{
-                    Chart(Model.SpotTimeStamps, Model.SpotPrice, "spot", "Spotová cena [EUR/MWh]", "bar");
-                    Chart(Model.FVEPredictionTimeStamps, Model.FVEPrediction, "fve", "Předpověd výroby FVE [kWh]", "bar");
-                    Chart(Model.ConsumptionPredictionTimeStamps, Model.ConsumptionPrediction, "consumption", "Předpověď spotřeby [kWh]", "bar");
-                    Chart(Model.PredictedCostTimeStamps, Model.PredictedCost, "cost", "Cena [EUR]", "bar");
-                    Chart(Model.SpotTimeStamps, Model.PredictedBattery, "battery", "Předpověď nabití baterie [%]", "bar");
+                    Chart(Model.SpotTimeStamps, Model.SpotPrice, "spot", "Spotová cena [CZK/kWh]");
+                    Chart(Model.FVEPredictionTimeStamps, Model.FVEPrediction, "fve", "Předpověd výroby FVE [W]");
+                    Chart(Model.ConsumptionPredictionTimeStamps, Model.ConsumptionPrediction, "consumption", "Předpověď spotřeby [W]");
+                    Chart(Model.PredictedCostTimeStamps, Model.PredictedBuy, "buy", "Nakoupeno [CZK]");
+                    Chart(Model.PredictedCostTimeStamps, Model.PredictedSell, "sell", "Prodáno [CZK]");
+
+                    Chart(Model.PredictedBatteryTimeStamps, Model.PredictedBattery, "battery", "Předpověď nabití baterie [%]");
 
                 }
             </div>

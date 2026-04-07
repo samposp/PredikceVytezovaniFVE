@@ -20,17 +20,22 @@
             </div>
             <div class="row">
                 @{
-                    Chart(Model.timestamps, Model.Battery, "Baterie [%]");
-                    Chart(Model.timestamps, Model.Consumption, "Spotreba [W]");
-                    Chart(Model.timestamps, Model.ToBat, "Do baterie [W]");
+                    Chart(Model.timestamps, Model.Battery, "battery", "Baterie [%]");
+                    Chart(Model.timestamps, Model.Consumption, "consumption", "Spotřeba [W]");
 
-                    Chart(Model.timestamps, Model.Production, "Energie z FVE [W]");
-                    Chart(Model.timestamps, Model.FromBat, "Z baterie [W]");
+                    Chart(Model.timestamps, Model.Production, "fve", "Energie z FVE [W]");
+                    Chart(Model.timestamps, Model.Grid, "grid", "Energie ze sítě [W]");
 
-                    Chart(Model.timestamps, Model.Grid, "Energie ze site [W]");
-                    Chart(Model.timestamps, Model.Sell, "Prodej [W]");
-                    Chart(Model.timestamps, Model.Buy, "Koupe [W]");
+                    Chart(Model.timestamps, Model.ToBat, "tobat", "Do baterie [kW]");
+                    Chart(Model.timestamps, Model.FromBat, "frombat", "Z baterie [kW]");
 
+                    Chart(Model.timestamps, Model.Sell, "sell", "Prodáno [CZK]");
+                    Chart(Model.timestamps, Model.Buy, "buy", "Nakoupeno [CZK]");
+
+                    if (Model.CheckBuyData)
+                    {
+                        Chart(Model.CosttimeStamp, Model.Cost, "buy2", "Výpočet Nakoupeno [CZK]");  
+                    }
                 }
             </div>
         </div>
@@ -39,20 +44,21 @@
 
 
 @{
-    void Chart<L, V>(List<L> labels, List<V> values, string chartName, string type = "line")
+    void Chart<L, V>(List<L> labels, List<V> values, string id, string title, string type = "line")
     {
         <div class="col-xl-6 col-md-8 col-sm-12">
             <div class="card mb-4">
-                <canvas id="@chartName" style="width:100%; height:300px"></canvas>
+                <canvas id="@id" style="width:100%; height:300px"></canvas>
             </div>
         </div>
         <script type="text/javascript">
             $(function () {
-                let ctx = document.getElementById("@chartName").getContext('2d');
-                let data = {
+                window.charts = window.charts || {};
+                const ctx = document.getElementById("@id").getContext('2d');
+                const data = {
                     labels: JSON.parse('@Html.Raw(Json.Serialize(labels))'),
                     datasets: [{
-                        label: "@chartName",
+                        label: "@Html.Raw(title)",
                         backgroundColor: 'rgba(54, 162, 235, 0.2)',
                         borderColor: 'rgba(54, 162, 235, 1)',
                         borderWidth: 1,
@@ -78,7 +84,7 @@
                     }
                 }
 
-                var myChart = new Chart(ctx, {
+                window.charts["@id"] = new Chart(ctx, {
                     options: options,
                     data: data,
                     type: "@type"

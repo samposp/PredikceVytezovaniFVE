@@ -4,18 +4,18 @@
     "Longitude": "15.138",
     "PeakPower": 9.9,
     "Declination": 35,
-    "Azimuth": -15
+    "Azimuth": -15,
+    "MinSellPrice": 2
   },
   "Api": {
     "MqttBroker": "cassandra2.tul.cz",
-    "MqttTopic": "FVE/Ibehej_TX",
-    "PvForecastApiKey": "esvk7s"
+    "MqttTopic": "FVE/Ibehej_TX"
   },
   "Model": {
     "HistoryDays": 30,
     "Retrain": false,
     "SARIMAX": {
-      "Order": [
+      "order": [
         2,
         0,
         0
@@ -28,7 +28,7 @@
       ]
     },
     "XGBoostParams": {
-      "Subsample": 1,
+      "subsample": 1,
       "n_estimators": 100,
       "max_depth": 7,
       "learning_rate": 0.01,

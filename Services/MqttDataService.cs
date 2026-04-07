@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.SignalR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using PredikceVytěžováníFVE.Data;
 using PredikceVytěžováníFVE.Helpers;
@@ -51,7 +52,12 @@ public class MqttDataService(IServiceProvider serviceProvider, ILogger<MqttDataS
     {
         using var scope = serviceProvider.CreateScope();
         var db = scope.ServiceProvider.GetRequiredService<FVEDbContext>();
-        return db.MqttData.AsEnumerable().OrderBy(x => x.Date).ThenBy(x => x.Time).Max(new DateTimeComparer())?.SoC;
+
+        return db.MqttData
+            .AsNoTracking()
+            .OrderByDescending(x => x.DateTime)
+            .Select(x => x.SoC)
+            .FirstOrDefault();
     }
 }
 

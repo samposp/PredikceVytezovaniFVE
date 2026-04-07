@@ -20,6 +20,7 @@ namespace PredikceVytìžováníFVE.Pages
         public List<float> Consumption = [];
         public List<float> Production = [];
         public List<float> Grid = [];
+        public DateTime LastUpdate;
         //public List<float> ToBat = [];
         //public List<float> FromBat = [];
         //public List<float> Sell = [];
@@ -41,7 +42,10 @@ namespace PredikceVytìžováníFVE.Pages
             chartData = DataFilterHelper.FilterDateTime(chartData, new TimeSpan(0,15,0));
 
             if (chartData.Count != 0)
+            {
                 initData = chartData.Last();
+                LastUpdate = ConverterHelper.ToDateTime(initData.Date, initData.Time);
+            }
             timestamps = chartData.Select(x => ConverterHelper.ToDateTime(x.Date, x.Time)).ToList();
             Battery = chartData.Where(x => x.SoC != null).Select(x => (int)x.SoC!).ToList();
             Production = chartData.Where(x => x.P_PV != null).Select(x => (float)x.P_PV!).ToList();

@@ -5,7 +5,6 @@ using PredikceVytěžováníFVE.Models.DB;
 using System;
 
 namespace PredikceVytěžováníFVE.Services {
-    // !!!This is the right one!!!
     public class PVForecastService {
 
         private readonly string host = "https://www.pvforecast.cz/api/";
@@ -14,6 +13,7 @@ namespace PredikceVytěžováníFVE.Services {
         private readonly string _apiKey;
         private string _latitude;
         private string _longitude;
+        private float _maxPower;
 
 
         // http://www.pvforecast.cz/api/?key=esvk7s&lat=50.793&lon=15.138
@@ -24,6 +24,7 @@ namespace PredikceVytěžováníFVE.Services {
             _latitude = configuration.Settings.Fve.Latitude ?? throw new Exception("Missing latitude");
             _longitude = configuration.Settings.Fve.Longitude ?? throw new Exception("Missing longitude");
             _apiKey = configuration.Settings.Api.PvForecastApiKey ?? throw new Exception("Missing PvForecastApiKey");
+            _maxPower = configuration.Settings.Fve.PeakPower ?? throw new Exception("Missing PeakPower in settings");
 
         }
 
@@ -33,7 +34,7 @@ namespace PredikceVytěžováníFVE.Services {
             using var db = scope.ServiceProvider.GetRequiredService<FVEDbContext>();
             var storedData = db.PvForecastData.Where(p => p.TimeStamp.Date == date.Date);
             if (storedData.Any())
-                return storedData.Select(d => new TimeValuePair(d.TimeStamp, d.Value)).ToList();
+                return storedData.Select(d => new TimeValuePair(d.TimeStamp, ToWatthour(d.Value, _maxPower))).ToList();
             return [];
         }
 
@@ -68,10 +69,15 @@ namespace PredikceVytěžováníFVE.Services {
                 var responseValue = pvforcastresponse.Select(ToTimeValuePair);
                 await db.AddRangeAsync(responseValue.Select(v => new PvForecastBo() { TimeStamp = v.DateTime, Value = v.Value }));
                 await db.SaveChangesAsync();
-                return responseValue;
+                return responseValue.Select(x => new TimeValuePair(x.DateTime, ToWatthour(x.Value, _maxPower)));
             }
             string errorMessage = await response.Content.ReadAsStringAsync();
             throw new HttpRequestException(errorMessage);
+        }
+
+        private static decimal ToWatthour(decimal g, float maxpower)
+        {
+            return ((decimal)maxpower * 1000) * (g / 1000);
         }
 
         private TimeValuePair ToTimeValuePair(List<object> timeValue) {

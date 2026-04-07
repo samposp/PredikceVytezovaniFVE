@@ -7,7 +7,7 @@ namespace PredikceVytěžováníFVE.Services;
 
 public class ConcumptionPredictionService(IServiceProvider serviceProvider, ILogger<PredictitonService> logger, OpenMeteoService meteoService, ConfigurationService configuration, IHostApplicationLifetime hostLifetime)
 {
-    public async Task<List<TimeValuePair>?> GetPrediction(DateTime date, CancellationToken cancellationToken = default)
+    public async Task<List<TimeValuePair>?> GetPrediction(DateTime date, bool onlyFromDb = false, CancellationToken cancellationToken = default)
     {
         using var scope = serviceProvider.CreateScope();
         bool retrain = configuration.Settings.Model.Retrain;
@@ -20,6 +20,10 @@ public class ConcumptionPredictionService(IServiceProvider serviceProvider, ILog
                 logger.LogInformation("Consumption prediction data retrieved from DB");
                 return [.. dbData.Select(ConverterHelper.ToTimeValuePair)];
             }
+        }
+        if (onlyFromDb)
+        {
+            return [];
         }
         await CallPythonScript("process_hourly_data.py", 5, cancellationToken);  // get historic data
         await meteoService.GetTomorrowTemperature(date); // get forecast data

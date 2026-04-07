@@ -102,7 +102,7 @@ def hybrid_24h_forecast(df, value_col, temperature_col, wind_col=None, pressure_
         seasonal_order=best_seasonal_order,
         enforce_stationarity=False,
         enforce_invertibility=False
-    ).fit(disp=False, method="lbfgs",maxiter=5)
+    ).fit(disp=False, method="lbfgs",maxiter=50)
     
     # Predict 24-hour SARIMAX forecast
     forecast_steps = int(24 / step_hours)

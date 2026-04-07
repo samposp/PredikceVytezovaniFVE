@@ -27,7 +27,7 @@ namespace PredikceVytěžováníFVE.Services
             _logger = logger;
             _serviceProvider = serviceProvider;
             mqttService = new(configuration.Settings.Api.MqttBroker ?? throw new Exception("missing mqtt broker"));
-            mqttTopic = configuration.Settings.Api.MqttTopic  ?? throw new Exception("missing mqtt topic");
+            mqttTopic = configuration.Settings.Api.MqttTopic ?? throw new Exception("missing mqtt topic");
         }
 
         public async Task StartAsync(CancellationToken cancellationToken)
@@ -56,7 +56,15 @@ namespace PredikceVytěžováníFVE.Services
                         return;
                     }
                     mqttMessage.FullMessage = message;
-                    //mqttMessage.DateTime = DateTime.Parse(mqttMessage.Date + " " + mqttMessage.Time);
+                    try
+                    {
+                        mqttMessage.DateTime = ConverterHelper.ToDateTime(mqttMessage.Date, mqttMessage.Time);
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.LogError(ex, "Failed to parse date and time from MQTT message");
+                        return;
+                    }
 
                     using IServiceScope scope = _serviceProvider.CreateScope();
                     MqttDataService mqttDataService = scope.ServiceProvider.GetRequiredService<MqttDataService>();

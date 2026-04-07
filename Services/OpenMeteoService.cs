@@ -1,9 +1,7 @@
 ﻿using PredikceVytěžováníFVE.Data;
 using PredikceVytěžováníFVE.Helpers;
 using PredikceVytěžováníFVE.Models;
-using PredikceVytěžováníFVE.Models.MeteoSource;
 using System.Web;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace PredikceVytěžováníFVE.Services {
     public class OpenMeteoService(IServiceProvider serviceProvider, ILogger<SpotSoapService> logger, ConfigurationService configuration) {
@@ -58,14 +56,16 @@ namespace PredikceVytěžováníFVE.Services {
 
                 }
 
-                logger.LogInformation("Spot data retrieved from SOAP");
+                logger.LogInformation("Temperature data retrieved from open meteo API");
                 var boData = timeList.Select(ConverterHelper.ToWeatherForecastBo);
                 await db.WeatherForecastData.AddRangeAsync(boData);
                 await db.SaveChangesAsync();
                 return timeList;
             }
             string errorMessage = await response.Content.ReadAsStringAsync();
-            throw new HttpRequestException(errorMessage);
+            logger.LogError(errorMessage);
+            return [];
+            //throw new HttpRequestException(errorMessage);
         }
     }
 }

@@ -12,6 +12,7 @@ public class ModelInfo
 
 public class SarimaxModel
 {
+    [JsonPropertyName("order")]
     public List<int>? Order { get; set; }
     [JsonPropertyName("seasonal_order")]
     public List<int>? SeasonalOrder { get; set; }
@@ -19,6 +20,7 @@ public class SarimaxModel
 
 public class XGBoostParams
 {
+    [JsonPropertyName("subsample")]
     public float? Subsample { get; set; }
     [JsonPropertyName("n_estimators")]
     public int? NEstimators { get; set; }
