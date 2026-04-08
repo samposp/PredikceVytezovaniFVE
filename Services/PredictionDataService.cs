@@ -1,6 +1,7 @@
 ﻿using PredikceVytěžováníFVE.Data;
 using PredikceVytěžováníFVE.Helpers;
 using PredikceVytěžováníFVE.Models;
+using PredikceVytěžováníFVE.Models.DB;
 using System.Reflection.Metadata.Ecma335;
 
 namespace PredikceVytěžováníFVE.Services;
@@ -14,12 +15,12 @@ public class PredictionDataService(ILogger<PredictitonService> logger, SpotSoapS
     public List<TimeValuePair> PredictedBuy { get; set; } = [];
     public List<TimeValuePair> PredictedSell { get; set; } = [];
     public List<TimeValuePair> PredictedBattery { get; set; } = [];
-
+    public ControlPredictionBo? PredictedControlData { get; set; }
     public async Task<bool> GetPredition(DateTime date)
     {
         DataDate = date;
-        var predictionData = db.PredictedControlData.Where(x => x.TimeStamp.Date == date.Date).FirstOrDefault();
-        if (predictionData == null)
+        PredictedControlData = db.PredictedControlData.Where(x => x.TimeStamp.Date == date.Date).FirstOrDefault();
+        if (PredictedControlData == null)
         {
             logger.LogWarning("Can not find predicted data for date: {date}", date.ToShortDateString());
             return false;
@@ -28,12 +29,12 @@ public class PredictionDataService(ILogger<PredictitonService> logger, SpotSoapS
         FVEPrediction = await forecastService.GetWatthours(date);
         ConsumptionPrediction = await consumptionService.GetPrediction(date, true) ?? [];
 
-        var batteryChargeList = predictionData.Charge!;
+        var batteryChargeList = PredictedControlData.Charge!;
         try
         {
-            PredictedBattery = ConverterHelper.ToQuarterHourlyList(predictionData.Capacity, date);
-            PredictedBuy = ConverterHelper.ToQuarterHourlyList(predictionData.GridBuy, date);
-            PredictedSell = ConverterHelper.ToQuarterHourlyList(predictionData.GridSell, date);
+            PredictedBattery = ConverterHelper.ToQuarterHourlyList(PredictedControlData.Capacity, date);
+            PredictedBuy = ConverterHelper.ToQuarterHourlyList(PredictedControlData.GridBuy, date);
+            PredictedSell = ConverterHelper.ToQuarterHourlyList(PredictedControlData.GridSell, date);
         }
         catch (Exception ex)
         {
@@ -43,17 +44,17 @@ public class PredictionDataService(ILogger<PredictitonService> logger, SpotSoapS
                 if (PredictedBattery.Count == 0)
                 {
                     logger.LogInformation("Trying to get hourly values");
-                    PredictedBattery = ConverterHelper.ToHourlyList(predictionData.Capacity, date);
+                    PredictedBattery = ConverterHelper.ToHourlyList(PredictedControlData.Capacity, date);
                 }
                 if (PredictedBuy.Count == 0)
                 {
                     logger.LogInformation("Trying to get hourly values");
-                    PredictedBuy = ConverterHelper.ToHourlyList(predictionData.GridBuy, date);
+                    PredictedBuy = ConverterHelper.ToHourlyList(PredictedControlData.GridBuy, date);
                 }
                 if (PredictedSell.Count == 0)
                 {
                     logger.LogInformation("Trying to get hourly values");
-                    PredictedSell = ConverterHelper.ToHourlyList(predictionData.GridSell, date);
+                    PredictedSell = ConverterHelper.ToHourlyList(PredictedControlData.GridSell, date);
                 }
             }
             catch (Exception ex2)

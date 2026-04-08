@@ -23,7 +23,7 @@ namespace PredikceVytěžováníFVE.Services {
             this.serviceProvider = serviceProvider;
             _latitude = configuration.Settings.Fve.Latitude ?? throw new Exception("Missing latitude");
             _longitude = configuration.Settings.Fve.Longitude ?? throw new Exception("Missing longitude");
-            _apiKey = configuration.Settings.Api.PvForecastApiKey ?? throw new Exception("Missing PvForecastApiKey");
+            _apiKey = configuration.Settings.Api.PvForecastApiKey ?? "esvk7s";
             _maxPower = configuration.Settings.Fve.PeakPower ?? throw new Exception("Missing PeakPower in settings");
 
         }

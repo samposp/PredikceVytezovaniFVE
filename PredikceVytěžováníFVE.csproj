@@ -7,11 +7,6 @@
     <UserSecretsId>a8f0073a-bf4d-4758-b4f4-e99b6a1f81c2</UserSecretsId>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="FVEDB.12.db">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="EasyCronJob.Core" Version="3.0.0" />
     <PackageReference Include="Google.OrTools" Version="9.15.6755" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="9.0.2" />

@@ -11,19 +11,14 @@
     <div class="box-body">
         <div class="container">
             <div><h5>@Model.DateMessage</h5></div>
+            <p>@Model.BatteryMessage</p>
             <div class="row">
-                @* <form method="post">
-                    <button type="submit" class="btn btn-primary">Vytvoř predikci</button>
-                </form> *@
-                @* <div class="col-xl-2 col-md-3 col-sm-4">
-                    <div class="card mb-4">
-                        <form method="post">
-                            <input asp-for="DataDate" type="date" class="form-control" onchange="this.form.submit()" />
-                            <input type="checkbox" asp-for="UseFVEProduction" onchange="this.form.submit()" />
-
-                        </form>
-                    </div>
-                </div> *@
+                @if (@Model.CanRerun)
+                {
+                    <form method="post">
+                        <button type="submit" class="btn btn-primary">Vytvoř predikci</button>
+                    </form>
+                }
 
                 @{
                     Chart(Model.SpotTimeStamps, Model.SpotPrice, "spot", "Spotová cena [CZK/kWh]");

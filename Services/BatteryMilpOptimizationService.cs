@@ -34,9 +34,7 @@ public class BatteryMilpOptimizationService(ConfigurationService config, ILogger
 
         float minSellPrice = config.Settings.Fve.MinSellPrice ?? 0.0f;
 
-        // If you later add a separate discharge speed in config, use that here instead.
         double maxChargePower = chargeSpeed;
-        double maxDischargePower = chargeSpeed;
 
         double minCharge = capacity * minPercent / 100.0;
         double maxCharge = capacity * maxPercent / 100.0;
@@ -81,10 +79,6 @@ public class BatteryMilpOptimizationService(ConfigurationService config, ILogger
         Variable[] startGridCharge = new Variable[T];
         Variable[] startDischarge = new Variable[T];
 
-        // Prevent simultaneous grid charge and PV charge
-        // 1 = grid charge allowed, 0 = PV charge allowed
-        Variable[] chargeFromGrid = new Variable[T];
-
         for (int t = 0; t <= T; t++)
             soc[t] = solver.MakeNumVar(minCharge, maxCharge, $"soc_{t}");
 
@@ -95,7 +89,7 @@ public class BatteryMilpOptimizationService(ConfigurationService config, ILogger
 
             gridCharge[t] = solver.MakeNumVar(0, maxChargePower, $"gridCharge_{t}");
             chargePv[t] = solver.MakeNumVar(0, maxChargePower, $"chargePv_{t}");
-            discharge[t] = solver.MakeNumVar(0, maxDischargePower, $"discharge_{t}");
+            discharge[t] = solver.MakeNumVar(0, INF, $"discharge_{t}");
             curtailPv[t] = solver.MakeNumVar(0, INF, $"curtailPv_{t}");
 
             isGridCharge[t] = solver.MakeBoolVar($"isGridCharge_{t}");
@@ -103,8 +97,6 @@ public class BatteryMilpOptimizationService(ConfigurationService config, ILogger
 
             startGridCharge[t] = solver.MakeBoolVar($"startGridCharge_{t}");
             startDischarge[t] = solver.MakeBoolVar($"startDischarge_{t}");
-
-            chargeFromGrid[t] = solver.MakeBoolVar($"chargeFromGrid_{t}");
         }
 
         // ========= Initial =========
@@ -122,8 +114,7 @@ public class BatteryMilpOptimizationService(ConfigurationService config, ILogger
             double deficit = Math.Max(cons - pv, 0.0);
 
             // Cannot charge from grid and PV at the same time
-            solver.Add(gridCharge[t] <= maxChargePower * chargeFromGrid[t]);
-            solver.Add(chargePv[t] <= maxChargePower * (1 - chargeFromGrid[t]));
+            solver.Add(chargePv[t] <= maxChargePower * (1 - isGridCharge[t]));
 
             // Cannot grid-charge and discharge at the same time
             solver.Add(isGridCharge[t] + isDischarge[t] <= 1);
@@ -190,9 +181,9 @@ public class BatteryMilpOptimizationService(ConfigurationService config, ILogger
 
         // ========= Objective =========
 
-        double switchingPenalty = 0.05;
-        double chargeOutsideWindowPenalty = 0.03;
-        double dischargeOutsideWindowPenalty = 0.03;
+        double switchingPenalty = 0.01;
+        //double chargeOutsideWindowPenalty = 0.03;
+        //double dischargeOutsideWindowPenalty = 0.03;
 
         Objective objective = solver.Objective();
 
@@ -201,10 +192,10 @@ public class BatteryMilpOptimizationService(ConfigurationService config, ILogger
             double price = spot[t];
 
             // buy from grid
-            objective.SetCoefficient(buy[t], price);
+            objective.SetCoefficient(buy[t], price * dt);
 
             // sell to grid
-            objective.SetCoefficient(sell[t], -price);
+            objective.SetCoefficient(sell[t], -price * dt);
 
             objective.SetCoefficient(curtailPv[t], 0.0);
 
@@ -222,29 +213,29 @@ public class BatteryMilpOptimizationService(ConfigurationService config, ILogger
                 startDischarge[t],
                 objective.GetCoefficient(startDischarge[t]) + switchingPenalty);
 
-            int hour = t / 4;
+            // FOR CHARGING IN SET TIMES - NOT NEEDED
+            //int hour = t / 4;
+            //bool preferredCharge =
+            //    (hour >= 0 && hour < 5) ||
+            //    (hour >= 10 && hour < 15);
 
-            bool preferredCharge =
-                (hour >= 0 && hour < 5) ||
-                (hour >= 10 && hour < 15);
+            //bool preferredDischarge =
+            //    (hour >= 5 && hour < 10) ||
+            //    (hour >= 16 && hour < 23);
 
-            bool preferredDischarge =
-                (hour >= 5 && hour < 10) ||
-                (hour >= 16 && hour < 23);
+            //if (!preferredCharge)
+            //{
+            //    objective.SetCoefficient(
+            //        isGridCharge[t],
+            //        objective.GetCoefficient(isGridCharge[t]) + chargeOutsideWindowPenalty);
+            //}
 
-            if (!preferredCharge)
-            {
-                objective.SetCoefficient(
-                    isGridCharge[t],
-                    objective.GetCoefficient(isGridCharge[t]) + chargeOutsideWindowPenalty);
-            }
-
-            if (!preferredDischarge)
-            {
-                objective.SetCoefficient(
-                    isDischarge[t],
-                    objective.GetCoefficient(isDischarge[t]) + dischargeOutsideWindowPenalty);
-            }
+            //if (!preferredDischarge)
+            //{
+            //    objective.SetCoefficient(
+            //        isDischarge[t],
+            //        objective.GetCoefficient(isDischarge[t]) + dischargeOutsideWindowPenalty);
+            //}
         }
 
         objective.SetMinimization();
@@ -301,14 +292,7 @@ public class BatteryMilpOptimizationService(ConfigurationService config, ILogger
 
         result.TotalCost = (float)objective.Value();
 
-        result.NightTargetPercent = GetMaxPercentInWindow(result.BatteryCapacity, 0, 5);
-        result.NoonTargetPercent = GetMaxPercentInWindow(result.BatteryCapacity, 10, 15);
-
-        result.ChargeToCapacity = new List<int>
-        {
-            (int)Math.Round(result.NightTargetPercent),
-            (int)Math.Round(result.NoonTargetPercent)
-        };
+        result.ChargeToCapacity = GetChargeTargets(result.BatteryCapacity, result.GridCharge);
 
         return result;
     }
@@ -318,18 +302,51 @@ public class BatteryMilpOptimizationService(ConfigurationService config, ILogger
         return date.Date.Add(TimeSpan.FromMinutes(15 * index));
     }
 
-    private static float GetMaxPercentInWindow(
-        List<float> batteryCapacityPercent,
-        int fromHour,
-        int toHourExclusive)
+    private static List<int> GetChargeTargets(List<float> batteryCapacityPercent, List<float> gridCharge)
     {
-        if (batteryCapacityPercent.Count == 0)
-            return 0;
+        var targets = new List<int>();
 
-        return batteryCapacityPercent
-            .Skip(fromHour)
-            .Take(toHourExclusive - fromHour)
-            .DefaultIfEmpty(0)
-            .Max();
+        if (batteryCapacityPercent.Count == 0 || gridCharge.Count == 0)
+            return targets;
+
+        bool inChargeBlock = false;
+        float maxCapacityInBlock = 0f;
+
+        for (int i = 0; i < gridCharge.Count; i++)
+        {
+            bool isChargingFromGrid = gridCharge[i] > 0.001f;
+
+            if (isChargingFromGrid)
+            {
+                if (!inChargeBlock)
+                {
+                    inChargeBlock = true;
+                    maxCapacityInBlock = batteryCapacityPercent[i];
+                }
+
+                maxCapacityInBlock = Math.Max(maxCapacityInBlock, batteryCapacityPercent[i]);
+            }
+            else if (inChargeBlock)
+            {
+                // include the SOC right after the last charging interval if available
+                if (i < batteryCapacityPercent.Count)
+                    maxCapacityInBlock = Math.Max(maxCapacityInBlock, batteryCapacityPercent[i]);
+
+                targets.Add((int)Math.Round(maxCapacityInBlock));
+                inChargeBlock = false;
+            }
+        }
+
+        // if charging continues until the end of the horizon
+        if (inChargeBlock)
+        {
+            maxCapacityInBlock = Math.Max(
+                maxCapacityInBlock,
+                batteryCapacityPercent[^1]);
+
+            targets.Add((int)Math.Round(maxCapacityInBlock));
+        }
+
+        return targets;
     }
 }

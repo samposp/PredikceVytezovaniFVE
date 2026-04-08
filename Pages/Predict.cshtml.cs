@@ -1,45 +1,35 @@
+using Google.OrTools.ConstraintSolver;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using PredikceVytěžováníFVE.Data;
 using PredikceVytěžováníFVE.Helpers;
 using PredikceVytěžováníFVE.Services;
 
-namespace PredikceVytěžováníFVE.Pages; 
+namespace PredikceVytěžováníFVE.Pages;
 public class PredictModel(PredictionDataService predictionService, PredictitonService runPredictionService) : PageModel
 {
     [BindProperty]
     public DateTime DataDate { get; set; }
 
-    [BindProperty]
     public List<DateTime> SpotTimeStamps { get; set; } = [];
-    [BindProperty]
     public List<float> SpotPrice { get; set; } = [];
-
-    [BindProperty]
     public List<DateTime> FVEPredictionTimeStamps { get; set; } = [];
-    [BindProperty]
     public List<float> FVEPrediction { get; set; } = [];
-
-    [BindProperty]
     public List<DateTime> ConsumptionPredictionTimeStamps { get; set; } = [];
-    [BindProperty]
     public List<float> ConsumptionPrediction { get; set; } = [];
-
-    [BindProperty]
     public bool UseFVEProduction { get; set; } = true;
-
-    [BindProperty]
     public List<DateTime> PredictedCostTimeStamps { get; set; } = [];
-    [BindProperty]
     public List<float> PredictedBuy { get; set; } = [];
-
     public List<float> PredictedSell { get; set; } = [];
-
     public List<float> PredictedBattery { get; set; } = [];
     public List<DateTime> PredictedBatteryTimeStamps { get; set; } = [];
 
+    public string BatteryMessage { get; set; } = "";
     public string DateMessage { get; set; } = "";
-    public async Task OnGet() {
+
+    public bool CanRerun = false;
+    public async Task OnGet()
+    {
 
         //await pred.BackTest();
         await GetData();
@@ -53,7 +43,7 @@ public class PredictModel(PredictionDataService predictionService, PredictitonSe
             DataDate = DateTime.Now;
             bool isTodayPred = await predictionService.GetPredition(DataDate);
             if (isTodayPred)
-                DateMessage = "Zobrazena predikce pro " + DataDate.ToShortDateString();
+                DateMessage = "Zobrazena predikce pro " + DataDate.ToString("dd.MM.yyyy");
             else
             {
                 DateMessage = "Nenalezena predikce pro dnešek ani zítřek";
@@ -61,11 +51,28 @@ public class PredictModel(PredictionDataService predictionService, PredictitonSe
             }
         }
         else
-            DateMessage = "Zobrazena predikce pro " + DataDate.ToShortDateString();
+            DateMessage = "Zobrazena predikce pro " + DataDate.ToString("dd.MM.yyyy");
 
         //DataDate = DateTime.Now.AddDays(-1);
         //await pred.Predict(DataDate);
         //await predictionService.GetPredition(DataDate);
+        BatteryMessage = $"Nabíjení baterie ze sítě: ";
+        for (int i = 0; i < predictionService.PredictedControlData?.ChargeTimes?.Count; i++)
+        {
+            var time = predictionService.PredictedControlData.ChargeTimes[i];
+            var charge = predictionService.PredictedControlData.ChargeToCapacities?[i];
+            if (charge != null)
+            {
+                BatteryMessage += $"{time.ToString("HH:mm")} - {charge.Value}%, ";
+            }
+        }
+        BatteryMessage += "Vybíjení baterie: ";
+        for (int i = 0; i < predictionService.PredictedControlData?.DischargeTimes?.Count; i++)
+        {
+            var time = predictionService.PredictedControlData.DischargeTimes[i];
+            BatteryMessage += $"{time.ToString("HH:mm")}, ";
+        }
+
 
         SpotTimeStamps = predictionService.SpotData?.Select(x => x.DateTime).ToList() ?? [];
         SpotPrice = predictionService.SpotData?.Select(x => (float)x.Value).ToList() ?? [];
@@ -84,9 +91,10 @@ public class PredictModel(PredictionDataService predictionService, PredictitonSe
         PredictedBatteryTimeStamps = predictionService.PredictedBattery?.Select(x => x.DateTime).ToList() ?? [];
     }
 
-    //public async Task<IActionResult> OnPost()
-    //{
-    //    await runPredictionService.Predict(DateTime.Now);
-    //    return RedirectToPage();
-    //}
+    public async Task<IActionResult> OnPost()
+    {
+        if (CanRerun)
+            await runPredictionService.Predict(DateTime.Now.AddDays(1));
+        return RedirectToPage();
+    }
 }
