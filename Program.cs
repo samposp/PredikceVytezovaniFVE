@@ -47,6 +47,7 @@ try
     builder.Services.AddTransient<MqttDataService>();
     builder.Services.AddTransient<PredictionDataService>();
     builder.Services.AddTransient<EcbCurrencyConversionService>();
+    builder.Services.AddTransient<SendPredictionService>();
     builder.Services.ApplyResulation<PredictionSechduleJob>(options =>
     {
         options.CronExpression = "0 23 * * *";

@@ -27,7 +27,7 @@ public class PredictModel(PredictionDataService predictionService, PredictitonSe
     public string BatteryMessage { get; set; } = "";
     public string DateMessage { get; set; } = "";
 
-    public bool CanRerun = false;
+    public bool CanRerun = true;
     public async Task OnGet()
     {
 
@@ -56,24 +56,10 @@ public class PredictModel(PredictionDataService predictionService, PredictitonSe
         //DataDate = DateTime.Now.AddDays(-1);
         //await pred.Predict(DataDate);
         //await predictionService.GetPredition(DataDate);
-        BatteryMessage = $"Nabíjení baterie ze sítě: ";
-        for (int i = 0; i < predictionService.PredictedControlData?.ChargeTimes?.Count; i++)
-        {
-            var time = predictionService.PredictedControlData.ChargeTimes[i];
-            var charge = predictionService.PredictedControlData.ChargeToCapacities?[i];
-            if (charge != null)
-            {
-                BatteryMessage += $"{time.ToString("HH:mm")} - {charge.Value}%, ";
-            }
-        }
-        BatteryMessage += "Vybíjení baterie: ";
-        for (int i = 0; i < predictionService.PredictedControlData?.DischargeTimes?.Count; i++)
-        {
-            var time = predictionService.PredictedControlData.DischargeTimes[i];
-            BatteryMessage += $"{time.ToString("HH:mm")}, ";
-        }
-        BatteryMessage += $" Celková cena za energie ze sítě: {predictionService.PredictedControlData?.PriceSum?.ToString("F2")} CZK";
 
+        SetBatteryMessage();
+
+        //await send.SendData(predictionService.PrediectedControlData);
 
         SpotTimeStamps = predictionService.SpotData?.Select(x => x.DateTime).ToList() ?? [];
         SpotPrice = predictionService.SpotData?.Select(x => (float)x.Value).ToList() ?? [];
@@ -91,11 +77,30 @@ public class PredictModel(PredictionDataService predictionService, PredictitonSe
         PredictedBattery = predictionService.PredictedBattery?.Select(x => (float)x.Value).ToList() ?? [];
         PredictedBatteryTimeStamps = predictionService.PredictedBattery?.Select(x => x.DateTime).ToList() ?? [];
     }
-
+    private void SetBatteryMessage()
+    {
+        BatteryMessage = $"Nabíjení baterie ze sítě: ";
+        for (int i = 0; i < predictionService.PredictedControlData?.ChargeTimes?.Count; i++)
+        {
+            var time = predictionService.PredictedControlData.ChargeTimes[i];
+            var charge = predictionService.PredictedControlData.ChargeToCapacities?[i];
+            if (charge != null)
+            {
+                BatteryMessage += $"{time.ToString("HH:mm")} - {charge.Value}%, ";
+            }
+        }
+        BatteryMessage += "Vybíjení baterie: ";
+        for (int i = 0; i < predictionService.PredictedControlData?.DischargeTimes?.Count; i++)
+        {
+            var time = predictionService.PredictedControlData.DischargeTimes[i];
+            BatteryMessage += $"{time.ToString("HH:mm")}, ";
+        }
+        BatteryMessage += $" Celková cena za energie ze sítě: {predictionService.PredictedControlData?.PriceSum?.ToString("F2")} CZK";
+    }
     public async Task<IActionResult> OnPost()
     {
         if (CanRerun)
-            await runPredictionService.Predict(DateTime.Now.AddDays(1));
+            await runPredictionService.Predict(DateTime.Now);
         return RedirectToPage();
     }
 }

@@ -1,4 +1,5 @@
 ﻿using MQTTnet;
+using MQTTnet.Formatter;
 using MQTTnet.Protocol;
 using System.ServiceModel.Security;
 using System.Text;
@@ -28,9 +29,9 @@ namespace PredikceVytěžováníFVE.Services
         {
             var options = new MqttClientOptionsBuilder()
                 .WithTcpServer(broker, port) // MQTT broker address and port
-                .WithCredentials(username, password) // Set username and password
+                //.WithCredentials(username, password) // Set username and password
                 .WithClientId(clientId)
-                .WithCleanSession()
+                //.WithCleanSession()
                 .Build();
             return await mqttClient.ConnectAsync(options);
         }

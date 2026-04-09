@@ -4,6 +4,7 @@ using PredikceVytěžováníFVE.BackTest;
 using PredikceVytěžováníFVE.Data;
 using PredikceVytěžováníFVE.Helpers;
 using PredikceVytěžováníFVE.Models;
+using PredikceVytěžováníFVE.Models.DB;
 
 namespace PredikceVytěžováníFVE.Services;
 public class PredictitonService(ILogger<PredictitonService> logger, SpotSoapService soapClient, ForecastService forecastService, ConfigurationService config, ConcumptionPredictionService consumptionService, MqttDataService mqttData, BatteryMilpOptimizationService batteryOptimizationService, IServiceProvider serviceProvider, PVForecastService oldFveService)
@@ -47,7 +48,7 @@ public class PredictitonService(ILogger<PredictitonService> logger, SpotSoapServ
         BacktestCsvWriter.SaveDayResults(resultFile, result.Days);
     }
 
-    public async Task Predict(DateTime date)
+    public async Task<ControlPredictionBo> Predict(DateTime date)
     {
         DataDate = date;
         SpotData = await soapClient.GetSoapData(date) ?? [];
@@ -56,8 +57,7 @@ public class PredictitonService(ILogger<PredictitonService> logger, SpotSoapServ
 
         ConsumptionPrediction = await consumptionService.GetPrediction(date) ?? [];
 
-        //float batteryInitial = mqttData.GetLastBattery() ?? 20;
-        float batteryInitial = 20;
+        float batteryInitial = mqttData.GetLastBattery() ?? 20;
 
         List<float> spotList = ConverterHelper.ToFloatList(SpotData); // From EUR/MWh to EUR/kWh
         var fveList = ConverterHelper.ToFloatList(FVEPrediction);
@@ -96,35 +96,8 @@ public class PredictitonService(ILogger<PredictitonService> logger, SpotSoapServ
 
         await db.SaveChangesAsync();
 
-        //PredictedBattery = ConverterHelper.ToHourlyList(batteryInfo.BatteryCapacity, date);
-
-        //List<float> predictedList = [];
-        //for (int i = 0; i < SpotData.Count; i++)
-        //{
-        //    var consumption = consumptionList[i];
-        //    var spot = spotList[i];
-        //    var fveProduction = fveList[i];
-        //    var batteryCharge = batteryInfo.BatteryDelta[i];
-
-        //    predictedList.Add((consumption - fveProduction + batteryCharge) * spot);
-        //}
-        //PredictedCost = ConverterHelper.ToHourlyList(predictedList, date);
+        return prediction;
     }
-
-    //private PredictedData GetOptimalAlg(float initialBattery, List<float> fve, List<float> consumption, List<float> spot)
-    //{
-    //    // analyze spot data 
-
-    //    var maxCharge = 0;
-    //    // get first charge
-    //    var surplus = GetFVESurplus(fve, consumption);
-    //    var start = DataDate.Date; // 0:00
-    //    var end = DataDate.Date.AddHours(12); // 12:00
-    //    var firstCharge = FindOptimalChargeTime(start, end, initialBattery, maxCharge);
-
-    //    return new();
-    //}
-
     private PredictedData GetOptimalBatteryCharge(float initialBattery, List<float> fve, List<float> consumption, List<float> spot)
     {
         int minTimeToCharge = 3;

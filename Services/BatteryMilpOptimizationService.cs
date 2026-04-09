@@ -81,6 +81,8 @@ public class BatteryMilpOptimizationService(ConfigurationService config)
         Variable[] startGridCharge = new Variable[T];
         Variable[] startDischarge = new Variable[T];
 
+        Variable[] isLimitedByMin = new Variable[T];
+
         for (int t = 0; t <= T; t++)
             soc[t] = solver.MakeNumVar(minCharge, maxCharge, $"soc_{t}");
 
@@ -99,6 +101,7 @@ public class BatteryMilpOptimizationService(ConfigurationService config)
 
             startGridCharge[t] = solver.MakeBoolVar($"startGridCharge_{t}");
             startDischarge[t] = solver.MakeBoolVar($"startDischarge_{t}");
+            isLimitedByMin[t] = solver.MakeBoolVar($"isLimitedByMin_{t}");
         }
 
         // ========= Initial =========
@@ -136,16 +139,38 @@ public class BatteryMilpOptimizationService(ConfigurationService config)
                 solver.Add(sell[t] == 0);
             }
 
-            // Discharge is all-or-nothing:
-            // if isDischarge = 1 -> discharge exactly deficit
-            // if isDischarge = 0 -> discharge = 0
-            solver.Add(discharge[t] == deficit * isDischarge[t]);
+            // Never discharge more than current deficit
+            solver.Add(discharge[t] <= deficit * isDischarge[t]);
+            // If discharging, force discharge to be either:
+            // 1) full deficit, or
+            // 2) all remaining usable battery power down to minCharge
+            //
+            // isLimitedByMin[t] = 0  => discharge = deficit
+            // isLimitedByMin[t] = 1  => discharge = available power above minCharge
+
+            double mDeficit = deficit;
+            double mAvailable = (maxCharge - minCharge) / dt;
+
+            solver.Add(
+                discharge[t] >= deficit
+                    - mDeficit * isLimitedByMin[t]
+                    - mDeficit * (1 - isDischarge[t])
+            );
+
+            solver.Add(
+                discharge[t] >= (soc[t] - minCharge) / dt
+                    - mAvailable * (1 - isLimitedByMin[t])
+                    - mAvailable * (1 - isDischarge[t])
+            );
+
+            // If not discharging, isLimitedByMin must be 0
+            solver.Add(isLimitedByMin[t] <= isDischarge[t]);
 
             // don't overcharge battery within one step
             solver.Add(gridCharge[t] + chargePv[t] <= (maxCharge - soc[t]) / dt + eps);
 
             // don't overdischarge battery within one step
-            solver.Add(discharge[t] <= (soc[t] - minCharge) / dt + eps);
+            solver.Add(discharge[t] <= (soc[t] - minCharge) / dt);
 
             // grid balance:
             // pv + buy + discharge = cons + chargePv + gridCharge + sell
