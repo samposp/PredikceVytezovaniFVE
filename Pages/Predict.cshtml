@@ -13,28 +13,24 @@
             <div><h5>@Model.DateMessage</h5></div>
             <p>@Model.BatteryMessage</p>
             <div class="row">
-                @if (@Model.CanRerun)
-                {
-                    <form method="post">
-                        <button type="submit" class="btn btn-primary">Vytvoř predikci</button>
-                    </form>
-                }
 
                 @{
                     Chart(Model.SpotTimeStamps, Model.SpotPrice, "spot", "Spotová cena [CZK/kWh]");
                     Chart(Model.FVEPredictionTimeStamps, Model.FVEPrediction, "fve", "Předpověd výroby FVE [W]");
                     Chart(Model.ConsumptionPredictionTimeStamps, Model.ConsumptionPrediction, "consumption", "Předpověď spotřeby [W]");
-                    Chart(Model.PredictedCostTimeStamps, Model.PredictedBuy, "buy", "Nakoupeno [CZK]");
-                    Chart(Model.PredictedCostTimeStamps, Model.PredictedSell, "sell", "Prodáno [CZK]");
-
+                    
                     Chart(Model.PredictedBatteryTimeStamps, Model.PredictedBattery, "battery", "Předpověď nabití baterie [%]");
-
+                    Chart(Model.PredictedCostTimeStamps, Model.PredictedBuy, "buy", "Nakoupeno [kWh]");
+                    Chart(Model.PredictedCostTimeStamps, Model.PredictedSell, "sell", "Prodáno [kWh]");
                 }
             </div>
         </div>
-        @* @{Chart(Model.labels, Model.data, "Price", "bar");} *@
-        @* @Html.Raw(Json.Serialize(Model.labels)) *@
-
+        @if (@Model.CanRerun)
+        {
+            <form method="post" class="m-3">
+                <button type="submit" class="btn btn-primary">Vytvoř predikci</button>
+            </form>
+        }
     </div>
 </div>
 

@@ -256,7 +256,6 @@ public class BatteryMilpOptimizationService(ConfigurationService config, ILogger
         float sellCummulative = 0;
         for (int t = 0; t < T; t++)
         {
-            float spotPrice = (float)(spot[t] * dt);
             float socNowPercent = (float)(soc[t].SolutionValue() * 100.0 / capacity);
             float gCharge = (float)gridCharge[t].SolutionValue();
             float pCharge = (float)chargePv[t].SolutionValue();
@@ -271,15 +270,15 @@ public class BatteryMilpOptimizationService(ConfigurationService config, ILogger
             result.Discharge.Add(dis);
             result.BatteryDelta.Add(delta);
 
-            var buyVal = (float)buy[t].SolutionValue() * spotPrice;
-            var sellVal = (float)sell[t].SolutionValue() * spotPrice;
+            var buyVal = buy[t].SolutionValue() * dt;
+            var sellVal = sell[t].SolutionValue() * dt;
             if (buyVal < 0)
             {
                 sellVal -= buyVal;
                 buyVal = 0;
             }
-            buyCummulative += buyVal;
-            sellCummulative += sellVal;
+            buyCummulative += (float)buyVal;
+            sellCummulative += (float)sellVal;
             result.GridBuy.Add(buyCummulative);
             result.GridSell.Add(sellCummulative);
 

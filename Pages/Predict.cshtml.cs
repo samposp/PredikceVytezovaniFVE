@@ -72,6 +72,7 @@ public class PredictModel(PredictionDataService predictionService, PredictitonSe
             var time = predictionService.PredictedControlData.DischargeTimes[i];
             BatteryMessage += $"{time.ToString("HH:mm")}, ";
         }
+        BatteryMessage += $" Celková cena za energie ze sítě: {predictionService.PredictedControlData?.PriceSum?.ToString("F2")} CZK";
 
 
         SpotTimeStamps = predictionService.SpotData?.Select(x => x.DateTime).ToList() ?? [];

@@ -29,12 +29,12 @@
                     Chart(Model.timestamps, Model.ToBat, "tobat", "Do baterie [kW]");
                     Chart(Model.timestamps, Model.FromBat, "frombat", "Z baterie [kW]");
 
-                    Chart(Model.timestamps, Model.Sell, "sell", "Prodáno [CZK]");
-                    Chart(Model.timestamps, Model.Buy, "buy", "Nakoupeno [CZK]");
+                    Chart(Model.timestamps, Model.Sell, "sell", "Prodáno [kWh]");
+                    Chart(Model.timestamps, Model.Buy, "buy", "Nakoupeno [kWh]");
 
                     if (Model.CheckBuyData)
                     {
-                        Chart(Model.CosttimeStamp, Model.Cost, "buy2", "Výpočet Nakoupeno [CZK]");  
+                        Chart(Model.CosttimeStamp, Model.Cost, "buy2", "Nakoupeno cena [CZK]");  
                     }
                 }
             </div>

@@ -26,8 +26,8 @@
             <div class="row"><h4>Celková data z <span id="date">@Model.initData.Date</span></h4></div>
             <div class="row">
                 @{
-                    Card("Nakoupeno", "buy", Model.initData.BUY, "CZK");
-                    Card("Prodáno", "sell", Model.initData.SELL, "CZK");
+                    Card("Nakoupeno", "buy", Model.initData.BUY, "kWh");
+                    Card("Prodáno", "sell", Model.initData.SELL, "kWh");
                     Card("Energie z FVE", "fve", Model.initData.PVenergy, "kWh");
                     Card("Do baterie", "toBat", Model.initData.ToBAT, "kWh");
                     Card("Z baterie", "fromBat", Model.initData.FromBAT, "kWh");

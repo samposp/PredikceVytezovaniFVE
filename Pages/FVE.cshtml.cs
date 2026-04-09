@@ -34,9 +34,9 @@ namespace PredikceVytěžováníFVE.Pages
         [BindProperty(SupportsGet = true)]
         public DateTime DataDate { get; set; } = DateTime.Now.AddDays(-1);
 
-        public void OnGet()
+        public async Task OnGet()
         {
-            GetData();
+            await GetData();
         }
 
         public async Task GetData()
