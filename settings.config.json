@@ -4,12 +4,13 @@
     "Longitude": "15.138",
     "PeakPower": 9.9,
     "Declination": 35,
-    "Azimuth": -15,
-    "MinSellPrice": 2
+    "Azimuth": -15
   },
   "Api": {
     "MqttBroker": "cassandra2.tul.cz",
-    "MqttTopic": "FVE/Ibehej_TX"
+    "MqttDataTopic": "FVE/Ibehej_TX",
+    "MqttPredictTopic": "FVE/IbehejPred",
+    "PvForecastApiKey": "esvk7s"
   },
   "Model": {
     "HistoryDays": 30,
@@ -40,5 +41,9 @@
     "MaxLevel": 95,
     "ChargeSpeed": 9.8,
     "Capacity": 14.4
+  },
+  "Control": {
+    "MinSellPrice": 1.5,
+    "MaxChargingBlocks": 2
   }
 }

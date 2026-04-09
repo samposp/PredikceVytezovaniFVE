@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 
 namespace PredikceVytěžováníFVE.Services;
 
-public class BatteryMilpOptimizationService(ConfigurationService config, ILogger<BatteryMilpOptimizationService> logger)
+public class BatteryMilpOptimizationService(ConfigurationService config)
 {
     public BatteryOptimizationResult Optimize(
         float initialBatteryPercent,
@@ -32,7 +32,9 @@ public class BatteryMilpOptimizationService(ConfigurationService config, ILogger
         float chargeSpeed = config.Settings.Battery.ChargeSpeed
             ?? throw new Exception("Missing battery charge speed in config");
 
-        float minSellPrice = config.Settings.Fve.MinSellPrice ?? 0.0f;
+        float minSellPrice = config.Settings.Control.MinSellPrice ?? 0.0f;
+
+        int maxChargeBlocks = config.Settings.Control.MaxChargingBlocks ?? 2;
 
         double maxChargePower = chargeSpeed;
 
@@ -174,16 +176,14 @@ public class BatteryMilpOptimizationService(ConfigurationService config, ILogger
         }
 
         // Limit number of grid charging sessions per day
-        solver.Add(startGridCharge.Sum() <= 2);
+        solver.Add(startGridCharge.Sum() <= maxChargeBlocks);
 
         // Limit number of discharge sessions per day
-        solver.Add(startDischarge.Sum() <= 2);
+        solver.Add(startDischarge.Sum() <= maxChargeBlocks);
 
         // ========= Objective =========
 
         double switchingPenalty = 0.01;
-        //double chargeOutsideWindowPenalty = 0.03;
-        //double dischargeOutsideWindowPenalty = 0.03;
 
         Objective objective = solver.Objective();
 

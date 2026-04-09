@@ -27,7 +27,7 @@ namespace PredikceVytěžováníFVE.Services
             _logger = logger;
             _serviceProvider = serviceProvider;
             mqttService = new(configuration.Settings.Api.MqttBroker ?? throw new Exception("missing mqtt broker"));
-            mqttTopic = configuration.Settings.Api.MqttTopic ?? throw new Exception("missing mqtt topic");
+            mqttTopic = configuration.Settings.Api.MqttDataTopic ?? throw new Exception("missing mqtt data topic");
         }
 
         public async Task StartAsync(CancellationToken cancellationToken)

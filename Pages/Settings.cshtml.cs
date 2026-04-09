@@ -18,12 +18,14 @@ public class SettingsModel(ConfigurationService config, IConfiguration configura
     [BindProperty]
     public ModelInfo ModelInfo { get; set; } = new();
     [BindProperty]
+    public ControlInfo ControlInfo { get; set; } = new();
+    [BindProperty]
     [Required(ErrorMessage = "Zadejte heslo.")]
     public string SavePassword { get; set; } = string.Empty;
 
     public void OnGet()
     {
-        GetData();
+        LoadData();
     }
 
     public async Task<IActionResult> OnPost()
@@ -40,33 +42,67 @@ public class SettingsModel(ConfigurationService config, IConfiguration configura
         }
         if (!ModelState.IsValid)
         {
+            LoadData();
             return Page();
         }
 
-        await config.UpdateAsync( settings =>
+        var currentSettings = config.Settings;
+
+        var fve = Merge(currentSettings.Fve, FveInfo);
+        var api = Merge(currentSettings.Api, ApiInfo);
+        var battery = Merge(currentSettings.Battery, BatteryInfo);
+        var model = Merge(currentSettings.Model, ModelInfo);
+        var control = Merge(currentSettings.Control, ControlInfo);
+
+        await config.UpdateAsync(settings =>
         {
-            settings.Api = ApiInfo;
-            settings.Fve = FveInfo;
-            settings.Battery = BatteryInfo;
-            settings.Model = ModelInfo;
+            settings.Fve = fve;
+            settings.Api = api;
+            settings.Battery = battery;
+            settings.Model = model;
+            settings.Control = control;
         });
         logger.LogInformation(
             "Changing settings to: {settings}",
             JsonSerializer.Serialize(new ApplicationSettings
             {
-                Fve = FveInfo,
-                Api = ApiInfo,
-                Battery = BatteryInfo,
-                Model = ModelInfo
+                Fve = fve,
+                Api = api,
+                Battery = battery,
+                Model = model,
+                Control = control
             }));
         return RedirectToPage();
     }
 
-    private void GetData()
+    private void LoadData()
     {
         FveInfo = config.Settings.Fve;
         ApiInfo = config.Settings.Api;
         BatteryInfo = config.Settings.Battery;
         ModelInfo = config.Settings.Model;
+        ControlInfo = config.Settings.Control;
+    }
+
+    private static T Merge<T>(T current, T posted) where T : class, new()
+    {
+        var result = new T();
+
+        foreach (var prop in typeof(T).GetProperties().Where(p => p.CanRead && p.CanWrite))
+        {
+            var postedValue = prop.GetValue(posted);
+            var currentValue = prop.GetValue(current);
+
+            if (postedValue is string s)
+            {
+                prop.SetValue(result, string.IsNullOrWhiteSpace(s) ? currentValue : s);
+            }
+            else
+            {
+                prop.SetValue(result, postedValue ?? currentValue);
+            }
+        }
+
+        return result;
     }
 }

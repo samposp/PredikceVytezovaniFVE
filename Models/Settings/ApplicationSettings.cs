@@ -6,5 +6,6 @@ public class ApplicationSettings
     public ApiInfo Api { get; set; } = new();
     public ModelInfo Model { get; set; } = new();
     public BatteryInfo Battery { get; set; } = new();
+    public ControlInfo Control { get; set; } = new();
 }
 

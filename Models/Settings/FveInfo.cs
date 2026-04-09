@@ -9,5 +9,4 @@ public class FveInfo
     public float? PeakPower { get; set; }
     public float? Declination { get; set; }
     public float? Azimuth { get; set; }
-    public float? MinSellPrice { get; set; } // CZK/kWh
 }
