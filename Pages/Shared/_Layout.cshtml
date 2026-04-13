@@ -20,9 +20,9 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                         <li class="nav-item">
-                             <a class="nav-link text-dark" asp-area="" asp-page="/Index"></a>
-                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Index"></a>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Predict">Predikce</a>
                         </li>
@@ -33,6 +33,13 @@
                             <a class="nav-link text-dark" asp-area="" asp-page="/Settings">Nastavení</a>
                         </li>
                     </ul>
+                    <div class="d-flex align-items-center ms-auto">
+                        <span id="mqttStatusDot"
+                              class="rounded-circle bg-secondary me-2"
+                              style="width: 12px; height: 12px; display: inline-block;">
+                        </span>
+                        <span id="mqttStatusText" class="small text-muted">MQTT: Neznámý stav</span>
+                    </div>
                 </div>
             </div>
         </nav>
@@ -45,7 +52,6 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-
         </div>
     </footer>
 
@@ -56,3 +62,39 @@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+
+<script>
+    async function updateMqttStatus() {
+        const dot = document.getElementById('mqttStatusDot');
+        const text = document.getElementById('mqttStatusText');
+
+        try {
+            const response = await fetch('/api/mqtt/status', { cache: 'no-store' });
+            if (!response.ok) {
+                throw new Error('Nepodařilo se načíst stav MQTT');
+            }
+
+            const data = await response.json();
+
+            dot.classList.remove('bg-success', 'bg-danger', 'bg-warning', 'bg-secondary');
+
+            if (data.connected && data.healthy) {
+                dot.classList.add('bg-success');
+                text.textContent = 'MQTT: Připojeno';
+            } else if (data.connected && !data.healthy) {
+                dot.classList.add('bg-warning');
+                text.textContent = 'MQTT: Bez aktuálních dat';
+            } else {
+                dot.classList.add('bg-danger');
+                text.textContent = 'MQTT: Odpojeno';
+            }
+        } catch {
+            dot.classList.remove('bg-success', 'bg-danger', 'bg-warning', 'bg-secondary');
+            dot.classList.add('bg-secondary');
+            text.textContent = 'MQTT: Neznámý stav';
+        }
+    }
+
+    updateMqttStatus();
+    setInterval(updateMqttStatus, 30000);
+</script>

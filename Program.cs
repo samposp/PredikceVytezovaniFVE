@@ -36,7 +36,8 @@ try
     {
         options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
     });
-    builder.Services.AddHostedService<MqttBackgroundTask>();
+    builder.Services.AddSingleton<MqttBackgroundTask>();
+    builder.Services.AddHostedService(sp => sp.GetRequiredService<MqttBackgroundTask>());
     builder.Services.AddSingleton<SpotSoapService>();
     builder.Services.AddTransient<OpenMeteoService>();
     builder.Services.AddTransient<BatteryMilpOptimizationService>();
@@ -120,6 +121,16 @@ try
         """);
         }
     }
+
+    app.MapGet("/api/mqtt/status", (MqttBackgroundTask mqttTask) =>
+    {
+        return Results.Ok(new
+        {
+            connected = mqttTask.IsConnected,
+            healthy = mqttTask.IsHealthy,
+            lastMessageReceivedUtc = mqttTask.LastMessageReceivedUtc
+        });
+    });
 
     app.Run();
 }
