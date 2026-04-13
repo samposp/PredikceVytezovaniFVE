@@ -6,7 +6,7 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<meta charset="utf-8"/>
+<meta charset="utf-8" />
 <div class="text-center">
     <div class="box-body">
         <div class="container">
@@ -18,7 +18,7 @@
                     Chart(Model.SpotTimeStamps, Model.SpotPrice, "spot", "Spotová cena [CZK/kWh]");
                     Chart(Model.FVEPredictionTimeStamps, Model.FVEPrediction, "fve", "Předpověd výroby FVE [W]");
                     Chart(Model.ConsumptionPredictionTimeStamps, Model.ConsumptionPrediction, "consumption", "Předpověď spotřeby [W]");
-                    
+
                     Chart(Model.PredictedBatteryTimeStamps, Model.PredictedBattery, "battery", "Předpověď nabití baterie [%]");
                     Chart(Model.PredictedCostTimeStamps, Model.PredictedBuy, "buy", "Nakoupeno [kWh]");
                     Chart(Model.PredictedCostTimeStamps, Model.PredictedSell, "sell", "Prodáno [kWh]");
@@ -44,8 +44,9 @@
         </div>
         <script type="text/javascript">
             $(function () {
-                let ctx = document.getElementById("@id").getContext('2d');
-                let data = {
+                window.charts = window.charts || {};
+                const ctx = document.getElementById("@id").getContext('2d');
+                const data = {
                     labels: JSON.parse('@Html.Raw(Json.Serialize(labels))'),
                     datasets: [{
                         label: "@Html.Raw(title)",
@@ -71,10 +72,23 @@
                         y: {
                             beginAtZero: true
                         }
+                    },
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                title: function(context) {
+                                    const value = context[0].parsed.x; // timestamp on time scale
+                                    return new Intl.DateTimeFormat("cs-CZ", {
+                                      dateStyle: "medium",
+                                      timeStyle: "short"
+                                    }).format(value);
+                                }
+                            }
+                        }
                     }
                 }
 
-                var myChart = new Chart(ctx, {
+                window.charts["@id"] = new Chart(ctx, {
                     options: options,
                     data: data,
                     type: "@type"

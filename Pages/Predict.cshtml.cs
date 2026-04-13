@@ -27,7 +27,7 @@ public class PredictModel(PredictionDataService predictionService, PredictitonSe
     public string BatteryMessage { get; set; } = "";
     public string DateMessage { get; set; } = "";
 
-    public bool CanRerun = true;
+    public bool CanRerun = false;
     public async Task OnGet()
     {
 

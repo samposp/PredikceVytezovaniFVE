@@ -34,7 +34,7 @@
 
                     if (Model.CheckBuyData)
                     {
-                        Chart(Model.CosttimeStamp, Model.Cost, "buy2", "Nakoupeno cena [CZK]");  
+                        Chart(Model.CosttimeStamp, Model.Cost, "buy2", "Nakoupeno cena [CZK]");
                     }
                 }
             </div>
@@ -80,6 +80,19 @@
                         },
                         y: {
                             beginAtZero: true
+                        }
+                    },
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                title: function(context) {
+                                    const value = context[0].parsed.x; // timestamp on time scale
+                                    return new Intl.DateTimeFormat("cs-CZ", {
+                                      dateStyle: "medium",
+                                      timeStyle: "short"
+                                    }).format(value);
+                                }
+                            }
                         }
                     }
                 }
