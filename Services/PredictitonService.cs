@@ -18,11 +18,13 @@ public class PredictitonService(ILogger<PredictitonService> logger, SpotSoapServ
 
     public async Task BackTest()
     {
-        DateTime start = new DateTime(2026, 2, 10);
-        DateTime end = new DateTime(2026, 2, 20);
+        DateTime start = new DateTime(2026, 2, 20);
+        DateTime end = new DateTime(2026, 3, 30);
         string resultFile = "backtestResult.csv";
 
-        var backtestService = new BatteryBacktestService(batteryOptimizationService);
+        using var scope = serviceProvider.CreateScope();
+        var db = scope.ServiceProvider.GetRequiredService<FVEDbContext>();
+        var backtestService = new BatteryBacktestService(batteryOptimizationService, db);
         List<HistoricalDayInput> input = new();
         for (DateTime date = start; date <= end; date = date.AddDays(1))
         {
@@ -44,7 +46,7 @@ public class PredictitonService(ILogger<PredictitonService> logger, SpotSoapServ
             });
         }
 
-        var result = backtestService.Run(input);
+        var result = await backtestService.Run(input);
         BacktestCsvWriter.SaveDayResults(resultFile, result.Days);
     }
 

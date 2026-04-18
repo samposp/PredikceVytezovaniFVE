@@ -1,12 +1,17 @@
-﻿using PredikceVytěžováníFVE.Models;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using PredikceVytěžováníFVE.Data;
+using PredikceVytěžováníFVE.Helpers;
+using PredikceVytěžováníFVE.Models;
+using PredikceVytěžováníFVE.Models.Settings;
 using PredikceVytěžováníFVE.Services;
 
 namespace PredikceVytěžováníFVE.BackTest;
 
-public class BatteryBacktestService(BatteryMilpOptimizationService optimizer)
+public class BatteryBacktestService(BatteryMilpOptimizationService optimizer, FVEDbContext db)
 {
 
-    public BacktestSummary Run(IEnumerable<HistoricalDayInput> days)
+    public async Task<BacktestSummary> Run(IEnumerable<HistoricalDayInput> days)
     {
         var summary = new BacktestSummary();
 
@@ -17,7 +22,38 @@ public class BatteryBacktestService(BatteryMilpOptimizationService optimizer)
             try
             {
                 ValidateDay(day);
+                float noBatteryCost = CalculateNoBatteryCost(
+                    day.Fve,
+                    day.Consumption,
+                    day.Spot);
+                var existing = await db.PredictedControlData.FirstOrDefaultAsync(x => x.TimeStamp == day.Date.ToDateTime(new TimeOnly()));
+                if (existing != null)
+                {
+                    var res = new BacktestDayResult
+                    {
+                        Date = day.Date,
+                        OptimizedCost = existing.PriceSum ?? 0,
+                        NoBatteryCost = noBatteryCost,
+                        SavingsVsNoBattery = noBatteryCost - existing.PriceSum ?? 0,
 
+                        TotalGridBuy = existing.GridBuy!.Sum(),
+                        TotalGridSell = existing.GridSell!.Sum(),
+                        TotalGridCharge = existing.Charge.Sum(),
+                        //TotalPvCharge = existing.PvC.Sum(),
+                        //TotalDischarge = existing.Discharge.Sum(),
+
+                        ChargeHoursCount = existing.ChargeTimes.Count,
+                        DischargeHoursCount = existing.DischargeTimes.Count,
+
+                        StartBatteryPercent = day.InitialBatteryPercent,
+                        EndBatteryPercent = existing.Capacity.LastOrDefault(),
+
+                        Status = "OK"
+                    };
+                    summary.Days.Add(res);
+                    summary.SuccessfulDays++;
+                    continue;
+                }
                 BatteryOptimizationResult optimized = optimizer.Optimize(
                     day.InitialBatteryPercent,
                     day.Fve,
@@ -25,11 +61,31 @@ public class BatteryBacktestService(BatteryMilpOptimizationService optimizer)
                     day.Spot,
                     day.Date.ToDateTime(new TimeOnly()));
 
+                // SAVE TO DB
+                var prediction = ConverterHelper.ToControlPredictionBo(day.Date.ToDateTime(new TimeOnly()), optimized);
+
+                if (existing is null)
+                {
+                    await db.PredictedControlData.AddAsync(prediction);
+                }
+                else
+                {
+                    existing.Capacity = prediction.Capacity;
+                    existing.TimeStamp = prediction.TimeStamp;
+                    existing.PriceSum = prediction.PriceSum;
+                    existing.Charge = prediction.Charge;
+                    existing.ChargeToCapacities = prediction.ChargeToCapacities;
+                    existing.ChargeTimes = prediction.ChargeTimes;
+                    existing.DischargeTimes = prediction.DischargeTimes;
+                    existing.GridBuy = prediction.GridBuy;
+                    existing.GridSell = prediction.GridSell;
+                }
+
+                await db.SaveChangesAsync();
+
+
                 float optimizedCost = optimized.TotalCost;
-                float noBatteryCost = CalculateNoBatteryCost(
-                    day.Fve,
-                    day.Consumption,
-                    day.Spot);
+
 
                 var result = new BacktestDayResult
                 {
@@ -92,21 +148,25 @@ public class BatteryBacktestService(BatteryMilpOptimizationService optimizer)
         List<float> spot)
     {
         // convert all to kW
-        fve = fve.Select(x => x/1000).ToList();
-        consumption = consumption.Select(x => x/1000).ToList();
+        fve = fve.Select(x => x / 1000).ToList();
+        consumption = consumption.Select(x => x / 1000).ToList();
         float total = 0f;
 
-        for (int t = 0; t < 24; t++)
+        fve = DataFilterHelper.InterpolateHourlyToQuarterHourly(fve);
+        consumption = DataFilterHelper.InterpolateHourlyToQuarterHourly(consumption);
+
+        for (int t = 0; t < 96; t++)
         {
+            float currentSpot = spot[t] * 0.25f;
             float net = consumption[t] - fve[t];
 
             if (net > 0)
             {
-                total += net * spot[t];
+                total += net * currentSpot;
             }
             else
             {
-                total -= Math.Abs(net) * spot[t];
+                total -= Math.Abs(net) * currentSpot;
             }
         }
 

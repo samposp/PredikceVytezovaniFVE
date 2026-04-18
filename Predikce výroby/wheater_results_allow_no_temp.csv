@@ -1,0 +1,17 @@
+;combo;mean_mse
+15;['wind_speed', 'pressure', 'precipitation', 'temperature'];710667.0817084194
+9;['pressure', 'temperature'];710998.0579416817
+12;['wind_speed', 'pressure', 'temperature'];712873.1595295313
+14;['pressure', 'precipitation', 'temperature'];721524.1108045512
+2;['pressure'];725214.3381820591
+11;['wind_speed', 'pressure', 'precipitation'];725257.237807481
+8;['pressure', 'precipitation'];728242.4836091609
+7;['wind_speed', 'temperature'];729493.0424303581
+5;['wind_speed', 'pressure'];730588.3546693184
+13;['wind_speed', 'precipitation', 'temperature'];731113.0500115614
+1;['wind_speed'];745145.7184378564
+6;['wind_speed', 'precipitation'];748020.0707851005
+4;['temperature'];759871.6383503326
+3;['precipitation'];763900.302716215
+0;[];766388.8160250048
+10;['precipitation', 'temperature'];769696.0302826605

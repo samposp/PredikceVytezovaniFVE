@@ -1,0 +1,9 @@
+;combo;mean_mse
+2;['temperature', 'pressure'];716215.7142897657
+7;['temperature', 'wind_speed', 'pressure', 'precipitation'];721305.9725426832
+1;['temperature', 'wind_speed'];730691.3609800796
+0;['temperature'];739170.8123786764
+4;['temperature', 'wind_speed', 'pressure'];747191.6050644505
+6;['temperature', 'pressure', 'precipitation'];750193.5909568608
+5;['temperature', 'wind_speed', 'precipitation'];753435.507197447
+3;['temperature', 'precipitation'];792752.1347436099
