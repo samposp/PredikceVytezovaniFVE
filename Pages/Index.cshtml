@@ -15,26 +15,26 @@
             <div class="row">
                 @{
                     // This is updated with signalR in MqttHub.js file!!!
-                    Card("Baterie", "batteryPercentage", Model.initData.SoC, "%");
-                    Card("Příkon ze sítě", "grid", -Model.initData.P_GRID, "W");
+                    Card("Stav baterie", "batteryPercentage", Model.initData.SoC, "%");
+                    Card("Tok ze sítě", "grid", -Model.initData.P_GRID, "W");
                     Card("Výkon FVE", "PVEnergy", Model.initData.P_PV, "W");
-                    Card("Výkon baterie", "battery", Model.initData.P_BAT, "W");
-                    Card("Spotřeba", "consumption", Model.initData.P_HOME, "W");
-                    Card("Cena za kW", "prize", Model.initData.PRICE_CZK, "CZK");
+                    Card("Tok baterie", "battery", Model.initData.P_BAT, "W");
+                    Card("Spotřeba domu", "consumption", Model.initData.P_HOME, "W");
+                    Card("Cena elektřiny", "prize", Model.initData.PRICE_CZK, "CZK/kWh");
                 }
             </div>
             <div class="row"><h4>Celková data z <span id="date">@Model.initData.Date</span></h4></div>
             <div class="row">
                 @{
-                    Card("Nakoupeno", "buy", Model.initData.BUY, "kWh");
-                    Card("Prodáno", "sell", Model.initData.SELL, "kWh");
-                    Card("Energie z FVE", "fve", Model.initData.PVenergy, "kWh");
-                    Card("Do baterie", "toBat", Model.initData.ToBAT, "kWh");
-                    Card("Z baterie", "fromBat", Model.initData.FromBAT, "kWh");
+                    Card("Nákup ze sítě", "buy", Model.initData.BUY, "kWh");
+                    Card("Prodej do sítě", "sell", Model.initData.SELL, "kWh");
+                    Card("Vyrobeno", "fve", Model.initData.PVenergy, "kWh");
+                    Card("Uloženo do baterie", "toBat", Model.initData.ToBAT, "kWh");
+                    Card("Spotřebováno z baterie", "fromBat", Model.initData.FromBAT, "kWh");
 
                     <hr />
                     Chart(Model.timestamps, Model.Battery, "batteryGraph", "Baterie [%]");
-                    Chart(Model.timestamps, Model.Consumption, "consumptionGraph", "Spotřeba [W]");
+                    Chart(Model.timestamps, Model.Consumption, "consumptionGraph", "Okamžitá spotřeba domu [W]");
                     // Chart(Model.timestamps, Model.ToBat, "Do baterie [W]");
 
                     Chart(Model.timestamps, Model.Production, "fveGraph", "Výkon fotovoltaické elektrárny [W]");
@@ -130,5 +130,4 @@
             });
         </script>
     }
-}
 }

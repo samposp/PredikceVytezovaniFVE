@@ -31,7 +31,7 @@ public class PredictModel(PredictionDataService predictionService, PredictitonSe
     public async Task OnGet()
     {
 
-        await runPredictionService.BackTest();
+        //await runPredictionService.BackTest();
         await GetData();
     }
     private async Task GetData()

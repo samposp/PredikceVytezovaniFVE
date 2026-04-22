@@ -20,17 +20,17 @@
             </div>
             <div class="row">
                 @{
-                    Chart(Model.timestamps, Model.Battery, "battery", "Baterie [%]");
-                    Chart(Model.timestamps, Model.Consumption, "consumption", "Spotřeba [W]");
+                    Chart(Model.timestamps, Model.Battery, "battery", "Stav nabití baterie (SOC) [%]");
+                    Chart(Model.timestamps, Model.Consumption, "consumption", "Okamžitý elektrický příkon domu [W]");
 
-                    Chart(Model.timestamps, Model.Production, "fve", "Energie z FVE [W]");
-                    Chart(Model.timestamps, Model.Grid, "grid", "Energie ze sítě [W]");
+                    Chart(Model.timestamps, Model.Production, "fve", "Výkon fotovoltaické elektrárny [W]");
+                    Chart(Model.timestamps, Model.Grid, "grid", "Odběr / dodávka ze sítě [W]");
 
-                    Chart(Model.timestamps, Model.ToBat, "tobat", "Do baterie [kW]");
-                    Chart(Model.timestamps, Model.FromBat, "frombat", "Z baterie [kW]");
+                    Chart(Model.timestamps, Model.ToBat, "tobat", "Nabíjecí výkon baterie [kW]");
+                    Chart(Model.timestamps, Model.FromBat, "frombat", "Vybíjecí výkon baterie [kW]");
 
-                    Chart(Model.timestamps, Model.Sell, "sell", "Prodáno [kWh]");
-                    Chart(Model.timestamps, Model.Buy, "buy", "Nakoupeno [kWh]");
+                    Chart(Model.timestamps, Model.Sell, "sell", "Prodej do sítě [kWh]");
+                    Chart(Model.timestamps, Model.Buy, "buy", "Nákup ze sítě [kWh]");
 
                     if (Model.CheckBuyData)
                     {
