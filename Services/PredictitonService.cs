@@ -61,7 +61,7 @@ public class PredictitonService(ILogger<PredictitonService> logger, SpotSoapServ
 
         float batteryInitial = mqttData.GetLastBattery() ?? 20;
 
-        List<float> spotList = ConverterHelper.ToFloatList(SpotData); // From EUR/MWh to EUR/kWh
+        List<float> spotList = ConverterHelper.ToFloatList(SpotData);
         var fveList = ConverterHelper.ToFloatList(FVEPrediction);
         var consumptionList = ConverterHelper.ToFloatList(ConsumptionPrediction);
 
