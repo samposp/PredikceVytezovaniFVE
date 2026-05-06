@@ -6,22 +6,6 @@ using PublicOTEService;
 namespace PredikceVytěžováníFVE.Helpers;
 public class ConverterHelper
 {
-    public static FVEData ToFVEData(MqttData message)
-    {
-        return new()
-        {
-            BatteryPercentage = message.SoC,
-            BatteryOutput = message.P_Batt,
-            PVOutput = message.P_PV,
-            Consumption = (float?)message.Consumption,
-            Grid = (float?)message.P_GRID,
-
-            PVEnergyCumulative = message.PVenergy,
-            OutputCumulative = message.Output,
-            InputCumulative = message.Consumption,
-            Timestamp = ToDateTime(message.Date, message.Time)
-        };
-    }
     public static TimeValuePair ToTimeValuePair(SpotBo spotBo)
     {
         return new TimeValuePair(spotBo.DateTime, spotBo.Value);
