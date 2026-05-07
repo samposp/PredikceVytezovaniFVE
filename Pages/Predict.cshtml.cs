@@ -10,7 +10,6 @@ public class PredictModel(PredictionDataService predictionService, PredictitonSe
 {
     [BindProperty]
     public DateTime DataDate { get; set; }
-
     public List<DateTime> SpotTimeStamps { get; set; } = [];
     public List<float> SpotPrice { get; set; } = [];
     public List<DateTime> FVEPredictionTimeStamps { get; set; } = [];
@@ -30,8 +29,6 @@ public class PredictModel(PredictionDataService predictionService, PredictitonSe
     public bool CanRerun = false;
     public async Task OnGet()
     {
-
-        await runPredictionService.BackTest();
         await GetData();
     }
     private async Task GetData()

@@ -41,15 +41,4 @@ public class SpotSoapService(IServiceProvider serviceProvider, ILogger<SpotSoapS
         await db.SaveChangesAsync();
         return [.. SpotData.Select(ConverterHelper.ToTimeValuePair).Select(x => new TimeValuePair(x.DateTime, x.Value))];
     }
-
-    public async Task<List<TimeValuePair>?> GetHourlyAverageSoapData(DateTime date)
-    {
-        var quarterHourData = await GetSoapData(date);
-        return quarterHourData?.GroupBy(q => q.DateTime.Hour)
-            .Select(g => new TimeValuePair
-            {
-                DateTime = new DateTime(date.Year, date.Month, date.Day, g.Key, 0, 0),
-                Value = g.Average(q => q.Value)
-            }).ToList();
-    } 
 }

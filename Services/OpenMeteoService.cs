@@ -23,7 +23,7 @@ namespace PredikceVytěžováníFVE.Services {
             return uriBuilder.ToString();
         }
 
-        async public Task<List<TimeValuePair>?> GetTomorrowTemperature(DateTime date) {
+        async public Task<List<TimeValuePair>?> GetTemperature(DateTime date) {
 
             using var scope = serviceProvider.CreateScope();
             var db = scope.ServiceProvider.GetRequiredService<FVEDbContext>();
@@ -65,7 +65,6 @@ namespace PredikceVytěžováníFVE.Services {
             string errorMessage = await response.Content.ReadAsStringAsync();
             logger.LogError(errorMessage);
             return [];
-            //throw new HttpRequestException(errorMessage);
         }
     }
 }

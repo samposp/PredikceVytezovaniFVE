@@ -8,7 +8,6 @@ namespace PredikceVytěžováníFVE.Services;
 
 public class PredictionDataService(ILogger<PredictitonService> logger, SpotSoapService soapClient, ForecastService forecastService, ConcumptionPredictionService consumptionService, FVEDbContext db)
 {
-    public DateTime DataDate { get; set; }
     public List<TimeValuePair> SpotData { get; set; } = [];
     public List<TimeValuePair> FVEPrediction { get; set; } = [];
     public List<TimeValuePair> ConsumptionPrediction { get; set; } = [];
@@ -18,7 +17,6 @@ public class PredictionDataService(ILogger<PredictitonService> logger, SpotSoapS
     public ControlPredictionBo? PredictedControlData { get; set; }
     public async Task<bool> GetPredition(DateTime date)
     {
-        DataDate = date;
         PredictedControlData = db.PredictedControlData.Where(x => x.TimeStamp.Date == date.Date).FirstOrDefault();
         if (PredictedControlData == null)
         {
@@ -26,7 +24,7 @@ public class PredictionDataService(ILogger<PredictitonService> logger, SpotSoapS
             return false;
         }
         SpotData = await soapClient.GetSoapData(date) ?? [];
-        FVEPrediction = await forecastService.GetWatthours(date);
+        FVEPrediction = await forecastService.GetForecast(date);
         ConsumptionPrediction = await consumptionService.GetPrediction(date, true) ?? [];
 
         var batteryChargeList = PredictedControlData.Charge!;
@@ -62,10 +60,7 @@ public class PredictionDataService(ILogger<PredictitonService> logger, SpotSoapS
                 logger.LogError(ex2.Message);
 
             }
-
         }
-
-
 
         return true;
     }

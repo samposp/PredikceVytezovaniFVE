@@ -291,12 +291,4 @@ public class MqttBackgroundTask : BackgroundService
 
         _subscribed = true;
     }
-
-    public bool IsReceivingMessages()
-    {
-        if (_lastMessageReceivedUtc == DateTime.MinValue)
-            return false;
-
-        return DateTime.UtcNow - _lastMessageReceivedUtc < _reconnectAfter;
-    }
 }

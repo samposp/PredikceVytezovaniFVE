@@ -224,10 +224,6 @@ public class BatteryMilpOptimizationService(ConfigurationService config)
 
             objective.SetCoefficient(curtailPv[t], 0.0);
 
-            // optional battery wear penalty
-            // objective.SetCoefficient(chargePv[t], batteryUsagePenalty);
-            // objective.SetCoefficient(discharge[t], batteryUsagePenalty);
-
             // switching penalties
             objective.SetCoefficient(
                 startGridCharge[t],
@@ -238,29 +234,6 @@ public class BatteryMilpOptimizationService(ConfigurationService config)
                 startDischarge[t],
                 objective.GetCoefficient(startDischarge[t]) + switchingPenalty);
 
-            // FOR CHARGING IN SET TIMES - NOT NEEDED
-            //int hour = t / 4;
-            //bool preferredCharge =
-            //    (hour >= 0 && hour < 5) ||
-            //    (hour >= 10 && hour < 15);
-
-            //bool preferredDischarge =
-            //    (hour >= 5 && hour < 10) ||
-            //    (hour >= 16 && hour < 23);
-
-            //if (!preferredCharge)
-            //{
-            //    objective.SetCoefficient(
-            //        isGridCharge[t],
-            //        objective.GetCoefficient(isGridCharge[t]) + chargeOutsideWindowPenalty);
-            //}
-
-            //if (!preferredDischarge)
-            //{
-            //    objective.SetCoefficient(
-            //        isDischarge[t],
-            //        objective.GetCoefficient(isDischarge[t]) + dischargeOutsideWindowPenalty);
-            //}
         }
 
         objective.SetMinimization();

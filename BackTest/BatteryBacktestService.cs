@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using PredikceVytěžováníFVE.Backtest;
 using PredikceVytěžováníFVE.Data;
 using PredikceVytěžováníFVE.Helpers;
 using PredikceVytěžováníFVE.Models;
@@ -8,8 +10,37 @@ using PredikceVytěžováníFVE.Services;
 
 namespace PredikceVytěžováníFVE.BackTest;
 
-public class BatteryBacktestService(BatteryMilpOptimizationService optimizer, FVEDbContext db)
+public class BatteryBacktestService(ILogger<BatteryBacktestService> logger, SpotSoapService soapClient, ConcumptionPredictionService consumptionService, BatteryMilpOptimizationService batteryOptimizationService, PVForecastService oldFveService, FVEDbContext db)
 {
+        public async Task BackTest()
+    {
+        DateTime start = new DateTime(2026, 1, 20);
+        DateTime end = new DateTime(2026, 3, 30);
+        string resultFile = "backtestResult.csv";
+        List<HistoricalDayInput> input = new();
+        for (DateTime date = start; date <= end; date = date.AddDays(1))
+        {
+            var spotData = await soapClient.GetSoapData(date) ?? [];
+            var fvePrediction =  oldFveService.GetPrediction(date).ToList();
+            var consumptionPrediction = await consumptionService.GetPrediction(date) ?? [];
+            if (spotData.Count == 0 || fvePrediction.Count == 0 || consumptionPrediction.Count == 0)
+            {
+                logger.LogWarning("Missing data for date {date}, skipping backtest for this day", date.ToShortDateString());
+                continue;
+            }
+            input.Add(new HistoricalDayInput
+            {
+                Date = DateOnly.FromDateTime(date),
+                InitialBatteryPercent = 20,
+                Spot = ConverterHelper.ToFloatList(spotData),
+                Fve = ConverterHelper.ToFloatList(fvePrediction),
+                Consumption = ConverterHelper.ToFloatList(consumptionPrediction)
+            });
+        }
+
+        var result = await Run(input);
+        BacktestCsvWriter.SaveDayResults(resultFile, result.Days);
+    }
 
     public async Task<BacktestSummary> Run(IEnumerable<HistoricalDayInput> days)
     {
@@ -38,15 +69,13 @@ public class BatteryBacktestService(BatteryMilpOptimizationService optimizer, FV
 
                         TotalGridBuy = existing.GridBuy!.Sum(),
                         TotalGridSell = existing.GridSell!.Sum(),
-                        TotalGridCharge = existing.Charge.Sum(),
-                        //TotalPvCharge = existing.PvC.Sum(),
-                        //TotalDischarge = existing.Discharge.Sum(),
+                        TotalGridCharge = existing.Charge!.Sum(),
 
-                        ChargeHoursCount = existing.ChargeTimes.Count,
-                        DischargeHoursCount = existing.DischargeTimes.Count,
+                        ChargeHoursCount = existing.ChargeTimes!.Count,
+                        DischargeHoursCount = existing.DischargeTimes!.Count,
 
                         StartBatteryPercent = day.InitialBatteryPercent,
-                        EndBatteryPercent = existing.Capacity.LastOrDefault(),
+                        EndBatteryPercent = existing.Capacity!.LastOrDefault(),
 
                         Status = "OK"
                     };
@@ -54,7 +83,7 @@ public class BatteryBacktestService(BatteryMilpOptimizationService optimizer, FV
                     summary.SuccessfulDays++;
                     continue;
                 }
-                BatteryOptimizationResult optimized = optimizer.Optimize(
+                BatteryOptimizationResult optimized = batteryOptimizationService.Optimize(
                     day.InitialBatteryPercent,
                     day.Fve,
                     day.Consumption,

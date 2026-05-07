@@ -26,7 +26,7 @@ public class ConcumptionPredictionService(IServiceProvider serviceProvider, ILog
             return [];
         }
         await CallPythonScript("process_hourly_data.py", 5, cancellationToken);  // get historic data
-        await meteoService.GetTomorrowTemperature(date); // get forecast data
+        await meteoService.GetTemperature(date); // get forecast data
         await CallPythonScript("prediction.py", retrain ? 20 : 5, cancellationToken); // predict consumption
 
         var newDbData = db.ConsumptionForecastData.Where(db => db.TimeStamp.Date == date.Date).ToList();

@@ -1,20 +1,11 @@
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Razor.TagHelpers;
-using Microsoft.AspNetCore.SignalR;
-using PredikceVytěžováníFVE.Data;
 using PredikceVytěžováníFVE.Helpers;
-using PredikceVytěžováníFVE.Hubs;
-using PredikceVytěžováníFVE.Models;
-using PredikceVytěžováníFVE.Models.DB;
-using PredikceVytěžováníFVE.Models.Forecast;
 using PredikceVytěžováníFVE.Services;
 
 namespace PredikceVytěžováníFVE.Pages
 {
-    public class FVEModel(MqttDataService mqttData, SpotSoapService spotService) : PageModel
+    public class FVEModel(MqttDataService mqttData) : PageModel
     {
         public List<int> Battery { get; set; } = [];
         public List<DateTime> timestamps { get; set; } = [];
@@ -25,21 +16,17 @@ namespace PredikceVytěžováníFVE.Pages
         public List<float> FromBat { get; set; } = [];
         public List<float> Sell { get; set; } = [];
         public List<float> Buy { get; set; } = [];
-        public List<float> Cost { get; set; } = [];
-        public List<DateTime> CosttimeStamp { get; set; } = [];
-
-        public bool CheckBuyData = false;
 
 
         [BindProperty(SupportsGet = true)]
         public DateTime DataDate { get; set; } = DateTime.Now.AddDays(-1);
 
-        public async Task OnGet()
+        public void OnGet()
         {
-            await GetData();
+            GetData();
         }
 
-        public async Task GetData()
+        public void GetData()
         {
             var chartData = mqttData.GetMqttDataByDate(DataDate);
 
@@ -54,22 +41,6 @@ namespace PredikceVytěžováníFVE.Pages
             FromBat = chartData.Where(x => x.FromBAT != null).Select(x => (float)-x.FromBAT!).ToList();
             Sell = chartData.Where(x => x.SELL != null).Select(x => (float)x.SELL!).ToList();
             Buy = chartData.Where(x => x.BUY != null).Select(x => (float)x.BUY!).ToList();
-
-            if (!CheckBuyData)
-                return;
-           var spotData = await spotService.GetSoapData(DataDate);
-            DateTime last = DataDate.Date;
-            float lastVal = 0;
-            foreach (var data in chartData)
-            {
-                var hours = data.DateTime?.Subtract(last).TotalMinutes / 60;
-                var price = spotData.Where(x => x.DateTime <= data.DateTime).Select(x => x.Value).Max();
-                lastVal += (float)((float)price * (-data.P_GRID / 1000) * hours);
-                Cost.Add(lastVal);
-                CosttimeStamp.Add(data.DateTime ?? DataDate);
-                last = data.DateTime ?? last;
-            }
-
         } 
 
         public IActionResult OnPost()

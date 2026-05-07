@@ -1,12 +1,6 @@
 ﻿using System.Xml.Serialization;
 
 namespace PredikceVytěžováníFVE.Models.Forecast {
-    // using System.Xml.Serialization;
-    // XmlSerializer serializer = new XmlSerializer(typeof(Response));
-    // using (StringReader reader = new StringReader(xml))
-    // {
-    //    var test = (Response)serializer.Deserialize(reader);
-    // }
 
     [XmlRoot(ElementName = "data")]
     public class Data {

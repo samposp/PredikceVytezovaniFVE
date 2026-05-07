@@ -7,7 +7,7 @@ using PredikceVytěžováníFVE.Models;
 using PredikceVytěžováníFVE.Models.DB;
 
 namespace PredikceVytěžováníFVE.Services;
-public class PredictitonService(ILogger<PredictitonService> logger, SpotSoapService soapClient, ForecastService forecastService, ConfigurationService config, ConcumptionPredictionService consumptionService, MqttDataService mqttData, BatteryMilpOptimizationService batteryOptimizationService, IServiceProvider serviceProvider, PVForecastService oldFveService)
+public class PredictitonService(SpotSoapService soapClient, ForecastService forecastService, ConcumptionPredictionService consumptionService, MqttDataService mqttData, BatteryMilpOptimizationService batteryOptimizationService, IServiceProvider serviceProvider)
 {
     public DateTime DataDate { get; set; }
     public List<TimeValuePair> SpotData { get; set; } = [];
@@ -16,46 +16,12 @@ public class PredictitonService(ILogger<PredictitonService> logger, SpotSoapServ
     public List<TimeValuePair> PredictedCost { get; set; } = [];
     public List<TimeValuePair> PredictedBattery { get; set; } = [];
 
-    public async Task BackTest()
-    {
-        DateTime start = new DateTime(2026, 2, 20);
-        DateTime end = new DateTime(2026, 3, 30);
-        string resultFile = "backtestResult.csv";
-
-        using var scope = serviceProvider.CreateScope();
-        var db = scope.ServiceProvider.GetRequiredService<FVEDbContext>();
-        var backtestService = new BatteryBacktestService(batteryOptimizationService, db);
-        List<HistoricalDayInput> input = new();
-        for (DateTime date = start; date <= end; date = date.AddDays(1))
-        {
-            var spotData = await soapClient.GetSoapData(date) ?? [];
-            var fvePrediction =  oldFveService.GetPrediction(date).ToList();
-            var consumptionPrediction = await consumptionService.GetPrediction(date) ?? [];
-            if (spotData.Count == 0 || fvePrediction.Count == 0 || consumptionPrediction.Count == 0)
-            {
-                logger.LogWarning("Missing data for date {date}, skipping backtest for this day", date.ToShortDateString());
-                continue;
-            }
-            input.Add(new HistoricalDayInput
-            {
-                Date = DateOnly.FromDateTime(date),
-                InitialBatteryPercent = 20,
-                Spot = ConverterHelper.ToFloatList(spotData),
-                Fve = ConverterHelper.ToFloatList(fvePrediction),
-                Consumption = ConverterHelper.ToFloatList(consumptionPrediction)
-            });
-        }
-
-        var result = await backtestService.Run(input);
-        BacktestCsvWriter.SaveDayResults(resultFile, result.Days);
-    }
-
     public async Task<ControlPredictionBo> Predict(DateTime date)
     {
         DataDate = date;
         SpotData = await soapClient.GetSoapData(date) ?? [];
 
-        FVEPrediction = await forecastService.GetWatthours(date);
+        FVEPrediction = await forecastService.GetForecast(date);
 
         ConsumptionPrediction = await consumptionService.GetPrediction(date) ?? [];
 
@@ -97,159 +63,7 @@ public class PredictitonService(ILogger<PredictitonService> logger, SpotSoapServ
         }   
 
         await db.SaveChangesAsync();
-
         return prediction;
-    }
-    private PredictedData GetOptimalBatteryCharge(float initialBattery, List<float> fve, List<float> consumption, List<float> spot)
-    {
-        int minTimeToCharge = 3;
-        int latestTimeToCharge = 20;
-        int latestTimeToDischarge = 22;
-        List<PredictedData> batteryInfo = new();
-        for (int i = 0; i < latestTimeToCharge; i++)
-        {
-            for (int j = i + minTimeToCharge; j < latestTimeToDischarge; j++)
-            {
-                List<int> charge = new() { i };
-                List<int> discharge = new() { j };
-                List<int> chargeTo = new() { 100 };
-                (var batteryCharge, var batteryCapacity) = GetBattery(initialBattery, fve, consumption, charge, discharge);
-
-                var price = GetPrice(consumption, spot, fve, batteryCharge);
-
-                batteryInfo.Add(new(batteryCapacity, batteryCharge, price, charge, discharge, chargeTo));
-            }
-        }
-        var minValue = batteryInfo.Min(x => x.PriceSum);
-        return batteryInfo.Where(x => x.PriceSum == minValue).First();
-    }
-
-    private (List<float>, List<float>) GetBattery(float initialBattery, List<float> fve, List<float> consumption, List<int> chargeTime, List<int> dischargeTime)
-    {
-        float capacity = config.Settings.Battery.Capacity ?? throw new Exception("Missing battery capacity in config");
-        float minRelative = ((float)(config.Settings.Battery.MinLevel ?? 20)) / 100;
-        float maxRelative = ((float)(config.Settings.Battery.MaxLevel ?? 100)) / 100;
-        float minCharge = minRelative * capacity;
-        float maxCharge = maxRelative * capacity;
-        List<float> batteryCapacity = new() { minCharge };
-        List<float> batteryCharge = new() { 0 };
-        bool charge = false;
-        bool discharge = false;
-        for (int i = 1; i < 24; i++)
-        {
-            float lastCapacity = batteryCapacity[i - 1];
-            if (chargeTime.Contains(i))
-            {
-                charge = true;
-                discharge = false;
-            }
-            if (dischargeTime.Contains(i))
-            {
-                discharge = true;
-                charge = false;
-            }
-
-            float currentBattery = lastCapacity;
-            float currentCharge = 0;
-
-            if (charge)
-            {
-                if (lastCapacity < maxCharge)
-                {
-                    var val = fve[i];
-                    currentBattery += val;
-                    currentCharge = val;
-                }
-                else
-                {
-                    charge = false;
-                }
-            }
-
-            if (discharge)
-            {
-                if (lastCapacity > minCharge)
-                {
-                    var cons = consumption[i] - fve[i];
-                    cons = cons > 0 ? cons : 0;
-                    currentBattery -= cons;
-                    currentCharge = -cons;
-                }
-                else
-                {
-                    discharge = false;
-                }
-            }
-            if (currentBattery > maxCharge)
-                currentBattery = maxCharge;
-            if (currentBattery < minCharge)
-                currentBattery = minCharge;
-
-            batteryCapacity.Add(currentBattery);
-            batteryCharge.Add(currentCharge);
-        }
-        return (batteryCharge, batteryCapacity);
-    }
-
-
-    private float GetPrice(List<float> consumption, List<float> spot, List<float> fve, List<float> batteryCharge)
-    {
-        if (consumption.Count != spot.Count)
-            throw new Exception($"Wrong consuption or spot count! consuption lenght:{consumption.Count}, spot length: ${spot.Count}");
-        float sum = 0;
-        for (int i = 0; i < spot.Count; i++)
-        {
-            var cons = consumption[i] - fve[i] + batteryCharge[i];
-            sum += cons * spot[i];
-        }
-        return sum;
-    }
-
-    private async Task<DateTime> FindOptimalChargeTime(DateTime min, DateTime max, float start, float end)
-    {
-        if (min.Date != max.Date)
-            throw new Exception("Min and max date must be the same");
-
-        var chargeSpeed = config.Settings.Battery.ChargeSpeed ?? throw new Exception("Missing charge speed in config");
-        var capacity = config.Settings.Battery.Capacity ?? throw new Exception("Missing battery capacity in config");
-
-        var minutesCharge = (int)Math.Ceiling((capacity * (end - start)) / chargeSpeed);
-        TimeSpan timeCharge = new(0, minutesCharge, 0);
-        var lastStartCharge = max.Subtract(timeCharge);
-        var spotData = await soapClient.GetSoapData(min.Date);
-        if (spotData == null || spotData.Count == 0)
-            throw new Exception("No spot data available for date: " + min.Date.ToShortDateString());
-
-        spotData = spotData.Where(x => x.DateTime >= min && x.DateTime <= lastStartCharge).ToList();
-        if (spotData.Count == 0)
-            throw new Exception("No possible time to charge found");
-
-        DateTime bestTime = new();
-        float bestPrice = float.MaxValue;
-        foreach (var data in spotData)
-        {
-            DateTime endCharge = data.DateTime.Add(timeCharge);
-            var price = (float)spotData.Where(x => x.DateTime >= data.DateTime && x.DateTime < endCharge).Sum(x => x.Value);
-            if (price < bestPrice)
-            {
-                bestPrice = price;
-                bestTime = data.DateTime;
-            }
-        }
-        return bestTime;
-    }
-
-    private List<float> GetFVESurplus(List<float> fve, List<float> consumption)
-    {
-        List<float> surplus = [];
-        for (int i = 0; i < fve.Count; i++)
-        {
-            var val = fve[i] - consumption[i];
-            surplus.Add(val > 0 ? val : 0);
-        }
-        return surplus;
     }
 
 }
-
-public record PredictedData(List<float> Capacity, List<float> Charge, float PriceSum, List<int> ChargeTime, List<int> DischargeTime, List<int> ChargeToCapacity);

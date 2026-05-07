@@ -16,8 +16,6 @@ namespace PredikceVytěžováníFVE.Services {
         private float _maxPower;
 
 
-        // http://www.pvforecast.cz/api/?key=esvk7s&lat=50.793&lon=15.138
-
         public PVForecastService(IServiceProvider serviceProvider, ConfigurationService configuration)
         {
             this.serviceProvider = serviceProvider;

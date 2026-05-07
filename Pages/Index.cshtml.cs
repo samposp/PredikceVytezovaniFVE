@@ -11,7 +11,7 @@ using PredikceVytìžováníFVE.Services;
 
 namespace PredikceVytìžováníFVE.Pages
 {
-    public class IndexModel(ILogger<IndexModel> logger, MqttDataService mqttData) : PageModel
+    public class IndexModel(MqttDataService mqttData) : PageModel
     {
 
         public MqttData initData = new();
@@ -21,11 +21,6 @@ namespace PredikceVytìžováníFVE.Pages
         public List<float> Production = [];
         public List<float> Grid = [];
         public DateTime LastUpdate;
-        //public List<float> ToBat = [];
-        //public List<float> FromBat = [];
-        //public List<float> Sell = [];
-        //public List<float> Buy = [];
-
 
         [BindProperty]
         public DateTime DataDate { get; set; } = DateTime.Now;
@@ -51,11 +46,6 @@ namespace PredikceVytìžováníFVE.Pages
             Production = chartData.Where(x => x.P_PV != null).Select(x => (float)x.P_PV!).ToList();
             Consumption = chartData.Where(x => x.P_HOME != null).Select(x => (float)x.P_HOME!).ToList();
             Grid = chartData.Where(x => x.P_GRID != null).Select(x => (float)-x.P_GRID!).ToList();
-            //ToBat = chartData.Where(x => x.ToBAT != null).Select(x => (float)-x.ToBAT!).ToList();
-            //FromBat = chartData.Where(x => x.FromBAT != null).Select(x => (float)-x.FromBAT!).ToList();
-            //Sell = chartData.Where(x => x.SELL != null).Select(x => (float)x.SELL!).ToList();
-            //Buy = chartData.Where(x => x.BUY != null).Select(x => (float)x.BUY!).ToList();
-
         } 
 
     }
