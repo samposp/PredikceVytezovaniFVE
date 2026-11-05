@@ -1,16 +1,16 @@
 {
   "Fve": {
-    "Latitude": "50.793",
-    "Longitude": "15.138",
-    "PeakPower": 9.9,
+    "Latitude": "50.0",
+    "Longitude": "15.0",
+    "PeakPower": 10,
     "Declination": 35,
     "Azimuth": -15
   },
   "Api": {
-    "MqttBroker": "cassandra2.tul.cz",
-    "MqttDataTopic": "FVE/Ibehej_TX",
-    "MqttPredictTopic": "FVE/IbehejPred",
-    "PvForecastApiKey": "esvk7s"
+    "MqttBroker": "",
+    "MqttDataTopic": "",
+    "MqttPredictTopic": "",
+    "PvForecastApiKey": ""
   },
   "Model": {
     "HistoryDays": 30,

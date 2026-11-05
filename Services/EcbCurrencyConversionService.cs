@@ -10,6 +10,7 @@ public sealed class EcbCurrencyConversionService
 
     public async Task<decimal> GetCurrentEurToCzkRateAsync(CancellationToken cancellationToken = default)
     {
+        // Http client should be as DI
         using var httpClient = new HttpClient();
         using var response = await httpClient.GetAsync(EcbDailyUrl, cancellationToken);
         response.EnsureSuccessStatusCode();

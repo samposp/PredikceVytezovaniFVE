@@ -38,7 +38,9 @@
 </div>
 
 
+
 @{
+    // Chart should be as standalone file te be used by multiple pages
     void Chart<L, V>(List<L> labels, List<V> values, string id, string title, string type = "line")
     {
         <div class="col-xl-6 col-md-8 col-sm-12">

@@ -7,6 +7,7 @@ namespace PredikceVytěžováníFVE.Services {
     public class OpenMeteoService(IServiceProvider serviceProvider, ILogger<SpotSoapService> logger, ConfigurationService configuration) {
         const string host = "api.open-meteo.com/v1/forecast";
 
+        // Http client should be as DI
         static private HttpClient client = new HttpClient();
 
         private string GetUri(string latitude, string longitude) {
@@ -53,7 +54,6 @@ namespace PredikceVytěžováníFVE.Services {
                         var temperature = (decimal) jResponse.hourly.temperature_2m[i];
                         timeList.Add(new TimeValuePair(timestamp, temperature));
                     }
-
                 }
 
                 logger.LogInformation("Temperature data retrieved from open meteo API");
